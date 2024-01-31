@@ -7,5 +7,5 @@ plotly
 scipy
 Pillow
 glob
-colour
+colour-science
 tmm
