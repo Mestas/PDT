@@ -8,3 +8,4 @@ scipy
 Pillow
 colour-science
 tmm
+numba
