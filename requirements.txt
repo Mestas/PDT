@@ -6,6 +6,5 @@ matplotlib
 plotly
 scipy
 Pillow
-glob
 colour-science
 tmm
