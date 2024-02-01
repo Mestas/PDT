@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import streamlit as st
 # st.balloons()  #过场动画
 
@@ -26,31 +27,31 @@ st.write("<h6>请输入Cpk相关数据</h6>", unsafe_allow_html=True)
 bz_1, bz_2, bz_3, bz_4 = st.columns([1, 4, 3, 12])
 with bz_2:
     st.write('  ')
-    st.write('单边tolerance')
+    st.write('输入规格上限')
 with bz_3:
-    tol = st.number_input(label='tolerance', label_visibility='collapsed', format='%f', key=1)
+    usl = st.number_input(label='tolerance', label_visibility='collapsed', format='%f', key=1)
 
 with bz_2:
     st.write('  ')
-    st.write('输入Cpk')
+    st.write('输入规格下限')
 with bz_3:
-    Cpk = st.number_input(label='Cpk', label_visibility='collapsed', format='%f', key=2)
+    lsl = st.number_input(label='tolerance', label_visibility='collapsed', format='%f', key=2)
 
 with bz_2:
     st.write('  ')
     st.write('输入规格中心值')
 with bz_3:
-    Ca = st.number_input(label='规格中心值', value=0.0, label_visibility='collapsed', format='%f', key=3)
+    sl = st.number_input(label='规格中心值', value=0.0, label_visibility='collapsed', format='%f', key=3)
 
 with bz_2:
     st.write('  ')
-    st.write('输入平均值')
+    st.write('输入Cpk')
 with bz_3:
-    x = st.number_input(label='平均值', value=0.0, label_visibility='collapsed', format='%f', key=4)
+    Cpk = st.number_input(label='Cpk', label_visibility='collapsed', format='%f', key=4)
 
 with bz_2:
     st.write('  ')
-    st.write('输入step数量')
+    st.write('输入规格step')
 with bz_3:
     step = st.number_input(label='step', label_visibility='collapsed', format='%f', key=5)
 
@@ -58,6 +59,7 @@ with bz_3:
 try:
     col3, col4 = st.columns([3, 5])
     col5, col6, col7, col8 = st.columns([1, 6, 20, 1])
+    col15, col16 = st.columns([1, 26])
     with col3:
         if st.button('***点击计算概率分布***'):
             # 将使用者保存到txt文件中
@@ -67,25 +69,31 @@ try:
                 f.write('使用了Cpk计算概率正态分布工具' + '\n')
             # 以下为主程序
             Cp = Cpk
-            T = 2 * tol
+            T = usl - lsl
             stedv = T / Cp / 6
+            layer = int(T / step + 1)
+            
+            A = np.zeros((layer, 3))
+            B = np.zeros((layer, 2))
 
-            A = np.zeros((int(step), 2))
-            B = np.zeros((int(step) * 10, 2))
-            for i in range(int(step)):
-                A[i, 0] = i * tol * 2 / (step - 1) - tol
-                A[i, 1] = norm.pdf(A[i, 0], x, stedv) / 10
+            for i in range(layer):
+                A[i, 0] = i * step - T / 2
+                A[i, 1] = norm.pdf(A[i, 0], sl, stedv)
+            for i in range(layer - 1):
+                A[i, 2] = (A[i + 1, 1] + A[i, 1]) * (A[i + 1, 0] - A[i, 0]) / 2
+            s = round(sum(A[:, 2]), 9)
 
-            for i in range(int(step) * 10):
-                B[i, 0] = i * tol * 2 / (step * 10 - 1) - tol
-                B[i, 1] = norm.pdf(B[i, 0], x, stedv) / 10
-
+            B[:, 0] = A[:, 0]
+            B[:, 1] = A[:, 2]
+            ccc = ['规格', '概率分布']
+            df = pd.DataFrame(B, columns=ccc)
             with col6:
-                st.write(A)
+                st.write(B)
+            with col16:
+                st.write('规格内的总概率为', s)
             with col7:
-                # st.write(B)
-                # st.bokeh_chart(B)
-                st.line_chart(B[:, 1])
+                st.line_chart(df, x='规格', y='概率分布')
+            
 
 except ZeroDivisionError:
     c1, c2, c3 = st.columns([1, 5, 5])
