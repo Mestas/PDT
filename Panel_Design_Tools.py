@@ -60,7 +60,7 @@ with col6:
     # code = st.text_input('请输入密码', key=2)
     btn = st.button('点击登录')
 p = len(name)
-namelist = ['admin']
+namelist = ['admin', '刘晓辉', '刘瑞超', '任静峰', '陈凯', '李泽亮', '吴兆君', '李小艳', '张小凤', '纪浩晨', '许曦', '佟洁', '栗晓亚', '梁鹏', '王宁', '李忻放']
 if btn is True:
     if p > 0 and name in namelist:
         with col16:
@@ -93,18 +93,18 @@ if btn is True:
         # 设置引导栏
         st.write("### 👈 请在左侧边栏点击想要使用的工具 ###")
 
-    #     # 将使用者保存到txt文件中
-    #     fp_save = 'D:\\python_work\\project\\1_PDT\\users\\网站使用者.txt'
-    #     mode = 'a'
-    #     date = time.strftime("%a %b %d %H:%M:%S %Y", time.localtime())
-    #     with open(fp_save, mode) as f:
-    #         f.write(name + '于' + date + '进行了登录: ')
-    # elif p > 0 and name not in namelist:
-    #     with col26:
-    #         st.write('请联系作者，注册后使用')
-    # elif p == 0:
-    #     with col26:
-    #         st.write('请输入姓名，登录后使用')
+        # 将使用者保存到txt文件中
+        fp_save = 'users/网站使用者.txt'
+        mode = 'a'
+        date = time.strftime("%a %b %d %H:%M:%S %Y", time.localtime())
+        with open(fp_save, mode) as f:
+            f.write(name + '于' + date + '进行了登录: ')
+    elif p > 0 and name not in namelist:
+        with col26:
+            st.write('请联系作者，注册后使用')
+    elif p == 0:
+        with col26:
+            st.write('请输入姓名，登录后使用')
 
 # 设置按钮底色
 st.markdown(
