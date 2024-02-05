@@ -278,11 +278,15 @@ st.markdown(
 st.markdown(
     '''
     <style>
-    input
-    {
-    background-color: rgb(220, 240, 220);
-    height: 70px;
-    width: 150px;
+    input {
+        font-size: 0.9rem !important; /*设置字体大小，加上!important是避免被 Markdown 样式覆盖*/
+        color: rgb(0, 0, 0) !important; /*设置字体颜色*/
+        background-color: rgb(220, 240, 220) !important; /*设置背景颜色*/
+        /background-color: rgb(220, 240, 220, 50%) !important; /*设置背景颜色*/
+        justify-content: center !important;
+        text-align: center !important; /*设置字体水平居中*/
+        vertical-align: middle !important; /*设置字体垂直居中*/
+        height: 39px !important;/ /*设置input的高度*/
     }
     </style>
     ''',
