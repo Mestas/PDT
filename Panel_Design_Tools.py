@@ -113,6 +113,8 @@ st.markdown(
     #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi8 > div.block-container.st-emotion-cache-1y4p8pa.ea3mdgi5 > div > div > div > div:nth-child(6) > div.st-emotion-cache-ndxjbj.e1f1d6gn3 > div > div > div > div:nth-child(2) > div > button
     {
     background-color: rgb(220, 240, 220);
+    height: 70px !important;
+    width: 150px !important;
     }
     </style>
     ''',
