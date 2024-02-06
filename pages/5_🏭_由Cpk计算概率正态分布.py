@@ -27,15 +27,15 @@ st.write("<h6>请输入Cpk相关数据</h6>", unsafe_allow_html=True)
 bz_1, bz_2, bz_3, bz_4 = st.columns([1, 4, 3, 12])
 with bz_2:
     st.write('  ')
-    st.write('输入规格上限')
+    st.write('输入规格下限')
 with bz_3:
-    usl = st.number_input(label='tolerance', label_visibility='collapsed', format='%f', key=1)
+    lsl = st.number_input(label='tolerance', label_visibility='collapsed', format='%f', key=1)
 
 with bz_2:
     st.write('  ')
-    st.write('输入规格下限')
+    st.write('输入规格上限')
 with bz_3:
-    lsl = st.number_input(label='tolerance', label_visibility='collapsed', format='%f', key=2)
+    usl = st.number_input(label='tolerance', label_visibility='collapsed', format='%f', key=2)
 
 with bz_2:
     st.write('  ')
@@ -73,18 +73,17 @@ try:
             stedv = T / Cp / 6
             layer = int(T / step + 1)
             
-            A = np.zeros((layer, 3))
+            A = np.zeros((layer + 1, 3))
             B = np.zeros((layer, 2))
 
-            for i in range(layer):
-                A[i, 0] = i * step - T / 2
+            for i in range(layer + 1):
+                A[i, 0] = (i - 0.5) * step - T / 2
                 A[i, 1] = norm.pdf(A[i, 0], sl, stedv)
-            for i in range(layer - 1):
-                A[i, 2] = (A[i + 1, 1] + A[i, 1]) * (A[i + 1, 0] - A[i, 0]) / 2
-            s = round(sum(A[:, 2]), 9)
-
-            B[:, 0] = A[:, 0]
-            B[:, 1] = A[:, 2]
+            for i in range(layer):
+                B[i, 0] = i * step - T / 2
+                B[i, 1] = (A[i + 1, 1] + A[i, 1]) * (A[i + 1, 0] - A[i, 0]) / 2
+            s = round(sum(B[:, 1]), 9)
+            
             ccc = ['规格', '概率分布']
             df = pd.DataFrame(B, columns=ccc)
             with col6:
