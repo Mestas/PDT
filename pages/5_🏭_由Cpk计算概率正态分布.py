@@ -98,7 +98,11 @@ except ZeroDivisionError:
     c1, c2, c3 = st.columns([1, 5, 5])
     with c2:
         st.write(':red[请检查Cpk参数是否填写正确!]')
-
+except ValueError:
+    c1, c2, c3 = st.columns([1, 5, 5])
+    with c2:
+        st.write(':red[请检查规格上下限是否填写正确!]')
+        
 # 编辑button - Final计算
 st.markdown(
     '''
