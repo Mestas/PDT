@@ -94,7 +94,7 @@ if btn is True:
         st.write("### 👈 请在左侧边栏点击想要使用的工具 ###")
 
         # 将使用者保存到txt文件中
-        fp_save = '/users/网站使用者.txt'
+        fp_save = 'users/网站使用者.txt'
         mode = 'a'
         date = time.strftime("%a %b %d %H:%M:%S %Y", time.localtime())
         with open(fp_save, mode) as f:
