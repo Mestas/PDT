@@ -51,7 +51,7 @@ with bz_3:
 
 with bz_2:
     st.write('  ')
-    st.write('输入计算数据的step精度')
+    st.write('输入生成数据的step精度')
 with bz_3:
     step = st.number_input(label='step', label_visibility='collapsed', format='%f', key=5)
 
