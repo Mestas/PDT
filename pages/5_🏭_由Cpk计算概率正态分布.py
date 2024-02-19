@@ -77,10 +77,10 @@ try:
             B = np.zeros((layer, 2))
 
             for i in range(layer + 1):
-                A[i, 0] = (i - 0.5) * step - T / 2 + (usl + lsl) / 2
+                A[i, 0] = (i - 0.5) * step - T / 2 + sl
                 A[i, 1] = norm.pdf(A[i, 0], sl, stedv)
             for i in range(layer):
-                B[i, 0] = i * step - T / 2 + (usl + lsl) / 2
+                B[i, 0] = i * step - T / 2 + sl
                 B[i, 1] = (A[i + 1, 1] + A[i, 1]) * (A[i + 1, 0] - A[i, 0]) / 2
             s = round(sum(B[:, 1]), 9)
             
