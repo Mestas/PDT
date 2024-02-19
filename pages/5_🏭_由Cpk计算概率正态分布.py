@@ -24,7 +24,7 @@ with col2:
 # # # 设置步骤1
 st.write("<h6>请输入Cpk相关数据</h6>", unsafe_allow_html=True)
 
-bz_1, bz_2, bz_3, bz_4 = st.columns([1, 4, 3, 12])
+bz_1, bz_2, bz_3, bz_4 = st.columns([1, 6, 3, 10])
 with bz_2:
     st.write('  ')
     st.write('输入规格下限')
