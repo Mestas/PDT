@@ -85,13 +85,13 @@ with bz2_2:
         By0 = 0.080
 
 with bz2_12:
-    Rx0 = st.number_input(label='**Rx**', value=Rx0, format='%f', key='Rx0')
-    Gx0 = st.number_input(label='**Gx**', value=Gx0, format='%f', key='Gx0')
-    Bx0 = st.number_input(label='**Bx**', value=Bx0, format='%f', key='Bx0')
+    Rx0 = st.number_input(label='**Rx**', value=Rx0, disabled=True, format='%f', key='Rx0')
+    Gx0 = st.number_input(label='**Gx**', value=Gx0, disabled=True, format='%f', key='Gx0')
+    Bx0 = st.number_input(label='**Bx**', value=Bx0, disabled=True, format='%f', key='Bx0')
 with bz2_13:
-    Ry0 = st.number_input(label='**Ry**', value=Ry0, format='%f', key='Ry0')
-    Gy0 = st.number_input(label='**Gy**', value=Gy0, format='%f', key='Gy0')
-    By0 = st.number_input(label='**By**', value=By0, format='%f', key='By0')
+    Ry0 = st.number_input(label='**Ry**', value=Ry0, disabled=True, format='%f', key='Ry0')
+    Gy0 = st.number_input(label='**Gy**', value=Gy0, disabled=True, format='%f', key='Gy0')
+    By0 = st.number_input(label='**By**', value=By0, disabled=True, format='%f', key='By0')
 
 # # # 设置步骤3
 col5, col6 = st.columns([1, 2])
