@@ -853,7 +853,7 @@ st.markdown(
     {
     background-color: rgb(220, 240, 220);
     }
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi8 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi5 > div > div > div > div:nth-child(9) > div:nth-child(6) > div > div > div > div > div > div > div > div
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi8 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi5 > div > div > div > div:nth-child(9) > div:nth-child(8) > div > div > div > div > div > div
     {
     background-color: rgb(220, 240, 220);
     }
