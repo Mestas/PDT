@@ -53,7 +53,7 @@ def get_nk_list():
         文件名列表
     """
     nk_list = []  # 存储文件名的列表
-    nk_dirs = "D:\\python_work\\project\\1_PDT\\source\\material\\"  # 指定 nk 文件所在的目录
+    nk_dirs = "source/material/"  # 指定 nk 文件所在的目录
     files = os.listdir(nk_dirs)  # 列出目录中的所有文件和子目录
     nk_files = [f for f in files if os.path.isfile(os.path.join(nk_dirs, f))]  # 仅筛选出真正的文件
 
@@ -67,7 +67,7 @@ def get_nk_list():
         st.error('在 ' + nk_dirs + ' 中未找到 nk 数据')
         files_data = glob.glob("data")
         st.error('data 目录下的文件 =', files_data)
-        files_nk = glob.glob("D:\\python_work\\project\\1_PDT\\source\\material\\")
+        files_nk = glob.glob("source/material/")
         st.error('material 目录下的文件 =', files_nk)
 
     nk_list.sort()  # 对文件名列表进行排序
@@ -105,7 +105,7 @@ def make_nk_fn(nk_name_list=[]):
     nk_fn_list : list of fn(wl)
         各层的光学定数函数列表.
     """
-    nk_path = "D:\\python_work\\project\\1_PDT\\source\\material\\"  # nk 文件的路径
+    nk_path = "source/material/"  # nk 文件的路径
     nk_fn_list = []
 
     # 遍历光学定数名列表
@@ -463,7 +463,7 @@ with bz3_2:
 if cal_button_clicked_ref:
     start_time = time.time()
     # 将使用者保存到txt文件中
-    fp_save = 'D:\\python_work\\project\\1_PDT\\users\\网站使用者.txt'
+    fp_save = 'users/网站使用者.txt'
     mode = 'a'
     with open(fp_save, mode) as f:
         f.write('使用了TFM工具-反射部分' + '\n')
@@ -567,7 +567,7 @@ if cal_button_clicked_ref:
             spectrum_R.wavelengths = wl_ar
 
             # 加载CMF，并进行波长step筛选
-            fp_CMF = 'D:\\python_work\\project\\1_PDT\\source\\CMF.txt'
+            fp_CMF = 'source/CMF.txt'
             CMF0 = pd.read_csv(fp_CMF, header=None, sep="\t", skip_blank_lines=True)
             CMF1 = np.float64(CMF0)
             wavelengths_cmfs = np.arange(380, 780 + 1, 1)
@@ -630,7 +630,7 @@ if cal_button_clicked_ref:
 if cal_button_clicked_trans:
     start_time = time.time()
     # 将使用者保存到txt文件中
-    fp_save = 'D:\\python_work\\project\\1_PDT\\users\\网站使用者.txt'
+    fp_save = 'users/网站使用者.txt'
     mode = 'a'
     with open(fp_save, mode) as f:
         f.write('使用了TFM工具-透射部分' + '\n')
@@ -729,7 +729,7 @@ if cal_button_clicked_trans:
             spectrum_T.wavelengths = wl_ar
 
             # 加载CMF，并进行波长step筛选
-            fp_CMF = 'D:\\python_work\\project\\1_PDT\\source\\CMF.txt'
+            fp_CMF = 'source/CMF.txt'
             CMF0 = pd.read_csv(fp_CMF, header=None, sep="\t", skip_blank_lines=True)
             CMF1 = np.float64(CMF0)
             wavelengths_cmfs = np.arange(380, 780 + 1, 1)
