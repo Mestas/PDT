@@ -1016,32 +1016,103 @@ def main_code(trans2, l, m, start1, end1, start2, end2, start3, end3, trans_step
                     if start3[i] <= T3 <= end3[i]:
                     # 如果key在该区间内，则将该区间的value累加
                         Final_lum_step[i, 1] += V3
+    
+    elif l == 16:
+        seq1 = trans2[0:m[0, 0], 0]
+        val1 = trans2[0:m[0, 0], 1]
+        seq2 = trans2[0:m[1, 0], 2]
+        val2 = trans2[0:m[1, 0], 3]
+        seq3 = trans2[0:m[2, 0], 4]
+        val3 = trans2[0:m[2, 0], 5]
+        seq4 = trans2[0:m[3, 0], 6]
+        val4 = trans2[0:m[3, 0], 7]
+        seq5 = trans2[0:m[4, 0], 8]
+        val5 = trans2[0:m[4, 0], 9]
+        seq6 = trans2[0:m[5, 0], 10]
+        val6 = trans2[0:m[5, 0], 11]
+        seq7 = trans2[0:m[6, 0], 12]
+        val7 = trans2[0:m[6, 0], 13]
+        seq8 = trans2[0:m[7, 0], 14]
+        val8 = trans2[0:m[7, 0], 15]
+        seq9 = trans2[0:m[8, 0], 16]
+        val9 = trans2[0:m[8, 0], 17]
+        seq10 = trans2[0:m[9, 0], 18]
+        val10 = trans2[0:m[9, 0], 19]
+        seq11 = trans2[0:m[10, 0], 20]
+        val11 = trans2[0:m[10, 0], 21]
+        seq12 = trans2[0:m[11, 0], 22]
+        val12 = trans2[0:m[11, 0], 23]
+        seq13 = trans2[0:m[12, 0], 24]
+        val13 = trans2[0:m[12, 0], 25]
+        seq14 = trans2[0:m[13, 0], 26]
+        val14 = trans2[0:m[13, 0], 27]
+        seq15 = trans2[0:m[14, 0], 28]
+        val15 = trans2[0:m[14, 0], 29]
+        seq16 = trans2[0:m[15, 0], 28]
+        val16 = trans2[0:m[15, 0], 29]
 
-# main_code(trans2, l, m, start1, end1, start2, end2, start3, end3, trans_step, Final_trans_step, Final_lum_step)
+        # 创建dict文件
+        dict1 = dict(zip(seq1, val1))
+        dict2 = dict(zip(seq2, val2))
+        dict3 = dict(zip(seq3, val3))
+        dict4 = dict(zip(seq4, val4))
+        dict5 = dict(zip(seq5, val5))
+        dict6 = dict(zip(seq6, val6))
+        dict7 = dict(zip(seq7, val7))
+        dict8 = dict(zip(seq8, val8))
+        dict9 = dict(zip(seq9, val9))
+        dict10 = dict(zip(seq10, val10))
+        dict11 = dict(zip(seq11, val11))
+        dict12 = dict(zip(seq12, val12))
+        dict13 = dict(zip(seq13, val13))
+        dict14 = dict(zip(seq14, val14))
+        dict15 = dict(zip(seq15, val15))
+        dict16 = dict(zip(seq15, val15))
 
-# TT = pd.DataFrame(Final_trans_step, columns=['透过率比例', '概率分布'])
-# LL = pd.DataFrame(Final_lum_step, columns=['亮度比例', '概率分布'])
 
-# print(TT)
-# print(LL)
-# data1 = pd.DataFrame(TT)
-# path1 = 'D:/Samui_Final_Trans_step.csv'
-# data1.index = np.arange(1, data1.shape[0] + 1)
-# data1.columns = np.arange(1, data1.shape[1] + 1)
-# data1.to_csv(path1)
+        # 将前8个dict的key和value进行交叉相乘，并进行判断
+        for key1, value1 in dict1.items():
+            for key2, value2 in dict2.items():
+                for key3, value3 in dict3.items():
+                    for key4, value4 in dict4.items():
+                        for key5, value5 in dict5.items():
+                            for key6, value6 in dict6.items():
+                                for key7, value7 in dict7.items():
+                                    for key8, value8 in dict8.items():
+                                        T1 = key1 * key2 * key3 * key4 * key5 * key6 * key7 * key8
+                                        V1 = value1 * value2 * value3 * value4 * value5 * value6 * value7 * value8
+                                        for i in range(stp1):
+                                            if start1[i] <= T1 <= end1[i]:
+                                            # 如果key在该区间内，则将该区间的value累加
+                                                trans_step[i, 1] += V1
 
-# data2 = pd.DataFrame(LL)
-# path2 = 'D:/Samui_Final_Lum_step.csv'
-# data2.index = np.arange(1, data2.shape[0] + 1)
-# data2.columns = np.arange(1, data2.shape[1] + 1)
-# data2.to_csv(path2)
+        dict1_8 = dict(zip(trans_step[:, 0], trans_step[:, 1]))
 
-# end_time = time.time()
-# # 计算执行时间
-# run_time = round(end_time - start_time, 2)
-# print("代码执行时间为：{}秒".format(run_time))
-# # print(T_step)
+        for key1_8, value1_8 in dict1_8.items():
+            for key9, value9 in dict9.items():
+                for key10, value10 in dict10.items():
+                    for key11, value11 in dict11.items():
+                        for key12, value12 in dict12.items():
+                            for key13, value13 in dict13.items():
+                                    for key14, value14 in dict14.items():
+                                        for key15, value15 in dict15.items():
+                                            T2 = key1_8 * key9 * key10 * key11 * key12 * key13 * key14 * key15
+                                            V2 = value1_8 * value9 * value10 * value11 * value12 * value13 * value14 * value15
+                                            for i in range(stp2):
+                                                if start2[i] <= T2 <= end2[i]:
+                                                # 如果key在该区间内，则将该区间的value累加
+                                                    Final_trans_step[i, 1] += V2
 
+        dict_trans = dict(zip(Final_trans_step[:, 0], Final_trans_step[:, 1]))
+
+        for key_trans, value_trans in dict_trans.items():
+            for key_blu, value_blu in dict16.items():
+                T3 = key_trans * key_blu
+                V3 = value_trans * value_blu
+                for i in range(stp3):
+                    if start3[i] <= T3 <= end3[i]:
+                    # 如果key在该区间内，则将该区间的value累加
+                        Final_lum_step[i, 1] += V3
 
 try:
     # # # 设置步骤2
