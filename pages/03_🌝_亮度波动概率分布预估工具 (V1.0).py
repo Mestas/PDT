@@ -57,7 +57,7 @@ with bz2_2:
     # vac_trans = 0.01  #输入panel透过率step精度
     # vac_lum = 200  #输入BLU亮度step精度
     p = int(math.floor((l - 1) / 2) + 1)  #输入前几个因子进行乘积
-    print(p)
+    # print(p)
 
     # 遍历前p个因子中最小值进行乘积得到前p列的trans最小值min1，同理获得前p列的trans最大值max1
     min1 = 1
@@ -71,7 +71,7 @@ with bz2_2:
     max1 = math.ceil(max1 * 100) / 100
 
     stp1 = int(math.ceil((max1 - min1) / vac_trans) + 1)
-    print(min1, max1, stp1)
+    # print(min1, max1, stp1)
 
     trans_step = np.zeros((stp1, 2))
 
@@ -95,7 +95,7 @@ with bz2_2:
     max2 = math.ceil(max2 * 100) / 100
 
     stp2 = int(math.ceil((max2 - min2) / vac_trans) + 1)
-    print(min2, max2, stp2)
+    # print(min2, max2, stp2)
 
     Final_trans_step = np.zeros((stp2, 2))
     for i in range(stp2):
@@ -118,7 +118,7 @@ with bz2_2:
     min3 = math.floor(min3 / 100) * 100
     max3 = math.ceil(max3 / 100) * 100
     stp3 = int(math.ceil((max3 - min3) / vac_lum) + 1)
-    print(min3, max3, stp3)
+    # print(min3, max3, stp3)
 
     Final_lum_step = np.zeros((stp3, 2))
     for i in range(stp3):
