@@ -110,7 +110,7 @@ if btn is True:
 st.markdown(
     '''
     <style>
-    button {
+    baseButton-secondary {
         background-color: rgb(220, 240, 220) !important;
         height: 70px !important;
         width: 150px !important;
