@@ -31,8 +31,6 @@ l = 0
 with bz1_2:
     # 创建文件上传按钮
     fp_trans = st.file_uploader("请上传TXT文件，请确保最后一组影响因子为BLU亮度分布！", type=['txt'], help="请选择TXT文件进行上传", key='fp_trans')
-    # # fp_trans = 'D:\\samui LCM brightness (15).txt'
-    # fp_trans = 'D:\\test9.txt'
     if fp_trans is not None:
         trans = pd.read_csv(fp_trans, header=None, sep="\t", skip_blank_lines=True)  # 使用pandas来读取txt，sep="t"为逗号分隔符
         trans1 = round(trans, 6)  # 用于计算行数的dataframe series
@@ -1048,8 +1046,8 @@ def main_code(trans2, l, m, start1, end1, start2, end2, start3, end3, trans_step
         val14 = trans2[0:m[13, 0], 27]
         seq15 = trans2[0:m[14, 0], 28]
         val15 = trans2[0:m[14, 0], 29]
-        seq16 = trans2[0:m[15, 0], 28]
-        val16 = trans2[0:m[15, 0], 29]
+        seq16 = trans2[0:m[15, 0], 30]
+        val16 = trans2[0:m[15, 0], 31]
 
         # 创建dict文件
         dict1 = dict(zip(seq1, val1))
@@ -1067,7 +1065,7 @@ def main_code(trans2, l, m, start1, end1, start2, end2, start3, end3, trans_step
         dict13 = dict(zip(seq13, val13))
         dict14 = dict(zip(seq14, val14))
         dict15 = dict(zip(seq15, val15))
-        dict16 = dict(zip(seq15, val15))
+        dict16 = dict(zip(seq16, val16))
 
 
         # 将前8个dict的key和value进行交叉相乘，并进行判断
