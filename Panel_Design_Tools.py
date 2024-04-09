@@ -110,10 +110,13 @@ if btn is True:
 st.markdown(
     '''
     <style>
-    btn {
+    button {
         background-color: rgb(220, 240, 220) !important;
         height: 70px !important;
         width: 150px !important;
+    }
+    input {
+        background-color: rgb(220, 240, 220) !important;
     }
     </style>
     ''',
