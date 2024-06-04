@@ -996,13 +996,13 @@ def main_code(trans2, l, m, start1, end1, start2, end2, start3, end3, trans_step
                     for key11, value11 in dict11.items():
                         for key12, value12 in dict12.items():
                             for key13, value13 in dict13.items():
-                                    for key14, value14 in dict14.items():
-                                        T2 = key1_8 * key9 * key10 * key11 * key12 * key13 * key14
-                                        V2 = value1_8 * value9 * value10 * value11 * value12 * value13 * value14
-                                        for i in range(stp2):
-                                            if start2[i] <= T2 <= end2[i]:
-                                            # 如果key在该区间内，则将该区间的value累加
-                                                Final_trans_step[i, 1] += V2
+                                for key14, value14 in dict14.items():
+                                    T2 = key1_8 * key9 * key10 * key11 * key12 * key13 * key14
+                                    V2 = value1_8 * value9 * value10 * value11 * value12 * value13 * value14
+                                    for i in range(stp2):
+                                        if start2[i] <= T2 <= end2[i]:
+                                        # 如果key在该区间内，则将该区间的value累加
+                                            Final_trans_step[i, 1] += V2
 
         dict_trans = dict(zip(Final_trans_step[:, 0], Final_trans_step[:, 1]))
 
@@ -1092,14 +1092,14 @@ def main_code(trans2, l, m, start1, end1, start2, end2, start3, end3, trans_step
                     for key11, value11 in dict11.items():
                         for key12, value12 in dict12.items():
                             for key13, value13 in dict13.items():
-                                    for key14, value14 in dict14.items():
-                                        for key15, value15 in dict15.items():
-                                            T2 = key1_8 * key9 * key10 * key11 * key12 * key13 * key14 * key15
-                                            V2 = value1_8 * value9 * value10 * value11 * value12 * value13 * value14 * value15
-                                            for i in range(stp2):
-                                                if start2[i] <= T2 <= end2[i]:
-                                                # 如果key在该区间内，则将该区间的value累加
-                                                    Final_trans_step[i, 1] += V2
+                                for key14, value14 in dict14.items():
+                                    for key15, value15 in dict15.items():
+                                        T2 = key1_8 * key9 * key10 * key11 * key12 * key13 * key14 * key15
+                                        V2 = value1_8 * value9 * value10 * value11 * value12 * value13 * value14 * value15
+                                        for i in range(stp2):
+                                            if start2[i] <= T2 <= end2[i]:
+                                            # 如果key在该区间内，则将该区间的value累加
+                                                Final_trans_step[i, 1] += V2
 
         dict_trans = dict(zip(Final_trans_step[:, 0], Final_trans_step[:, 1]))
 
