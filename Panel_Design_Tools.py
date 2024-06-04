@@ -42,7 +42,7 @@ st.sidebar.write("## 👆请在上方点击所要使用的工具 ##")
 st.markdown(
     '''
     <style>
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.st-emotion-cache-vk3wp9.eczjsme11
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.st-emotion-cache-1gv3huu.eczjsme16
     {
     visibility: hidden !important;
     }
@@ -82,7 +82,7 @@ if btn is True:
         st.markdown(
             '''
             <style>
-            #root > div:nth-child(1) > div.withScreencast > div > div > div > section.st-emotion-cache-vk3wp9.eczjsme11
+            #root > div:nth-child(1) > div.withScreencast > div > div > div > section.st-emotion-cache-1gv3huu.eczjsme16
             {
             visibility: visible;
             }
@@ -110,7 +110,7 @@ if btn is True:
 st.markdown(
     '''
     <style>
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi8 > div.block-container.st-emotion-cache-gh2jqd.ea3mdgi5 > div > div > div > div:nth-child(6) > div.st-emotion-cache-ndxjbj.e1f1d6gn3 > div > div > div > div:nth-child(2) > div > button
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-bm2z3a.ea3mdgi8 > div.block-container.st-emotion-cache-13ln4jf.ea3mdgi5 > div > div > div > div:nth-child(6) > div.st-emotion-cache-ndxjbj.e1f1d6gn3 > div > div > div > div:nth-child(2) > div > button
     {
     background-color: rgb(220, 240, 220) !important;
     height: 70px !important;
