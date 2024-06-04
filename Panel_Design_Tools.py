@@ -44,7 +44,7 @@ st.markdown(
     <style>
     #root > div:nth-child(1) > div.withScreencast > div > div > div > section.st-emotion-cache-vk3wp9.eczjsme11
     {
-    visibility: hidden;
+    visibility: hidden !important;
     }
     </style>
     ''',
@@ -71,7 +71,7 @@ if btn is True:
             <style>
             input
             {
-            visibility: collapsed;
+            visibility: collapsed !important;
             background-color: rgb(220, 240, 220);
             }
             </style>
