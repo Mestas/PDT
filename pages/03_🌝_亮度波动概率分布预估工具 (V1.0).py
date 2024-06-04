@@ -172,7 +172,7 @@ def main_code(trans2, l, m, start1, end1, start2, end2, start3, end3, trans_step
                         for key4, value4 in dict4.items():
                             T1 = key1 * key2 * key3 * key4
                             V1 = value1 * value2 * value3 * value4
-                            for i in range(stp1):
+                            for i in range(stp2):
                                 if start2[i] <= T1 <= end2[i]:
                                 # 如果key在该区间内，则将该区间的value累加
                                     Final_trans_step[i, 1] += V1
@@ -230,7 +230,7 @@ def main_code(trans2, l, m, start1, end1, start2, end2, start3, end3, trans_step
                         for key5, value5 in dict5.items():
                             T1 = key1 * key2 * key3 * key4 * key5
                             V1 = value1 * value2 * value3 * value4 * value5
-                            for i in range(stp1):
+                            for i in range(stp2):
                                 if start2[i] <= T1 <= end2[i]:
                                 # 如果key在该区间内，则将该区间的value累加
                                     Final_trans_step[i, 1] += V1
@@ -295,7 +295,7 @@ def main_code(trans2, l, m, start1, end1, start2, end2, start3, end3, trans_step
                             for key6, value6 in dict6.items():
                                 T1 = key1 * key2 * key3 * key4 * key5 * key6
                                 V1 = value1 * value2 * value3 * value4 * value5 * value6
-                                for i in range(stp1):
+                                for i in range(stp2):
                                     if start2[i] <= T1 <= end2[i]:
                                     # 如果key在该区间内，则将该区间的value累加
                                         Final_trans_step[i, 1] += V1
