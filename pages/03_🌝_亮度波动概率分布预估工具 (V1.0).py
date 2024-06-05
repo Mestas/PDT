@@ -133,7 +133,7 @@ start_time = time.time()
 
 @njit # (nopython=True)
 
-def main_code(trans2, l, m, start1, end1, start2, end2, start3, end3, trans_step, Final_trans_step, Final_lum_step):
+def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3, stp3, trans_step, Final_trans_step, Final_lum_step):
     if l == 5:
         # seq1 = trans2[0:int(m[0, 0]), 0]
         # val1 = trans2[0:int(m[0, 0]), 1]
@@ -1126,7 +1126,7 @@ try:
             with open(fp_save, mode) as f:
                 f.write('使用了透过率波动1step工具' + '\n')
 
-            main_code(trans2, l, m, start1, end1, start2, end2, start3, end3, trans_step, Final_trans_step, Final_lum_step)
+            main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3, stp3, trans_step, Final_trans_step, Final_lum_step)
             bz3_3, bz3_4, bz3_5, bz3_6 = st.columns([1, 5, 5, 8])
             with bz3_4:
                 st.write('透过率概率分布', Final_trans_step)
