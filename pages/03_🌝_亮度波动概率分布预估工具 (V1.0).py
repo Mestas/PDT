@@ -11,14 +11,14 @@ st.set_page_config(
 )
 
 # # # 侧边栏设置
-st.sidebar.write("<h4 style='color: blue;'>本工具可以计算影响因子为5~15个的亮度波动概率分布</h4>", unsafe_allow_html=True)
+st.sidebar.write("<h4 style='color: blue;'>本工具可以计算影响因子为5~16个的亮度波动概率分布</h4>", unsafe_allow_html=True)
 
 # # # 工具名称、版本号
 st.write("# 亮度波动概率计算工具 #")
 col1, col2 = st.columns([2, 1])
 with col2:
-    st.write("<h5 style='color: blue;'>版本号：V1.0</h5>", unsafe_allow_html=True)
-    st.write("<h5 style='color: blue;'>发布时间：2024/03/20</h5>", unsafe_allow_html=True)
+    st.write("<h5 style='color: blue;'>版本号：V1.1</h5>", unsafe_allow_html=True)
+    st.write("<h5 style='color: blue;'>发布时间：2024/06/05</h5>", unsafe_allow_html=True)
 # # # 设置步骤1
 col1, col2 = st.columns([2, 1])
 bz1_1, bz1_2 = st.columns([1, 20])
