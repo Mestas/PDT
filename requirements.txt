@@ -1,5 +1,5 @@
 requests
-streamlit 1.29.0
+streamlit==1.29.0
 pandas
 numpy
 matplotlib
