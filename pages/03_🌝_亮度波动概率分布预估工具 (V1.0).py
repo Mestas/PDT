@@ -459,8 +459,8 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
             for key6, value6 in dict6.items():
                 for key7, value7 in dict7.items():
                     for key8, value8 in dict8.items():
-                        T2 = key1_5 * key5 * key6 * key7 * key8
-                        V2 = value1_5 * value5 * value6 * value7 * value8
+                        T2 = key1_5 * key6 * key7 * key8
+                        V2 = value1_5 * value6 * value7 * value8
                         for i in range(stp2):
                             if start2[i] <= T2 <= end2[i]:
                             # 如果key在该区间内，则将该区间的value累加
