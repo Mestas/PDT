@@ -167,30 +167,21 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
             for key2, value2 in dict2.items():
                 T1 = round(key1 * key2, 4)
                 V1 = value1 * value2
-                print(T1)
-                print(V1)
                 for i in range(stp2):
                     if start2[i] < T1 <= end2[i]:
                     # 如果key在该区间内，则将该区间的value累加
                         Final_trans_step[i, 1] += V1
-        
-        dict_trans = dict(zip(Final_trans_step[:, 0], Final_trans_step[:, 1]))
-        # print(start2)
-        # print(end2)
-        # print(Final_trans_step)
-        # print(min1, max1, stp1)
-        # print(min2, max2, stp2)
-        # print(dict_trans)
-        print(sum(Final_trans_step[:, 1]))
 
-        # for key_trans, value_trans in dict_trans.items():
-        #     for key_blu, value_blu in dict3.items():
-        #         T3 = key_trans * key_blu
-        #         V3 = value_trans * value_blu
-        #         for i in range(stp3):
-        #             if start3[i] <= T3 <= end3[i]:
-        #             # 如果key在该区间内，则将该区间的value累加
-        #                 Final_lum_step[i, 1] += V3
+        dict_trans = dict(zip(Final_trans_step[:, 0], Final_trans_step[:, 1]))
+
+        for key_trans, value_trans in dict_trans.items():
+            for key_blu, value_blu in dict3.items():
+                T3 = key_trans * key_blu
+                V3 = value_trans * value_blu
+                for i in range(stp3):
+                    if start3[i] < T3 <= end3[i]:
+                    # 如果key在该区间内，则将该区间的value累加
+                        Final_lum_step[i, 1] += V3
     elif l == 5:
         seq1 = trans2[0:m[0, 0], 0]
         val1 = trans2[0:m[0, 0], 1]
@@ -217,12 +208,16 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
                     for key4, value4 in dict4.items():
                         T1 = round(key1 * key2 * key3 * key4, 4)
                         V1 = value1 * value2 * value3 * value4
+                        # print(T1)
+                        # print(V1)
                         for i in range(stp2):
                             if start2[i] < T1 <= end2[i]:
                             # 如果key在该区间内，则将该区间的value累加
                                 Final_trans_step[i, 1] += V1
         
         dict_trans = dict(zip(Final_trans_step[:, 0], Final_trans_step[:, 1]))
+        
+        # print(Final_trans_step)
 
         for key_trans, value_trans in dict_trans.items():
             for key_blu, value_blu in dict5.items():
@@ -234,19 +229,6 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
                         Final_lum_step[i, 1] += V3
     
     elif l == 6:
-        # seq1 = trans2[0:int(m[0, 0]), 0]
-        # val1 = trans2[0:int(m[0, 0]), 1]
-        # seq2 = trans2[0:int(m[1, 0]), 2]
-        # val2 = trans2[0:int(m[1, 0]), 3]
-        # seq3 = trans2[0:int(m[2, 0]), 4]
-        # val3 = trans2[0:int(m[2, 0]), 5]
-        # seq4 = trans2[0:int(m[3, 0]), 6]
-        # val4 = trans2[0:int(m[3, 0]), 7]
-        # seq5 = trans2[0:int(m[4, 0]), 8]
-        # val5 = trans2[0:int(m[4, 0]), 9]
-        # seq6 = trans2[0:int(m[5, 0]), 10]
-        # val6 = trans2[0:int(m[5, 0]), 11]
-
         seq1 = trans2[0:m[0, 0], 0]
         val1 = trans2[0:m[0, 0], 1]
         seq2 = trans2[0:m[1, 0], 2]
@@ -464,8 +446,8 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
             for key6, value6 in dict6.items():
                 for key7, value7 in dict7.items():
                     for key8, value8 in dict8.items():
-                        T2 = round(key1_5 * key5 * key6 * key7 * key8, 4)
-                        V2 = value1_5 * value5 * value6 * value7 * value8
+                        T2 = round(key1_5 * key6 * key7 * key8, 4)
+                        V2 = value1_5 * value6 * value7 * value8
                         for i in range(stp2):
                             if start2[i] < T2 <= end2[i]:
                             # 如果key在该区间内，则将该区间的value累加
@@ -1069,33 +1051,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
                 for i in range(stp3):
                     if start3[i] < T3 <= end3[i]:
                     # 如果key在该区间内，则将该区间的value累加
-                        Final_lum_step[i, 1] += V3
-                        
-# main_code(trans2, l, m, start1, end1, start2, end2, start3, end3, trans_step, Final_trans_step, Final_lum_step)
-
-# TT = pd.DataFrame(Final_trans_step, columns=['透过率比例', '概率分布'])
-# LL = pd.DataFrame(Final_lum_step, columns=['亮度比例', '概率分布'])
-
-# print(TT)
-# print(LL)
-# data1 = pd.DataFrame(TT)
-# path1 = 'D:/Samui_Final_Trans_step.csv'
-# data1.index = np.arange(1, data1.shape[0] + 1)
-# data1.columns = np.arange(1, data1.shape[1] + 1)
-# data1.to_csv(path1)
-
-# data2 = pd.DataFrame(LL)
-# path2 = 'D:/Samui_Final_Lum_step.csv'
-# data2.index = np.arange(1, data2.shape[0] + 1)
-# data2.columns = np.arange(1, data2.shape[1] + 1)
-# data2.to_csv(path2)
-
-# end_time = time.time()
-# # 计算执行时间
-# run_time = round(end_time - start_time, 2)
-# print("代码执行时间为：{}秒".format(run_time))
-# # print(T_step)
-
+                        Final_lum_step[i, 1] += V3                    
 
 try:
     # # # 设置步骤2
