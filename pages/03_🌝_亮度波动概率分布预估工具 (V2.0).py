@@ -855,8 +855,6 @@ def main_code():
         v14 = trans2[0:int(m[13, 0]), 27]
         f15 = trans2[0:int(m[14, 0]), 28]
         v15 = trans2[0:int(m[14, 0]), 29]
-        f16 = trans2[0:int(m[15, 0]), 30]
-        v16 = trans2[0:int(m[15, 0]), 31]
 
         # 创建trans itertools迭代列表1
         F1 = [a * b * c * d * e for a, b, c, d, e in itertools.product(f1, f2, f3, f4, f5)]
