@@ -79,8 +79,8 @@ with bz2_2:
         start1 = np.zeros((stp1, 1))
         end1 = np.zeros((stp1, 1))
         for i in range(stp1):
-            start1[i] = round(trans_step[i, 0] - vac_trans / 2, 4)
-            end1[i] = round(trans_step[i, 0] + vac_trans / 2, 4)
+            start1[i] = trans_step[i, 0] - vac_trans / 2
+            end1[i] = trans_step[i, 0] + vac_trans / 2
 
         # 遍历所有trans因子中最小值进行乘积得到trans最小值min2，同理获得trans最大值max2
         min2 = 1
@@ -102,8 +102,8 @@ with bz2_2:
         start2 = np.zeros((stp2, 1))
         end2 = np.zeros((stp2, 1))
         for i in range(stp2):
-            start2[i] = round(Final_trans_step[i, 0] - vac_trans / 2, 4)
-            end2[i] = round(Final_trans_step[i, 0] + vac_trans / 2, 4)
+            start2[i] = Final_trans_step[i, 0] - vac_trans / 2
+            end2[i] = Final_trans_step[i, 0] + vac_trans / 2
 
         # 遍历所有lum因子中最小值进行乘积得到lum最小值min3，同理获得lum最大值max3
         min3 = 1
@@ -126,7 +126,7 @@ with bz2_2:
         for i in range(stp3):
             start3[i] = Final_lum_step[i, 0] - vac_lum / 2
             end3[i] = Final_lum_step[i, 0] + vac_lum / 2
-    else:
+    elif 10 < l <= 13:
         if divmod((l - 1), 3)[1] == 0:
             p = math.ceil((l - 1) / 3)
             q = p
@@ -161,8 +161,8 @@ with bz2_2:
         start1 = np.zeros((stp1, 1))
         end1 = np.zeros((stp1, 1))
         for i in range(stp1):
-            start1[i] = round(trans_step1[i, 0] - vac_trans / 2, 4)
-            end1[i] = round(trans_step1[i, 0] + vac_trans / 2, 4)
+            start1[i] = trans_step1[i, 0] - vac_trans / 2
+            end1[i] = trans_step1[i, 0] + vac_trans / 2
 
         # 遍历前p+q个因子中最小值进行乘积得到trans最小值min2，同理获得trans最大值max2
         min2 = 1
@@ -183,8 +183,8 @@ with bz2_2:
         start2 = np.zeros((stp2, 1))
         end2 = np.zeros((stp2, 1))
         for i in range(stp2):
-            start2[i] = round(trans_step2[i, 0] - vac_trans / 2, 4)
-            end2[i] = round(trans_step2[i, 0] + vac_trans / 2, 4)
+            start2[i] = trans_step2[i, 0] - vac_trans / 2
+            end2[i] = trans_step2[i, 0] + vac_trans / 2
 
         # 遍历所有trans因子中最小值进行乘积得到trans最小值min3，同理获得trans最大值max3
         min3 = 1
@@ -205,10 +205,10 @@ with bz2_2:
         start3 = np.zeros((stp3, 1))
         end3 = np.zeros((stp3, 1))
         for i in range(stp3):
-            start3[i] = round(Final_trans_step[i, 0] - vac_trans / 2, 4)
-            end3[i] = round(Final_trans_step[i, 0] + vac_trans / 2, 4)
+            start3[i] = Final_trans_step[i, 0] - vac_trans / 2
+            end3[i] = Final_trans_step[i, 0] + vac_trans / 2
 
-         # 遍历所有lum因子中最小值进行乘积得到lum最小值min3，同理获得lum最大值max3
+        # 遍历所有lum因子中最小值进行乘积得到lum最小值min3，同理获得lum最大值max3
         min4 = 1
         max4 = 1
         for i in range(l):
@@ -229,6 +229,132 @@ with bz2_2:
         for i in range(stp4):
             start4[i] = Final_lum_step[i, 0] - vac_lum / 2
             end4[i] = Final_lum_step[i, 0] + vac_lum / 2
+    else:
+        if l == 14:
+            p = 4
+            q = 3
+            r = 3
+            s = 3
+        elif l == 15:
+            p = 4
+            q = 4
+            r = 3
+            s = 3
+        elif l == 16:
+            p = 4
+            q = 4
+            r = 4
+            s = 3
+
+        # 遍历前p个因子中最小值进行乘积得到前p列的trans最小值min1，同理获得前p列的trans最大值max1
+        min1 = 1
+        max1 = 1
+        for i in range(p):
+            min_trans1 = min(trans2[0:int(m[i, 0]), i * 2])
+            max_trans1 = max(trans2[0:int(m[i, 0]), i * 2])
+            min1 *= min_trans1
+            max1 *= max_trans1
+        min1 = math.floor(min1 * 100) / 100
+        max1 = math.ceil(max1 * 100) / 100
+        stp1 = int(round((max1 - min1) / vac_trans + 1))
+
+        trans_step1 = np.zeros((stp1, 2))
+        for i in range(stp1):
+            trans_step1[i, 0] = min1 + i * vac_trans
+
+        start1 = np.zeros((stp1, 1))
+        end1 = np.zeros((stp1, 1))
+        for i in range(stp1):
+            start1[i] = trans_step1[i, 0] - vac_trans / 2
+            end1[i] = trans_step1[i, 0] + vac_trans / 2
+
+        # 遍历前p+q个因子中最小值进行乘积得到trans最小值min2，同理获得trans最大值max2
+        min2 = 1
+        max2 = 1
+        for i in range(p + q):
+            min_trans2 = min(trans2[0:int(m[i, 0]), i * 2])
+            max_trans2 = max(trans2[0:int(m[i, 0]), i * 2])
+            min2 *= min_trans2
+            max2 *= max_trans2
+        min2 = math.floor(min2 * 100) / 100
+        max2 = math.ceil(max2 * 100) / 100
+        stp2 = int(round((max2 - min2) / vac_trans + 1))
+        
+        trans_step2 = np.zeros((stp2, 2))
+        for i in range(stp2):
+            trans_step2[i, 0] = min2 + i * vac_trans
+
+        start2 = np.zeros((stp2, 1))
+        end2 = np.zeros((stp2, 1))
+        for i in range(stp2):
+            start2[i] = trans_step2[i, 0] - vac_trans / 2
+            end2[i] = trans_step2[i, 0] + vac_trans / 2
+
+        # 遍历前p+q+s个因子中最小值进行乘积得到trans最小值min3，同理获得trans最大值max3
+        min3 = 1
+        max3 = 1
+        for i in range(p + q + s):
+            min_trans3 = min(trans2[0:int(m[i, 0]), i * 2])
+            max_trans3 = max(trans2[0:int(m[i, 0]), i * 2])
+            min3 *= min_trans3
+            max3 *= max_trans3
+        min3 = math.floor(min3 * 100) / 100
+        max3 = math.ceil(max3 * 100) / 100
+        stp3 = int(round((max3 - min3) / vac_trans + 1))
+        
+        trans_step3 = np.zeros((stp3, 2))
+        for i in range(stp3):
+            trans_step3[i, 0] = min3 + i * vac_trans
+
+        start3 = np.zeros((stp3, 1))
+        end3 = np.zeros((stp3, 1))
+        for i in range(stp3):
+            start3[i] = trans_step3[i, 0] - vac_trans / 2
+            end3[i] = trans_step3[i, 0] + vac_trans / 2
+
+        # 遍历所有因子中最小值进行乘积得到trans最小值min3，同理获得trans最大值max3
+        min4 = 1
+        max4 = 1
+        for i in range(l - 1):
+            min_trans4 = min(trans2[0:int(m[i, 0]), i * 2])
+            max_trans4 = max(trans2[0:int(m[i, 0]), i * 2])
+            min4 *= min_trans4
+            max4 *= max_trans4
+        min4 = math.floor(min4 * 100) / 100
+        max4 = math.ceil(max4 * 100) / 100
+        stp4 = int(round((max4 - min4) / vac_trans + 1))
+        
+        Final_trans_step = np.zeros((stp4, 2))
+        for i in range(stp4):
+            Final_trans_step[i, 0] = min4 + i * vac_trans
+
+        start4 = np.zeros((stp4, 1))
+        end4 = np.zeros((stp4, 1))
+        for i in range(stp4):
+            start4[i] = Final_trans_step[i, 0] - vac_trans / 2
+            end4[i] = Final_trans_step[i, 0] + vac_trans / 2
+
+        # 遍历所有lum因子中最小值进行乘积得到lum最小值min3，同理获得lum最大值max3
+        min5 = 1
+        max5 = 1
+        for i in range(l):
+            min_trans5 = min(trans2[0:int(m[i, 0]), i * 2])
+            max_trans5 = max(trans2[0:int(m[i, 0]), i * 2])
+            min5 *= min_trans5
+            max5 *= max_trans5
+        min5 = math.floor(min5 / 100) * 100
+        max5 = math.ceil(max5 / 100) * 100
+        stp5 = int(round((max5 - min5) / vac_lum + 1))
+
+        Final_lum_step = np.zeros((stp5, 2))
+        for i in range(stp5):
+            Final_lum_step[i, 0] = min5 + i * vac_lum
+
+        start5 = np.zeros((stp5, 1))
+        end5 = np.zeros((stp5, 1))
+        for i in range(stp5):
+            start5[i] = Final_lum_step[i, 0] - vac_lum / 2
+            end5[i] = Final_lum_step[i, 0] + vac_lum / 2
 
 # 获取代码执行前时间戳
 start_time = time.time()
@@ -781,8 +907,8 @@ def main_code():
         v14 = trans2[0:int(m[13, 0]), 27]
         
         # 创建trans itertools迭代列表1
-        F1 = [a * b * c * d * e for a, b, c, d, e in itertools.product(f1, f2, f3, f4, f5)]
-        V1 = [a * b * c * d * e for a, b, c, d, e in itertools.product(v1, v2, v3, v4, v5)]
+        F1 = [a * b * c * d for a, b, c, d in itertools.product(f1, f2, f3, f4)]
+        V1 = [a * b * c * d for a, b, c, d in itertools.product(v1, v2, v3, v4)]
         num1 = len(F1)
 
         for i in range(num1):
@@ -792,8 +918,8 @@ def main_code():
                     trans_step1[j, 1] += V1[i]
 
         # 创建trans itertools迭代列表2
-        F2 = [a * b * c * d * e for a, b, c, d, e in itertools.product(trans_step1[:, 0], f6, f7, f8, f9)]
-        V2 = [a * b * c * d * e for a, b, c, d, e in itertools.product(trans_step1[:, 1], v6, v7, v8, v9)]
+        F2 = [a * b * c * d for a, b, c, d in itertools.product(trans_step1[:, 0], f5, f6, f7)]
+        V2 = [a * b * c * d for a, b, c, d in itertools.product(trans_step1[:, 1], v5, v6, v7)]
         num2 = len(F2)
 
         for i in range(num2):
@@ -803,26 +929,37 @@ def main_code():
                     trans_step2[j, 1] += V2[i]
 
         # 创建trans itertools迭代列表3
-        F3 = [a * b * c * d * e for a, b, c, d, e in itertools.product(trans_step2[:, 0], f10, f11, f12, f13)]
-        V3 = [a * b * c * d * e for a, b, c, d, e in itertools.product(trans_step2[:, 1], v10, v11, v12, v13)]
+        F3 = [a * b * c * d for a, b, c, d in itertools.product(trans_step2[:, 0], f8, f9, f10)]
+        V3 = [a * b * c * d for a, b, c, d in itertools.product(trans_step2[:, 1], v8, v9, v10)]
         num3 = len(F3)
 
         for i in range(num3):
             for j in range(stp3):
                 if start3[j] < F3[i] <= end3[j]:
                 # 如果key在该区间内，则将该区间的value累加
-                    Final_trans_step[j, 1] += V3[i]
+                    trans_step3[j, 1] += V3[i]
 
-        # 创建lum itertools迭代列表4
-        F4 = [a * b for a, b in itertools.product(Final_trans_step[:, 0], f14)]
-        V4 = [a * b for a, b in itertools.product(Final_trans_step[:, 1], v14)]
+        # 创建trans itertools迭代列表4
+        F4 = [a * b * c * d for a, b, c, d in itertools.product(trans_step3[:, 0], f11, f12, f13)]
+        V4 = [a * b * c * d for a, b, c, d in itertools.product(trans_step3[:, 1], v11, v12, v13)]
         num4 = len(F4)
 
         for i in range(num4):
             for j in range(stp4):
                 if start4[j] < F4[i] <= end4[j]:
                 # 如果key在该区间内，则将该区间的value累加
-                    Final_lum_step[j, 1] += V4[i]
+                    Final_trans_step[j, 1] += V4[i]
+
+        # 创建lum itertools迭代列表5
+        F5 = [a * b for a, b in itertools.product(Final_trans_step[:, 0], f14)]
+        V5 = [a * b for a, b in itertools.product(Final_trans_step[:, 1], v14)]
+        num5 = len(F5)
+
+        for i in range(num5):
+            for j in range(stp5):
+                if start5[j] < F5[i] <= end5[j]:
+                # 如果key在该区间内，则将该区间的value累加
+                    Final_lum_step[j, 1] += V5[i]
         
     elif l == 15:
         f1 = trans2[0:int(m[0, 0]), 0]
@@ -857,8 +994,8 @@ def main_code():
         v15 = trans2[0:int(m[14, 0]), 29]
 
         # 创建trans itertools迭代列表1
-        F1 = [a * b * c * d * e for a, b, c, d, e in itertools.product(f1, f2, f3, f4, f5)]
-        V1 = [a * b * c * d * e for a, b, c, d, e in itertools.product(v1, v2, v3, v4, v5)]
+        F1 = [a * b * c * d for a, b, c, d in itertools.product(f1, f2, f3, f4)]
+        V1 = [a * b * c * d for a, b, c, d in itertools.product(v1, v2, v3, v4)]
         num1 = len(F1)
 
         for i in range(num1):
@@ -868,8 +1005,8 @@ def main_code():
                     trans_step1[j, 1] += V1[i]
 
         # 创建trans itertools迭代列表2
-        F2 = [a * b * c * d * e * f for a, b, c, d, e, f in itertools.product(trans_step1[:, 0], f6, f7, f8, f9, f10)]
-        V2 = [a * b * c * d * e * f for a, b, c, d, e, f in itertools.product(trans_step1[:, 1], v6, v7, v8, v9, v10)]
+        F2 = [a * b * c * d * e for a, b, c, d, e in itertools.product(trans_step1[:, 0], f5, f6, f7, f8)]
+        V2 = [a * b * c * d * e for a, b, c, d, e in itertools.product(trans_step1[:, 1], v5, v6, v7, v8)]
         num2 = len(F2)
 
         for i in range(num2):
@@ -879,26 +1016,37 @@ def main_code():
                     trans_step2[j, 1] += V2[i]
 
         # 创建trans itertools迭代列表3
-        F3 = [a * b * c * d * e for a, b, c, d, e in itertools.product(trans_step2[:, 0], f11, f12, f13, f14)]
-        V3 = [a * b * c * d * e for a, b, c, d, e in itertools.product(trans_step2[:, 1], v11, v12, v13, v14)]
+        F3 = [a * b * c * d for a, b, c, d in itertools.product(trans_step2[:, 0], f9, f10, f11)]
+        V3 = [a * b * c * d for a, b, c, d in itertools.product(trans_step2[:, 1], v9, v10, v11)]
         num3 = len(F3)
 
         for i in range(num3):
             for j in range(stp3):
                 if start3[j] < F3[i] <= end3[j]:
                 # 如果key在该区间内，则将该区间的value累加
-                    Final_trans_step[j, 1] += V3[i]
+                    trans_step3[j, 1] += V3[i]
 
-        # 创建lum itertools迭代列表4
-        F4 = [a * b for a, b in itertools.product(Final_trans_step[:, 0], f15)]
-        V4 = [a * b for a, b in itertools.product(Final_trans_step[:, 1], v15)]
+        # 创建trans itertools迭代列表4
+        F4 = [a * b * c * d for a, b, c, d in itertools.product(trans_step3[:, 0], f12, f13, f14)]
+        V4 = [a * b * c * d for a, b, c, d in itertools.product(trans_step3[:, 1], v12, v13, v14)]
         num4 = len(F4)
 
         for i in range(num4):
             for j in range(stp4):
                 if start4[j] < F4[i] <= end4[j]:
                 # 如果key在该区间内，则将该区间的value累加
-                    Final_lum_step[j, 1] += V4[i]
+                    Final_trans_step[j, 1] += V4[i]
+
+        # 创建lum itertools迭代列表5
+        F5 = [a * b for a, b in itertools.product(Final_trans_step[:, 0], f15)]
+        V5 = [a * b for a, b in itertools.product(Final_trans_step[:, 1], v15)]
+        num5 = len(F5)
+
+        for i in range(num5):
+            for j in range(stp5):
+                if start5[j] < F5[i] <= end5[j]:
+                # 如果key在该区间内，则将该区间的value累加
+                    Final_lum_step[j, 1] += V5[i]
 
     elif l == 16:
         f1 = trans2[0:int(m[0, 0]), 0]
@@ -935,8 +1083,8 @@ def main_code():
         v16 = trans2[0:int(m[15, 0]), 31]
 
         # 创建trans itertools迭代列表1
-        F1 = [a * b * c * d * e for a, b, c, d, e in itertools.product(f1, f2, f3, f4, f5)]
-        V1 = [a * b * c * d * e for a, b, c, d, e in itertools.product(v1, v2, v3, v4, v5)]
+        F1 = [a * b * c * d for a, b, c, d in itertools.product(f1, f2, f3, f4)]
+        V1 = [a * b * c * d for a, b, c, d in itertools.product(v1, v2, v3, v4)]
         num1 = len(F1)
 
         for i in range(num1):
@@ -946,8 +1094,8 @@ def main_code():
                     trans_step1[j, 1] += V1[i]
 
         # 创建trans itertools迭代列表2
-        F2 = [a * b * c * d * e * f for a, b, c, d, e, f in itertools.product(trans_step1[:, 0], f6, f7, f8, f9, f10)]
-        V2 = [a * b * c * d * e * f for a, b, c, d, e, f in itertools.product(trans_step1[:, 1], v6, v7, v8, v9, v10)]
+        F2 = [a * b * c * d * e for a, b, c, d, e in itertools.product(trans_step1[:, 0], f5, f6, f7, f8)]
+        V2 = [a * b * c * d * e for a, b, c, d, e in itertools.product(trans_step1[:, 1], v5, v6, v7, v8)]
         num2 = len(F2)
 
         for i in range(num2):
@@ -957,26 +1105,37 @@ def main_code():
                     trans_step2[j, 1] += V2[i]
 
         # 创建trans itertools迭代列表3
-        F3 = [a * b * c * d * e * f for a, b, c, d, e, f in itertools.product(trans_step2[:, 0], f11, f12, f13, f14, f15)]
-        V3 = [a * b * c * d * e * f for a, b, c, d, e, f in itertools.product(trans_step2[:, 1], v11, v12, v13, v14, f15)]
+        F3 = [a * b * c * d * e for a, b, c, d, e in itertools.product(trans_step2[:, 0], f9, f10, f11, f12)]
+        V3 = [a * b * c * d * e for a, b, c, d, e in itertools.product(trans_step2[:, 1], v9, v10, v11, v12)]
         num3 = len(F3)
 
         for i in range(num3):
             for j in range(stp3):
                 if start3[j] < F3[i] <= end3[j]:
                 # 如果key在该区间内，则将该区间的value累加
-                    Final_trans_step[j, 1] += V3[i]
+                    trans_step3[j, 1] += V3[i]
 
-        # 创建lum itertools迭代列表4
-        F4 = [a * b for a, b in itertools.product(Final_trans_step[:, 0], f16)]
-        V4 = [a * b for a, b in itertools.product(Final_trans_step[:, 1], v16)]
+        # 创建trans itertools迭代列表4
+        F4 = [a * b * c * d for a, b, c, d in itertools.product(trans_step3[:, 0], f13, f14, f15)]
+        V4 = [a * b * c * d for a, b, c, d in itertools.product(trans_step3[:, 1], v13, v14, v15)]
         num4 = len(F4)
 
         for i in range(num4):
             for j in range(stp4):
                 if start4[j] < F4[i] <= end4[j]:
                 # 如果key在该区间内，则将该区间的value累加
-                    Final_lum_step[j, 1] += V4[i]
+                    Final_trans_step[j, 1] += V4[i]
+
+        # 创建lum itertools迭代列表5
+        F5 = [a * b for a, b in itertools.product(Final_trans_step[:, 0], f16)]
+        V5 = [a * b for a, b in itertools.product(Final_trans_step[:, 1], v16)]
+        num5 = len(F5)
+
+        for i in range(num5):
+            for j in range(stp5):
+                if start5[j] < F5[i] <= end5[j]:
+                # 如果key在该区间内，则将该区间的value累加
+                    Final_lum_step[j, 1] += V5[i]
 
         
                         
