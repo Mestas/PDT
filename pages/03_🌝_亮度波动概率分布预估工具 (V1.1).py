@@ -82,8 +82,8 @@ with bz2_2:
     start1 = np.zeros((stp1, 1))
     end1 = np.zeros((stp1, 1))
     for i in range(stp1):
-        start1[i] = round(trans_step[i, 0] - vac_trans / 2, 4)
-        end1[i] = round(trans_step[i, 0] + vac_trans / 2, 4)
+        start1[i] = trans_step[i, 0] - vac_trans / 2
+        end1[i] = trans_step[i, 0] + vac_trans / 2
 
     # 遍历所有trans因子中最小值进行乘积得到trans最小值min2，同理获得trans最大值max2
     min2 = 1
@@ -107,8 +107,8 @@ with bz2_2:
     start2 = np.zeros((stp2, 1))
     end2 = np.zeros((stp2, 1))
     for i in range(stp2):
-        start2[i] = round(Final_trans_step[i, 0] - vac_trans / 2, 4)
-        end2[i] = round(Final_trans_step[i, 0] + vac_trans / 2, 4)
+        start2[i] = Final_trans_step[i, 0] - vac_trans / 2
+        end2[i] = Final_trans_step[i, 0] + vac_trans / 2
     
     # print(min1, max1, stp1)
     # print(trans_step)
@@ -165,7 +165,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
         # 将前4个dict的key和value进行交叉相乘，并进行判断
         for key1, value1 in dict1.items():
             for key2, value2 in dict2.items():
-                T1 = round(key1 * key2, 4)
+                T1 = key1 * key2
                 V1 = value1 * value2
                 for i in range(stp2):
                     if start2[i] < T1 <= end2[i]:
@@ -206,7 +206,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
             for key2, value2 in dict2.items():
                 for key3, value3 in dict3.items():
                     for key4, value4 in dict4.items():
-                        T1 = round(key1 * key2 * key3 * key4, 4)
+                        T1 = key1 * key2 * key3 * key4
                         V1 = value1 * value2 * value3 * value4
                         # print(T1)
                         # print(V1)
@@ -256,7 +256,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
                 for key3, value3 in dict3.items():
                     for key4, value4 in dict4.items():
                         for key5, value5 in dict5.items():
-                            T1 = round(key1 * key2 * key3 * key4 * key5, 4)
+                            T1 = key1 * key2 * key3 * key4 * key5
                             V1 = value1 * value2 * value3 * value4 * value5
                             for i in range(stp2):
                                 if start2[i] < T1 <= end2[i]:
@@ -304,7 +304,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
             for key2, value2 in dict2.items():
                 for key3, value3 in dict3.items():
                     for key4, value4 in dict4.items():
-                        T1 = round(key1 * key2 * key3 * key4, 4)
+                        T1 = key1 * key2 * key3 * key4
                         V1 = value1 * value2 * value3 * value4
                         for i in range(stp1):
                             if start1[i] < T1 <= end1[i]:
@@ -315,7 +315,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
         for key1_4, value1_4 in dict1_4.items():
             for key5, value5 in dict5.items():
                 for key6, value6 in dict6.items():
-                    T2 = round(key1_4 * key5 * key6, 4)
+                    T2 = key1_4 * key5 * key6
                     V2 = value1_4 * value5 * value6
                     for i in range(stp2):
                         if start2[i] < T2 <= end2[i]:
@@ -365,7 +365,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
             for key2, value2 in dict2.items():
                 for key3, value3 in dict3.items():
                     for key4, value4 in dict4.items():
-                        T1 = round(key1 * key2 * key3 * key4, 4)
+                        T1 = key1 * key2 * key3 * key4
                         V1 = value1 * value2 * value3 * value4
                         for i in range(stp1):
                             if start1[i] < T1 <= end1[i]:
@@ -378,7 +378,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
             for key5, value5 in dict5.items():
                 for key6, value6 in dict6.items():
                     for key7, value7 in dict7.items():
-                        T2 = round(key1_4 * key5 * key6 * key7, 4)
+                        T2 = key1_4 * key5 * key6 * key7
                         V2 = value1_4 * value5 * value6 * value7
                         for i in range(stp2):
                             if start2[i] < T2 <= end2[i]:
@@ -433,7 +433,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
                 for key3, value3 in dict3.items():
                     for key4, value4 in dict4.items():
                         for key5, value5 in dict5.items():
-                            T1 = round(key1 * key2 * key3 * key4 * key5, 4)
+                            T1 = key1 * key2 * key3 * key4 * key5
                             V1 = value1 * value2 * value3 * value4 * value5
                             for i in range(stp1):
                                 if start1[i] < T1 <= end1[i]:
@@ -446,7 +446,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
             for key6, value6 in dict6.items():
                 for key7, value7 in dict7.items():
                     for key8, value8 in dict8.items():
-                        T2 = round(key1_5 * key6 * key7 * key8, 4)
+                        T2 = key1_5 * key6 * key7 * key8
                         V2 = value1_5 * value6 * value7 * value8
                         for i in range(stp2):
                             if start2[i] < T2 <= end2[i]:
@@ -504,7 +504,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
                 for key3, value3 in dict3.items():
                     for key4, value4 in dict4.items():
                         for key5, value5 in dict5.items():
-                            T1 = round(key1 * key2 * key3 * key4 * key5, 4)
+                            T1 = key1 * key2 * key3 * key4 * key5
                             V1 = value1 * value2 * value3 * value4 * value5
                             for i in range(stp1):
                                 if start1[i] < T1 <= end1[i]:
@@ -518,7 +518,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
                 for key7, value7 in dict7.items():
                     for key8, value8 in dict8.items():
                         for key9, value9 in dict9.items():
-                            T2 = round(key1_5 * key6 * key7 * key8 * key9, 4)
+                            T2 = key1_5 * key6 * key7 * key8 * key9
                             V2 = value1_5 * value6 * value7 * value8 * value9
                             for i in range(stp2):
                                 if start2[i] < T2 <= end2[i]:
@@ -580,7 +580,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
                     for key4, value4 in dict4.items():
                         for key5, value5 in dict5.items():
                             for key6, value6 in dict6.items():
-                                T1 = round(key1 * key2 * key3 * key4 * key5 * key6, 4)
+                                T1 = key1 * key2 * key3 * key4 * key5 * key6
                                 V1 = value1 * value2 * value3 * value4 * value5 * value6
                                 for i in range(stp1):
                                     if start1[i] < T1 <= end1[i]:
@@ -594,7 +594,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
                 for key8, value8 in dict8.items():
                     for key9, value9 in dict9.items():
                         for key10, value10 in dict10.items():
-                            T2 = round(key1_6 * key7 * key8 * key9 * key10, 4)
+                            T2 = key1_6 * key7 * key8 * key9 * key10
                             V2 = value1_6 * value7 * value8 * value9 * value10
                             for i in range(stp2):
                                 if start2[i] < T2 <= end2[i]:
@@ -659,7 +659,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
                     for key4, value4 in dict4.items():
                         for key5, value5 in dict5.items():
                             for key6, value6 in dict6.items():
-                                T1 = round(key1 * key2 * key3 * key4 * key5 * key6, 4)
+                                T1 = key1 * key2 * key3 * key4 * key5 * key6
                                 V1 = value1 * value2 * value3 * value4 * value5 * value6
                                 for i in range(stp1):
                                     if start1[i] < T1 <= end1[i]:
@@ -674,7 +674,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
                     for key9, value9 in dict9.items():
                         for key10, value10 in dict10.items():
                             for key11, value11 in dict11.items():
-                                T2 = round(key1_6 * key7 * key8 * key9 * key10 * key11, 4)
+                                T2 = key1_6 * key7 * key8 * key9 * key10 * key11
                                 V2 = value1_6 * value7 * value8 * value9 * value10 * value11
                                 for i in range(stp2):
                                     if start2[i] < T2 <= end2[i]:
@@ -743,7 +743,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
                         for key5, value5 in dict5.items():
                             for key6, value6 in dict6.items():
                                 for key7, value7 in dict7.items():
-                                    T1 = round(key1 * key2 * key3 * key4 * key5 * key6 * key7, 4)
+                                    T1 = key1 * key2 * key3 * key4 * key5 * key6 * key7
                                     V1 = value1 * value2 * value3 * value4 * value5 * value6 * value7
                                     for i in range(stp1):
                                         if start1[i] < T1 <= end1[i]:
@@ -758,7 +758,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
                     for key10, value10 in dict10.items():
                         for key11, value11 in dict11.items():
                             for key12, value12 in dict12.items():
-                                T2 = round(key1_7 * key8 * key9 * key10 * key11 * key12, 4)
+                                T2 = key1_7 * key8 * key9 * key10 * key11 * key12
                                 V2 = value1_7 * value8 * value9 * value10 * value11 * value12
                                 for i in range(stp2):
                                     if start2[i] < T2 <= end2[i]:
@@ -829,7 +829,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
                         for key5, value5 in dict5.items():
                             for key6, value6 in dict6.items():
                                 for key7, value7 in dict7.items():
-                                    T1 = round(key1 * key2 * key3 * key4 * key5 * key6 * key7, 4)
+                                    T1 = key1 * key2 * key3 * key4 * key5 * key6 * key7
                                     V1 = value1 * value2 * value3 * value4 * value5 * value6 * value7
                                     for i in range(stp1):
                                         if start1[i] < T1 <= end1[i]:
@@ -845,7 +845,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
                         for key11, value11 in dict11.items():
                             for key12, value12 in dict12.items():
                                 for key13, value13 in dict13.items():
-                                    T2 = round(key1_7 * key8 * key9 * key10 * key11 * key12 * key13, 4)
+                                    T2 = key1_7 * key8 * key9 * key10 * key11 * key12 * key13
                                     V2 = value1_7 * value8 * value9 * value10 * value11 * value12 * value13
                                     for i in range(stp2):
                                         if start2[i] < T2 <= end2[i]:
@@ -922,7 +922,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
                             for key6, value6 in dict6.items():
                                 for key7, value7 in dict7.items():
                                     for key8, value8 in dict8.items():
-                                        T1 = round(key1 * key2 * key3 * key4 * key5 * key6 * key7 * key8, 4)
+                                        T1 = key1 * key2 * key3 * key4 * key5 * key6 * key7 * key8
                                         V1 = value1 * value2 * value3 * value4 * value5 * value6 * value7 * value8
                                         for i in range(stp1):
                                             if start1[i] < T1 <= end1[i]:
@@ -938,7 +938,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
                         for key12, value12 in dict12.items():
                             for key13, value13 in dict13.items():
                                 for key14, value14 in dict14.items():
-                                    T2 = round(key1_8 * key9 * key10 * key11 * key12 * key13 * key14, 4)
+                                    T2 = key1_8 * key9 * key10 * key11 * key12 * key13 * key14
                                     V2 = value1_8 * value9 * value10 * value11 * value12 * value13 * value14
                                     for i in range(stp2):
                                         if start2[i] < T2 <= end2[i]:
@@ -1018,7 +1018,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
                             for key6, value6 in dict6.items():
                                 for key7, value7 in dict7.items():
                                     for key8, value8 in dict8.items():
-                                        T1 = round(key1 * key2 * key3 * key4 * key5 * key6 * key7 * key8, 4)
+                                        T1 = key1 * key2 * key3 * key4 * key5 * key6 * key7 * key8
                                         V1 = value1 * value2 * value3 * value4 * value5 * value6 * value7 * value8
                                         for i in range(stp1):
                                             if start1[i] < T1 <= end1[i]:
@@ -1035,7 +1035,7 @@ def main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3
                             for key13, value13 in dict13.items():
                                 for key14, value14 in dict14.items():
                                     for key15, value15 in dict15.items():
-                                        T2 = round(key1_8 * key9 * key10 * key11 * key12 * key13 * key14 * key15, 4)
+                                        T2 = key1_8 * key9 * key10 * key11 * key12 * key13 * key14 * key15
                                         V2 = value1_8 * value9 * value10 * value11 * value12 * value13 * value14 * value15
                                         for i in range(stp2):
                                             if start2[i] < T2 <= end2[i]:
