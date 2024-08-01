@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import streamlit as st
+import math
 # st.balloons()  #过场动画
 
 st.set_page_config(
@@ -71,9 +72,9 @@ try:
             Cp = Cpk
             T = usl - lsl
             stedv = T / Cp / 6
-            layer = int(T / step + 1)
+            layer = int(math.ceil(T / step + 1))
             
-            A = np.zeros((layer + 1, 3))
+            A = np.zeros((layer + 1, 2))
             B = np.zeros((layer, 2))
 
             for i in range(layer + 1):
