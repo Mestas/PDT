@@ -245,6 +245,11 @@ with bz2_2:
             q = 4
             r = 4
             s = 3
+        elif l == 17:
+            p = 4
+            q = 4
+            r = 4
+            s = 4
 
         # 遍历前p个因子中最小值进行乘积得到前p列的trans最小值min1，同理获得前p列的trans最大值max1
         min1 = 1
@@ -1136,8 +1141,96 @@ def main_code():
                 if start5[j] < F5[i] <= end5[j]:
                 # 如果key在该区间内，则将该区间的value累加
                     Final_lum_step[j, 1] += V5[i]
+    elif l == 17:
+        f1 = trans2[0:int(m[0, 0]), 0]
+        v1 = trans2[0:int(m[0, 0]), 1]
+        f2 = trans2[0:int(m[1, 0]), 2]
+        v2 = trans2[0:int(m[1, 0]), 3]
+        f3 = trans2[0:int(m[2, 0]), 4]
+        v3 = trans2[0:int(m[2, 0]), 5]
+        f4 = trans2[0:int(m[3, 0]), 6]
+        v4 = trans2[0:int(m[3, 0]), 7]
+        f5 = trans2[0:int(m[4, 0]), 8]
+        v5 = trans2[0:int(m[4, 0]), 9]
+        f6 = trans2[0:int(m[5, 0]), 10]
+        v6 = trans2[0:int(m[5, 0]), 11]
+        f7 = trans2[0:int(m[6, 0]), 12]
+        v7 = trans2[0:int(m[6, 0]), 13]
+        f8 = trans2[0:int(m[7, 0]), 14]
+        v8 = trans2[0:int(m[7, 0]), 15]
+        f9 = trans2[0:int(m[8, 0]), 16]
+        v9 = trans2[0:int(m[8, 0]), 17]
+        f10 = trans2[0:int(m[9, 0]), 18]
+        v10 = trans2[0:int(m[9, 0]), 19]
+        f11 = trans2[0:int(m[10, 0]), 20]
+        v11 = trans2[0:int(m[10, 0]), 21]
+        f12 = trans2[0:int(m[11, 0]), 22]
+        v12 = trans2[0:int(m[11, 0]), 23]
+        f13 = trans2[0:int(m[12, 0]), 24]
+        v13 = trans2[0:int(m[12, 0]), 25]
+        f14 = trans2[0:int(m[13, 0]), 26]
+        v14 = trans2[0:int(m[13, 0]), 27]
+        f15 = trans2[0:int(m[14, 0]), 28]
+        v15 = trans2[0:int(m[14, 0]), 29]
+        f16 = trans2[0:int(m[15, 0]), 30]
+        v16 = trans2[0:int(m[15, 0]), 31]
+        f17 = trans2[0:int(m[16, 0]), 32]
+        v17 = trans2[0:int(m[16, 0]), 33]
 
-        
+        # 创建trans itertools迭代列表1
+        F1 = [a * b * c * d for a, b, c, d in itertools.product(f1, f2, f3, f4)]
+        V1 = [a * b * c * d for a, b, c, d in itertools.product(v1, v2, v3, v4)]
+        num1 = len(F1)
+
+        for i in range(num1):
+            for j in range(stp1):
+                if start1[j] < F1[i] <= end1[j]:
+                # 如果key在该区间内，则将该区间的value累加
+                    trans_step1[j, 1] += V1[i]
+
+        # 创建trans itertools迭代列表2
+        F2 = [a * b * c * d * e for a, b, c, d, e in itertools.product(trans_step1[:, 0], f5, f6, f7, f8)]
+        V2 = [a * b * c * d * e for a, b, c, d, e in itertools.product(trans_step1[:, 1], v5, v6, v7, v8)]
+        num2 = len(F2)
+
+        for i in range(num2):
+            for j in range(stp2):
+                if start2[j] < F2[i] <= end2[j]:
+                # 如果key在该区间内，则将该区间的value累加
+                    trans_step2[j, 1] += V2[i]
+
+        # 创建trans itertools迭代列表3
+        F3 = [a * b * c * d * e for a, b, c, d, e in itertools.product(trans_step2[:, 0], f9, f10, f11, f12)]
+        V3 = [a * b * c * d * e for a, b, c, d, e in itertools.product(trans_step2[:, 1], v9, v10, v11, v12)]
+        num3 = len(F3)
+
+        for i in range(num3):
+            for j in range(stp3):
+                if start3[j] < F3[i] <= end3[j]:
+                # 如果key在该区间内，则将该区间的value累加
+                    trans_step3[j, 1] += V3[i]
+
+        # 创建trans itertools迭代列表4
+        F4 = [a * b * c * d * e for a, b, c, d, e in itertools.product(trans_step3[:, 0], f13, f14, f15, f16)]
+        V4 = [a * b * c * d * e for a, b, c, d, e in itertools.product(trans_step3[:, 1], v13, v14, v15, f16)]
+        num4 = len(F4)
+
+        for i in range(num4):
+            for j in range(stp4):
+                if start4[j] < F4[i] <= end4[j]:
+                # 如果key在该区间内，则将该区间的value累加
+                    Final_trans_step[j, 1] += V4[i]
+
+        # 创建lum itertools迭代列表5
+        F5 = [a * b for a, b in itertools.product(Final_trans_step[:, 0], f17)]
+        V5 = [a * b for a, b in itertools.product(Final_trans_step[:, 1], v17)]
+        num5 = len(F5)
+
+        for i in range(num5):
+            for j in range(stp5):
+                if start5[j] < F5[i] <= end5[j]:
+                # 如果key在该区间内，则将该区间的value累加
+                    Final_lum_step[j, 1] += V5[i]
                         
 # main_code(trans2, l, m, start1, end1, start2, end2, start3, end3, trans_step, Final_trans_step, Final_lum_step)
 
