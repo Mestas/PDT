@@ -491,6 +491,6 @@ if calc is True:
     area[11, 1] = area_pix12
 
     area = pd.DataFrame(area, columns=['像素', '开口率'])
-    col41, col42, col43 = st.columns([1, 8, 10])
+    col41, col42, col43 = st.columns([1, 20, 10])
     with col42:
         st.write(area)
