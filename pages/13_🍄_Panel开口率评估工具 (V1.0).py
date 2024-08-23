@@ -120,7 +120,7 @@ st.write("<h6>步骤3：点击按钮计算开口率</h6>", unsafe_allow_html=Tru
 calc = st.button('***点击计算***', key='calc')
 if calc is True:
     # # # # # # 计算开口区尺寸
-    if pix < 2:
+    if pix < 3:
         # 计算开口区大小
         AR_x = (pix_x * math.cos(angle / 180 * math.pi) - BM_SD) / math.cos(angle / 180 * math.pi)
         AR_y = pix_y - BM_Gate
