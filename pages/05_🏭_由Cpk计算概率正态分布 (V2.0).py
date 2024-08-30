@@ -19,8 +19,8 @@ st.sidebar.write("<h4 style='color: blue;'>本工具可以由Cpk数据计算概�
 st.write("# Cpk计算概率分布工具 #")
 col1, col2 = st.columns([2, 1])
 with col2:
-    st.write("<h5 style='color: blue;'>版本号：V1.0</h5>", unsafe_allow_html=True)
-    st.write("<h5 style='color: blue;'>发布时间：2023/12/06</h5>", unsafe_allow_html=True)
+    st.write("<h5 style='color: blue;'>版本号：V2.0</h5>", unsafe_allow_html=True)
+    st.write("<h5 style='color: blue;'>发布时间：2024/01/28</h5>", unsafe_allow_html=True)
 
 # # # 设置步骤1
 st.write("<h6>请输入Cpk相关数据</h6>", unsafe_allow_html=True)
