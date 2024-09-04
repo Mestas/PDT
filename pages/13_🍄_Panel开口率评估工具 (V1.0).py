@@ -494,3 +494,17 @@ if calc is True:
     col41, col42, col43 = st.columns([1, 8, 10])
     with col42:
         st.write(area)
+# 编辑点击计算按钮
+st.markdown(
+    '''
+    <style>
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-1y4p8pa.ea3mdgi2 > div > div > div > div:nth-child(8) > div > button
+    {
+    background-color: rgb(220, 240, 220);
+    height: 70px;
+    width: 150px;
+    }
+    </style>
+    ''',
+    unsafe_allow_html=True
+)
