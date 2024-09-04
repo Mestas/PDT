@@ -6,7 +6,6 @@ import pandas as pd
 import numpy as np
 import os
 import cv2
-import tempfile
 
 st.set_page_config(
     initial_sidebar_state="auto",
@@ -249,7 +248,9 @@ with col52:
                 st.image(AA_W1, width=60)
             with col561:
                 st.image(AA_W2, width=60)
-
+            # 清理：删除临时文件
+            os.unlink(temp.name)
+            
         except NameError:
             st.write(':red[DXF文件未解密, 请解密后重新上传]')
         except TypeError:
@@ -322,7 +323,9 @@ with col54:
             with col521:
                 st.write('Dummy1区灰阶过渡')
                 st.write(D1_DF)
-
+            # 清理：删除临时文件
+            os.unlink(temp.name)
+            
         except NameError:
             st.write(':red[DXF文件未解密, 请解密后重新上传]')
         except TypeError:
@@ -393,6 +396,8 @@ with col56:
             with col521:
                 st.write('Dummy2区灰阶过渡')
                 st.write(D2_DF)
+            # 清理：删除临时文件
+            os.unlink(temp.name)
 
         except NameError:
             st.write(':red[DXF文件未解密, 请解密后重新上传]')
@@ -400,9 +405,6 @@ with col56:
             st.write(':red[DXF文件未包含正确图层, 请确认后重新上传]')
         except AttributeError:
             st.write(':red[DXF图层不正确, 请确认后重新上传]')  
-
-# 清理：删除临时文件
-os.unlink(temp.name)
 
 # 编辑点击计算按钮
 st.markdown(
