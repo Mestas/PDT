@@ -817,7 +817,7 @@ st.markdown(
 st.markdown(
     '''
     <style>
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi8 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi5 > div > div > div > div:nth-child(5) > div.st-emotion-cache-tqfcjc.e1f1d6gn3 > div > div > div > div:nth-child(1) > div > div > div
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(5) > div.st-emotion-cache-tqfcjc.e1f1d6gn3 > div > div > div > div:nth-child(1) > div > div
     {
     background-color: rgb(220, 240, 220);
     }
