@@ -816,7 +816,7 @@ st.markdown(
     {
     background-color: rgb(220, 240, 220);
     }
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi8 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi5 > div > div > div > div:nth-child(5) > div.st-emotion-cache-tqfcjc.e1f1d6gn3 > div > div > div > div:nth-child(2) > div > div.st-emotion-cache-kskxxl.e116k4er3 > div.st-ae.st-af.st-ag.st-ah.st-bd.st-be.st-bf.st-bg.st-am.st-an.st-ao.st-ap.st-aq.st-ar.st-as.st-at.st-au.st-e8.st-e9.st-ax.st-ay.st-az.st-b0.st-b1.st-b2.st-b3.st-b4.st-b5.st-b6.st-b7.st-b8.st-b9 > div
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(5) > div.st-emotion-cache-tqfcjc.e1f1d6gn3 > div > div > div > div:nth-child(2) > div > div.st-emotion-cache-kskxxl.e116k4er3
     {
     background-color: rgb(220, 240, 220);
     }
