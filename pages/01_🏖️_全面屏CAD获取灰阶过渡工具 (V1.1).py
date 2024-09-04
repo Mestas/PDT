@@ -6,8 +6,6 @@ import pandas as pd
 import numpy as np
 import os
 import cv2
-import zipfile
-import io
 
 st.set_page_config(
     initial_sidebar_state="auto",
