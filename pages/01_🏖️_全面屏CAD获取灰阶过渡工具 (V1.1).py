@@ -5,7 +5,7 @@ from shapely.geometry import Polygon, Point
 import pandas as pd
 import numpy as np
 import os
-import cv2
+import opencv-python as cv2
 
 st.set_page_config(
     initial_sidebar_state="auto",
