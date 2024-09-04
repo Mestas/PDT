@@ -29,9 +29,6 @@ col11, col12 = st.columns([1, 20])
 with col12:
     st.write('<span style="color: blue; font-size: 16px">DXF文件要求: <br>1. 文件类型为DXF, 支持版本R12, R2000, R2004, R2007, R2010, R2013 and R2018  <br>2. DXF文件需解密后上传  <br>3. Panel图纸若不带孔: 按照AA, Dummy1, Dummy2三个图层; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Panel图纸若带孔: 需在上述图层再增加Hole_AA, Hole_Dummy1, Hole_Dummy2三个图层  <br>4. DXF文件中的图形为闭合的多段线, 圆弧线需要转换成多段线, 孔为圆形  <br>5. DXF文件的单位为mm, 确保图形为正确的尺寸', unsafe_allow_html=True)
 
-# 创建一个临时文件
-temp = tempfile.TemporaryFile()
-
 with col12:
     dxf_file = st.file_uploader("请选择DXF文件", type=['DXF'], help="请选择dxf文件进行上传")
     if dxf_file is not None:
