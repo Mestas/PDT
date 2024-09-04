@@ -508,3 +508,38 @@ st.markdown(
     ''',
     unsafe_allow_html=True
 )
+
+# 通过markdown设置textarea区域的字体和input字体
+st.markdown(
+    """
+    <style>
+    textarea {
+        font-size: 0.9rem !important;
+    }
+    input {
+        font-size: 0.9rem !important; /*设置字体大小，加上!important是避免被 Markdown 样式覆盖*/
+        color: rgb(0, 0, 0) !important; /*设置字体颜色*/
+        background-color: rgb(220, 240, 220) !important; /*设置背景颜色*/
+        /background-color: rgb(220, 240, 220, 50%) !important; /*设置背景颜色*/
+        justify-content: center !important;
+        text-align: center !important; /*设置字体水平居中*/
+        vertical-align: middle !important; /*设置字体垂直居中*/
+        height: 39px !important;/ /*设置input的高度*/
+    }
+    label {
+        color: rgb(0, 0, 0) !important; /*设置字体颜色*/
+        background-color: rgb(255, 255, 255) !important; /*设置背景颜色*/
+        text-align: center !important; /*设置字体水平居中*/
+        vertical-align: middle !important; /*设置字体垂直居中*/
+        justify-content: center !important; /*设置label居中*/
+        /outline: 5px solid rgb(15,15,15) !important;/ /*大小不变，设置边框*/
+        /border: 5px solid rgb(15,15,15) !important;/ /*外形变大，增加边框并设置*/
+        /*letter-spacing: 30px !important;*/ /*设置字体间距*/
+        /*text-transform: uppercase !important;*/ /*强制大写*/
+        /align-items: center !important;
+        /height: 1vh !important;/ /*调节label垂直间距*/
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
