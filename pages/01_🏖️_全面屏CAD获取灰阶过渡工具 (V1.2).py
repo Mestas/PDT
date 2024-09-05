@@ -110,7 +110,8 @@ def pixel_array(x0, y0, xmax, ymax, entity_polygon):
 # 按钮1 - 生成AA区CSV及图片
 # col511, col521, col531 = st.columns([1, 10, 1])
 col51, col52, col53, col54, col55, col56, col57 = st.columns([1, 8, 1, 8, 1, 8, 5])
-col511, col521, col522, col531, col541, col551, col561, col571 = st.columns([1, 10, 1, 1, 5, 1, 5, 1])
+# col511, col521, col522, col531, col541, col551, col561, col571 = st.columns([1, 10, 1, 1, 5, 1, 5, 1])
+col511, col521 = st.columns([1, 20])
 with col52:
     btn_AA_cp = st.button('***生成AA区CSV和图片***')
     if btn_AA_cp is True:  
