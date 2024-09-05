@@ -173,78 +173,78 @@ with col52:
             AA_area_list = list(reversed(AA_area_list0))
             AA_DF = pd.DataFrame(AA_area_list)
 
-            # # # 获取AA区灰阶过渡图片信息
-            M_AA0 = np.array(AA_area_list)
-            M_AA = np.int16(M_AA0)
-            aa_h = M_AA.shape[0]
-            aa_l = M_AA.shape[1]
+            # # # # 获取AA区灰阶过渡图片信息
+            # M_AA0 = np.array(AA_area_list)
+            # M_AA = np.int16(M_AA0)
+            # aa_h = M_AA.shape[0]
+            # aa_l = M_AA.shape[1]
 
-            M_Al = np.ones((aa_h, aa_l), dtype=np.int16) * 255
-            M_Alpha = M_Al - M_AA
-            ZZ = np.zeros((aa_h, aa_l), dtype=np.int16)
-            ONE = np.ones((aa_h, aa_l), dtype=np.int16) * 255
+            # M_Al = np.ones((aa_h, aa_l), dtype=np.int16) * 255
+            # M_Alpha = M_Al - M_AA
+            # ZZ = np.zeros((aa_h, aa_l), dtype=np.int16)
+            # ONE = np.ones((aa_h, aa_l), dtype=np.int16) * 255
 
-            AA_B1 = cv2.merge([ZZ, ZZ, M_AA])
-            AA_B2 = cv2.merge([ZZ, ZZ, ONE, M_Alpha])
+            # AA_B1 = cv2.merge([ZZ, ZZ, M_AA])
+            # AA_B2 = cv2.merge([ZZ, ZZ, ONE, M_Alpha])
 
-            AA_G1 = cv2.merge([ZZ, M_AA, ZZ])
-            AA_G2 = cv2.merge([ZZ, ONE, ZZ, M_Alpha])
+            # AA_G1 = cv2.merge([ZZ, M_AA, ZZ])
+            # AA_G2 = cv2.merge([ZZ, ONE, ZZ, M_Alpha])
 
-            AA_R1 = cv2.merge([M_AA, ZZ, ZZ])
-            AA_R2 = cv2.merge([ONE, ZZ, ZZ, M_Alpha])
+            # AA_R1 = cv2.merge([M_AA, ZZ, ZZ])
+            # AA_R2 = cv2.merge([ONE, ZZ, ZZ, M_Alpha])
 
-            AA_W1 = cv2.merge([M_AA, M_AA, M_AA])
-            AA_W2 = cv2.merge([ZZ, ZZ, ZZ, M_Alpha])
+            # AA_W1 = cv2.merge([M_AA, M_AA, M_AA])
+            # AA_W2 = cv2.merge([ZZ, ZZ, ZZ, M_Alpha])
 
             # 显示CSV数据
             with col521:
                 st.write('AA区灰阶过渡数据')
                 st.write(AA_DF)
 
-            # 显示AA灰阶过渡图片
-            with col541:
-                st.write('灰阶过渡位图')
-            with col561:
-                st.write('灰阶过渡透明图')
-            with col531:
-                st.write('')
-                st.write('')
-                st.write('')
-                st.write('')
-                st.write('')
-                st.write('<span style="color: red;">R', unsafe_allow_html=True)
-                st.write('')
-                st.write('')
-                st.write('')
-                st.write('')
-                st.write('<span style="color: green;">G', unsafe_allow_html=True)
-                st.write('')
-                st.write('')
-                st.write('')
-                st.write('')
-                st.write('<span style="color: blue;">B', unsafe_allow_html=True)
-                st.write('')
-                st.write('')
-                st.write('')
-                st.write('')
-                st.write('W')
+            # # 显示AA灰阶过渡图片
+            # with col541:
+            #     st.write('灰阶过渡位图')
+            # with col561:
+            #     st.write('灰阶过渡透明图')
+            # with col531:
+            #     st.write('')
+            #     st.write('')
+            #     st.write('')
+            #     st.write('')
+            #     st.write('')
+            #     st.write('<span style="color: red;">R', unsafe_allow_html=True)
+            #     st.write('')
+            #     st.write('')
+            #     st.write('')
+            #     st.write('')
+            #     st.write('<span style="color: green;">G', unsafe_allow_html=True)
+            #     st.write('')
+            #     st.write('')
+            #     st.write('')
+            #     st.write('')
+            #     st.write('<span style="color: blue;">B', unsafe_allow_html=True)
+            #     st.write('')
+            #     st.write('')
+            #     st.write('')
+            #     st.write('')
+            #     st.write('W')
 
-            with col541:
-                st.image(AA_R1, width=60)
-            with col561:
-                st.image(AA_R2, width=60)
-            with col541:
-                st.image(AA_G1, width=60)
-            with col561:
-                st.image(AA_G2, width=60)
-            with col541:
-                st.image(AA_B1, width=60)
-            with col561:
-                st.image(AA_B2, width=60)
-            with col541:
-                st.image(AA_W1, width=60)
-            with col561:
-                st.image(AA_W2, width=60)
+            # with col541:
+            #     st.image(AA_R1, width=60)
+            # with col561:
+            #     st.image(AA_R2, width=60)
+            # with col541:
+            #     st.image(AA_G1, width=60)
+            # with col561:
+            #     st.image(AA_G2, width=60)
+            # with col541:
+            #     st.image(AA_B1, width=60)
+            # with col561:
+            #     st.image(AA_B2, width=60)
+            # with col541:
+            #     st.image(AA_W1, width=60)
+            # with col561:
+            #     st.image(AA_W2, width=60)
             # 清理：删除临时文件
             os.unlink(temp.name)
             
