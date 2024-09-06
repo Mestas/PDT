@@ -6,6 +6,9 @@ import pandas as pd
 import numpy as np
 import os
 import cv2
+import time
+import zipfile
+from io import BytesIO
 
 st.set_page_config(
     initial_sidebar_state="auto",
@@ -16,11 +19,11 @@ st.set_page_config(
 st.sidebar.write("<h4 style='color: blue;'>本工具可以将异形产品CAD图纸转换为灰阶过渡CSV文件</h4>", unsafe_allow_html=True)
 
 # # # 工具名称、版本号
-st.write("# 灰阶过渡处理工具 (V1.2) #")
+st.write("# 灰阶过渡处理工具 (V1.3) #")
 col1, col2 = st.columns([2, 1])
 with col2:
-    st.write("<h5 style='color: blue;'>版本号：V1.2</h5>", unsafe_allow_html=True)
-    st.write("<h5 style='color: blue;'>发布时间：2024/09/04</h5>", unsafe_allow_html=True)
+    st.write("<h5 style='color: blue;'>版本号：V1.3</h5>", unsafe_allow_html=True)
+    st.write("<h5 style='color: blue;'>发布时间：2024/09/06</h5>", unsafe_allow_html=True)
 
 # # # 设置步骤1
 st.write()
@@ -108,14 +111,13 @@ def pixel_array(x0, y0, xmax, ymax, entity_polygon):
     return Gray_Mapping
 
 # 按钮1 - 生成AA区CSV及图片
-# col511, col521, col531 = st.columns([1, 10, 1])
-col51, col52, col53, col54, col55, col56, col57 = st.columns([1, 8, 1, 8, 1, 8, 5])
-# col511, col521, col522, col531, col541, col551, col561, col571 = st.columns([1, 10, 1, 1, 5, 1, 5, 1])
-col511, col521, col522 = st.columns([1, 20, 1])
+col51, col52, col53, col54, col55, col56, col57, col58, col59 = st.columns([1, 5, 1, 5, 1, 5, 1, 4, 1])
+col511, col521, col531 = st.columns([1, 20, 1])
 with col52:
-    btn_AA_cp = st.button('***生成AA区CSV和图片***')
-    if btn_AA_cp is True:  
+    btn_AA_csv = st.button('***生成AA区CSV数据***')
+    if btn_AA_csv is True:  
         try:
+            start_time = time.time()
             # 创建工作区
             msp = doc.modelspace()
             if hole == 0:
@@ -174,93 +176,76 @@ with col52:
             AA_area_list = list(reversed(AA_area_list0))
             AA_DF = pd.DataFrame(AA_area_list)
 
-            # # # # 获取AA区灰阶过渡图片信息
-            # M_AA0 = np.array(AA_area_list)
-            # M_AA = np.int16(M_AA0)
-            # aa_h = M_AA.shape[0]
-            # aa_l = M_AA.shape[1]
+            end_time = time.time()
+            dis_time = round(end_time - start_time, 2)
 
-            # M_Al = np.ones((aa_h, aa_l), dtype=np.int16) * 255
-            # M_Alpha = M_Al - M_AA
-            # ZZ = np.zeros((aa_h, aa_l), dtype=np.int16)
-            # ONE = np.ones((aa_h, aa_l), dtype=np.int16) * 255
-
-            # AA_B1 = cv2.merge([ZZ, ZZ, M_AA])
-            # AA_B2 = cv2.merge([ZZ, ZZ, ONE, M_Alpha])
-
-            # AA_G1 = cv2.merge([ZZ, M_AA, ZZ])
-            # AA_G2 = cv2.merge([ZZ, ONE, ZZ, M_Alpha])
-
-            # AA_R1 = cv2.merge([M_AA, ZZ, ZZ])
-            # AA_R2 = cv2.merge([ONE, ZZ, ZZ, M_Alpha])
-
-            # AA_W1 = cv2.merge([M_AA, M_AA, M_AA])
-            # AA_W2 = cv2.merge([ZZ, ZZ, ZZ, M_Alpha])
-
+            str0 = '下表为AA区灰阶过渡数据；' + '数据生成时间：<span style="color: #11CC11; font-weight: bold;">' + str(dis_time) + '</span>s'
             # 显示CSV数据
             with col521:
-                st.write('AA区灰阶过渡数据')
+                st.write(str0, unsafe_allow_html=True)
+            with col521:
                 st.write(AA_DF)
 
-            # # 显示AA灰阶过渡图片
-            # with col541:
-            #     st.write('灰阶过渡位图')
-            # with col561:
-            #     st.write('灰阶过渡透明图')
-            # with col531:
-            #     st.write('')
-            #     st.write('')
-            #     st.write('')
-            #     st.write('')
-            #     st.write('')
-            #     st.write('<span style="color: red;">R', unsafe_allow_html=True)
-            #     st.write('')
-            #     st.write('')
-            #     st.write('')
-            #     st.write('')
-            #     st.write('<span style="color: green;">G', unsafe_allow_html=True)
-            #     st.write('')
-            #     st.write('')
-            #     st.write('')
-            #     st.write('')
-            #     st.write('<span style="color: blue;">B', unsafe_allow_html=True)
-            #     st.write('')
-            #     st.write('')
-            #     st.write('')
-            #     st.write('')
-            #     st.write('W')
+            # # # 获取AA区灰阶过渡图片信息
+            M_AA0 = np.array(AA_area_list)
+            M_AA = np.int16(M_AA0)
+            aa_h = M_AA.shape[0]
+            aa_l = M_AA.shape[1]
 
-            # with col541:
-            #     st.image(AA_R1, width=60)
-            # with col561:
-            #     st.image(AA_R2, width=60)
-            # with col541:
-            #     st.image(AA_G1, width=60)
-            # with col561:
-            #     st.image(AA_G2, width=60)
-            # with col541:
-            #     st.image(AA_B1, width=60)
-            # with col561:
-            #     st.image(AA_B2, width=60)
-            # with col541:
-            #     st.image(AA_W1, width=60)
-            # with col561:
-            #     st.image(AA_W2, width=60)
+            M_Al = np.ones((aa_h, aa_l), dtype=np.int16) * 255
+            M_Alpha = M_Al - M_AA
+            ZZ = np.zeros((aa_h, aa_l), dtype=np.int16)
+            ONE = np.ones((aa_h, aa_l), dtype=np.int16) * 255
+
+            AA_B1 = cv2.merge([ZZ, ZZ, M_AA])
+            AA_B2 = cv2.merge([ZZ, ZZ, ONE, M_Alpha])
+
+            AA_G1 = cv2.merge([ZZ, M_AA, ZZ])
+            AA_G2 = cv2.merge([ZZ, ONE, ZZ, M_Alpha])
+
+            AA_R1 = cv2.merge([M_AA, ZZ, ZZ])
+            AA_R2 = cv2.merge([ONE, ZZ, ZZ, M_Alpha])
+
+            AA_W1 = cv2.merge([M_AA, M_AA, M_AA])
+            AA_W2 = cv2.merge([ZZ, ZZ, ZZ, M_Alpha])
+
+            pics = [AA_R1, AA_R2, AA_G1, AA_G2, AA_B1, AA_B2, AA_W1, AA_W2]
+
+            # 创建ZIP文件
+            zip_file = BytesIO()
+            with zipfile.ZipFile(zip_file, 'w', zipfile.ZIP_DEFLATED) as zf:
+                for i, img_array in enumerate(pics):
+                    img = cv2.imencode('.png', img_array)[1]
+                    zip_info = zipfile.ZipInfo(f'image_{i}.png')
+                    zf.writestr(zip_info, img.tobytes())
+
+            zip_file.seek(0)  # 移动到ZIP文件的开头
+
+            with col58:
+                btn_download_pic = st.download_button(
+                    label="下载AA区灰阶过渡图片",
+                    data=zip_file.getvalue(),
+                    file_name="AA区灰阶过渡图片.zip",
+                    mime="application/zip",
+                )
+
             # 清理：删除临时文件
             os.unlink(temp.name)
             
         except NameError:
-            st.write(':red[DXF文件未解密, 请解密后重新上传]')
+            st.write(':red[DXF文件未上传或DXF文件未解密, 请确认后重新上传]')
         except TypeError:
             st.write(':red[DXF文件未包含正确图层, 请确认后重新上传]')
         except AttributeError:
-            st.write(':red[DXF图层不正确, 请确认后重新上传]')  
-
+            st.write(':red[DXF图层不正确, 请确认后重新上传]')
+        except OverflowError:
+            st.write(':red[未输入Pixel信息, 请输入后再生成]')
 
 with col54:
-    btn_D1_cp = st.button('***生成Dummy1区CSV***')
+    btn_D1_cp = st.button('***生成Dummy1区CSV数据***')
     if btn_D1_cp is True:  
         try:
+            start_time = time.time()
             # 创建工作区
             msp = doc.modelspace()
             if hole == 0:
@@ -317,24 +302,32 @@ with col54:
             D1_area_list = list(reversed(D1_area_list0))
             D1_DF = pd.DataFrame(D1_area_list)
 
+            end_time = time.time()
+            dis_time = round(end_time - start_time, 2)
+            str1 = '下表为Dummy1区灰阶过渡数据；' + '数据生成时间：<span style="color: #11CC11; font-weight: bold;">' + str(dis_time) + '</span>s'
+
             # 显示CSV数据
             with col521:
-                st.write('Dummy1区灰阶过渡')
+                st.write(str1, unsafe_allow_html=True)
+            with col521:
                 st.write(D1_DF)
             # 清理：删除临时文件
             os.unlink(temp.name)
             
         except NameError:
-            st.write(':red[DXF文件未解密, 请解密后重新上传]')
+            st.write(':red[DXF文件未上传或DXF文件未解密, 请确认后重新上传]')
         except TypeError:
             st.write(':red[DXF文件未包含正确图层, 请确认后重新上传]')
         except AttributeError:
-            st.write(':red[DXF图层不正确, 请确认后重新上传]')  
+            st.write(':red[DXF图层不正确, 请确认后重新上传]')
+        except OverflowError:
+            st.write(':red[未输入Pixel信息, 请输入后再生成]') 
 
 with col56:
-    btn_D2_cp = st.button('***生成Dummy2区CSV***')
+    btn_D2_cp = st.button('***生成Dummy2区CSV数据***')
     if btn_D2_cp is True:  
         try:
+            start_time = time.time()
             # 创建工作区
             msp = doc.modelspace()
             if hole == 0:
@@ -390,42 +383,55 @@ with col56:
             D2_area_list = list(reversed(D2_area_list0))
             D2_DF = pd.DataFrame(D2_area_list)
 
+            end_time = time.time()
+            dis_time = round(end_time - start_time, 2)
+            str1 = '下表为Dummy2区灰阶过渡数据；' + '数据生成时间：<span style="color: #11CC11; font-weight: bold;">' + str(dis_time) + '</span>s'
+
             # 显示CSV数据
             with col521:
-                st.write('Dummy2区灰阶过渡')
+                st.write(str1, unsafe_allow_html=True)
+            with col521:
                 st.write(D2_DF)
             # 清理：删除临时文件
             os.unlink(temp.name)
 
         except NameError:
-            st.write(':red[DXF文件未解密, 请解密后重新上传]')
+            st.write(':red[DXF文件未上传或DXF文件未解密, 请确认后重新上传]')
         except TypeError:
             st.write(':red[DXF文件未包含正确图层, 请确认后重新上传]')
         except AttributeError:
-            st.write(':red[DXF图层不正确, 请确认后重新上传]')  
+            st.write(':red[DXF图层不正确, 请确认后重新上传]')
+        except OverflowError:
+            st.write(':red[未输入Pixel信息, 请输入后再生成]') 
 
 # 编辑点击计算按钮
 st.markdown(
     '''
     <style>
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-1y4p8pa.ea3mdgi2 > div > div > div > div:nth-child(12) > div:nth-child(2) > div > div > div > div > div > button
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-bm2z3a.ea3mdgi8 > div.block-container.st-emotion-cache-13ln4jf.ea3mdgi5 > div > div > div > div:nth-child(12) > div:nth-child(2) > div > div > div > div > div > button
     {
-    background-color: rgb(220, 240, 220);
-    height: 70px;
-    width: 150px;
+        background-color: rgb(220, 240, 220);
+        height: 70px;
+        width: 150px;
     }
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-1y4p8pa.ea3mdgi2 > div > div > div > div:nth-child(12) > div:nth-child(4) > div > div > div > div > div > button
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-bm2z3a.ea3mdgi8 > div.block-container.st-emotion-cache-13ln4jf.ea3mdgi5 > div > div > div > div:nth-child(12) > div:nth-child(4) > div > div > div > div > div > button
     {
-    background-color: rgb(220, 240, 220);
-    height: 70px;
-    width: 150px;
+        background-color: rgb(220, 240, 220);
+        height: 70px;
+        width: 150px;
     }
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-1y4p8pa.ea3mdgi2 > div > div > div > div:nth-child(12) > div:nth-child(6) > div > div > div > div > div > button
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-bm2z3a.ea3mdgi8 > div.block-container.st-emotion-cache-13ln4jf.ea3mdgi5 > div > div > div > div:nth-child(12) > div:nth-child(6) > div > div > div > div > div > button
     {
-    background-color: rgb(220, 240, 220);
-    height: 70px;
-    width: 150px;
+        background-color: rgb(220, 240, 220);
+        height: 70px;
+        width: 150px;
     } 
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-bm2z3a.ea3mdgi8 > div.block-container.st-emotion-cache-13ln4jf.ea3mdgi5 > div > div > div > div:nth-child(12) > div:nth-child(8) > div > div > div > div > div > button
+    {
+        background-color: rgb(200, 250, 250);
+        height: 60px;
+        width: 120px;
+    }
     </style>
     ''',
     unsafe_allow_html=True
@@ -435,7 +441,7 @@ st.markdown(
 st.markdown(
     '''
     <style>
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-1y4p8pa.ea3mdgi2 > div > div > div > div:nth-child(4) > div.st-emotion-cache-15qpf3q.e1f1d6gn3 > div > div > div > div:nth-child(2) > div > section > button
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-bm2z3a.ea3mdgi8 > div.block-container.st-emotion-cache-13ln4jf.ea3mdgi5 > div > div > div > div:nth-child(4) > div.st-emotion-cache-15qpf3q.e1f1d6gn3 > div > div > div > div:nth-child(2) > div > section > button
     {
     background-color: rgb(220, 240, 220);
     }
