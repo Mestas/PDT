@@ -92,8 +92,8 @@ def check_trans(calc_tr):
 
 # 功能模块2 - 生成pixel阵列pixel_array
 def pixel_array(x0, y0, xmax, ymax, entity_polygon):
-    rows = int((ymax - y0) / pix_y)
-    columns = int((xmax - x0) / pix_x)
+    rows = round((ymax - y0) / pix_y)
+    columns = round((xmax - x0) / pix_x)
     Gray_Mapping = []
     for row in range(rows):
         for col in range(columns):
@@ -171,7 +171,7 @@ with col52:
 
             # # # 获取布满AA区时的开口率信息
             AA_area = pixel_array(AA_x0, AA_y0, AA_xmax, AA_ymax, AA_polygon)
-            sublist_size1 = int((AA_xmax - AA_x0) / pix_x)
+            sublist_size1 = round((AA_xmax - AA_x0) / pix_x)
             AA_area_list0 = [AA_area[i:i + sublist_size1] for i in range(0, len(AA_area), sublist_size1)]
             AA_area_list = list(reversed(AA_area_list0))
             AA_DF = pd.DataFrame(AA_area_list)
@@ -297,7 +297,7 @@ with col54:
 
             # # # 布满Dummy1区时的面积获得
             D1_area = pixel_array(D1_x0, D1_y0, D1_xmax, D1_ymax, D1_polygon)
-            sublist_size2 = int((D1_xmax - D1_x0) / pix_x)
+            sublist_size2 = round((D1_xmax - D1_x0) / pix_x)
             D1_area_list0 = [D1_area[i:i + sublist_size2] for i in range(0, len(D1_area), sublist_size2)]
             D1_area_list = list(reversed(D1_area_list0))
             D1_DF = pd.DataFrame(D1_area_list)
@@ -378,7 +378,7 @@ with col56:
 
             # # # 布满Dummy2区时的面积获得
             D2_area = pixel_array(D2_x0, D2_y0, D2_xmax, D2_ymax, D2_polygon)
-            sublist_size3 = int((D2_xmax - D2_x0) / pix_x)
+            sublist_size3 = round((D2_xmax - D2_x0) / pix_x)
             D2_area_list0 = [D2_area[i:i + sublist_size3] for i in range(0, len(D2_area), sublist_size3)]
             D2_area_list = list(reversed(D2_area_list0))
             D2_DF = pd.DataFrame(D2_area_list)
