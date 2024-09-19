@@ -73,14 +73,14 @@ def write_txt(content):
     # 发送请求以更新文件内容
     response = requests.put(api_url, headers=headers, data=json.dumps(data))
 
-    # 检查响应状态
-    if response.status_code == 200:
-        # 请求成功，显示成功信息
-        st.success('File updated successfully on GitHub!')
-    else:
-        # 请求失败，显示错误信息
-        st.error(f'Error: {response.status_code}')
-        st.write(response.text)
+    # # 检查响应状态
+    # if response.status_code == 200:
+    #     # 请求成功，显示成功信息
+    #     st.success('File updated successfully on GitHub!')
+    # else:
+    #     # 请求失败，显示错误信息
+    #     st.error(f'Error: {response.status_code}')
+    #     st.write(response.text)
 
 
 write = st.button('点击计算', key='pushbutton1')
