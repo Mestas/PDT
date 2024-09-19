@@ -18,37 +18,63 @@ with col2:
     st.write("<h5 style='color: blue;'>发布时间：2999/12/31</h5>", unsafe_allow_html=True)
 
 import requests
+import json
+from hashlib import sha1
 
 # 您的GitHub Personal Access Token
 github_pat = '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'
+# GitHub 仓库信息
+owner = 'Mestas'  # 仓库所有者
+repo = 'PDT'     # 仓库名称
+branch = 'main'             # 分支名称
+filepath = 'users/网站使用者.txt'  # 文件路径
 
-# GitHub 上的文件 URL
-file_url = 'https://raw.githubusercontent.com/Mestas/PDT/main/users/网站使用者.txt'
+# 文件内容
+content = '测试数据'
 
-# 发送请求
-response = requests.get(file_url)
+# 计算内容的 SHA1 哈希值
+encoded_content = content.encode('utf-8')
+content_sha1 = sha1(encoded_content).hexdigest()
+
+# GitHub API URL
+api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
+
+# 设置请求头，包括你的 PAT
+headers = {
+    'Authorization': f'token {github_pat}',
+    'Accept': 'application/vnd.github.v3+json',
+    'Content-Type': 'application/json'
+}
+
+# 发送请求以获取当前文件内容
+response = requests.get(api_url, headers=headers)
+if response.status_code == 200:
+    file_data = response.json()
+    # 如果文件存在，获取其当前的 SHA1 哈希值
+    content_sha1 = file_data['sha']
+else:
+    # 如果文件不存在，初始化 content_sha1 为空
+    content_sha1 = ''
+
+# 构建请求体
+data = {
+    "message": "Update file via Streamlit",
+    "content": content,
+    "branch": branch,
+    "sha": content_sha1
+}
+
+# 发送请求以更新文件内容
+response = requests.put(api_url, headers=headers, data=json.dumps(data))
+
 # 检查响应状态
 if response.status_code == 200:
-    # 请求成功，解析响应数据
-    file_content = response.text
-    st.write(file_content)
+    # 请求成功，显示成功信息
+    st.success('File updated successfully on GitHub!')
 else:
     # 请求失败，显示错误信息
     st.error(f'Error: {response.status_code}')
-    
-
-write = st.button('点击计算', key='pushbutton1')
-if write is True:
-    try:
-        os.makedirs('users', exist_ok=True)
-        fp_save = 'users/网站使用者.txt'
-        mode = 'a'
-        with open(fp_save, mode) as f:
-            f.write('使用了CA410数据处理工具' + '\n')
-        st.write('写入成功')
-    except Exception as e:
-        # st.error(f"无法写入文件: {e}")
-        st.write('写入失败')
+    st.write(response.text)
 
 read = st.button('点击读取', key='pushbutton2')
 if read is True:
