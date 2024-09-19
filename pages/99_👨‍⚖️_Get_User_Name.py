@@ -8,11 +8,11 @@ st.set_page_config(
 )
 
 # # # 侧边栏设置
-st.sidebar.write("<h4 style='color: blue;'>本工具用来获取网站使用者.txt</h4>", unsafe_allow_html=True)
+st.sidebar.write("<h4 style='color: blue;'>本工具用来获取网站使用者信息，非管理员勿用</h4>", unsafe_allow_html=True)
 
 
 # # # 工具名称、版本号
-st.write("# 网站使用者获取 #")
+st.write("# 网站使用者获取(非设计工具) #")
 col1, col2 = st.columns([2, 1])
 with col2:
     st.write("<h5 style='color: blue;'>版本号：V9999</h5>", unsafe_allow_html=True)
