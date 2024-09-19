@@ -22,7 +22,7 @@ import json
 from hashlib import sha1
 
 # 您的GitHub Personal Access Token
-github_pat = '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'
+github_pat = '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'
 # GitHub 仓库信息
 owner = 'Mestas'  # 仓库所有者
 repo = 'PDT'     # 仓库名称
