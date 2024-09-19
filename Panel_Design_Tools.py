@@ -127,7 +127,7 @@ if btn is True:
 
         # 文件内容
         date = time.strftime("%a %b %d %H:%M:%S %Y", time.localtime())
-        new_content = name + '于' + date + '进行了登录: '
+        new_content = name + '于' + date + '进行了登录:  ' + '\n'
 
     # GitHub API URL
         api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
