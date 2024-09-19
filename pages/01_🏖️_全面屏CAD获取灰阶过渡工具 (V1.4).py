@@ -197,14 +197,14 @@ with col52:
             ZZ = np.zeros((aa_h, aa_l), dtype=np.int16)
             ONE = np.ones((aa_h, aa_l), dtype=np.int16) * 255
 
-            AA_B1 = cv2.merge([ZZ, ZZ, M_AA])
-            AA_B2 = cv2.merge([ZZ, ZZ, ONE, M_Alpha])
+            AA_R1 = cv2.merge([ZZ, ZZ, M_AA])
+            AA_R2 = cv2.merge([ZZ, ZZ, ONE, M_Alpha])
 
             AA_G1 = cv2.merge([ZZ, M_AA, ZZ])
             AA_G2 = cv2.merge([ZZ, ONE, ZZ, M_Alpha])
 
-            AA_R1 = cv2.merge([M_AA, ZZ, ZZ])
-            AA_R2 = cv2.merge([ONE, ZZ, ZZ, M_Alpha])
+            AA_B1 = cv2.merge([M_AA, ZZ, ZZ])
+            AA_B2 = cv2.merge([ONE, ZZ, ZZ, M_Alpha])
 
             AA_W1 = cv2.merge([M_AA, M_AA, M_AA])
             AA_W2 = cv2.merge([ZZ, ZZ, ZZ, M_Alpha])
