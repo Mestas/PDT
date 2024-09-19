@@ -19,7 +19,7 @@ with col2:
 import requests
 
 def get_github_user_info(token):
-    url = "https://api.github.com/user"
+    url = "https://api.github.com/PDT/users/网站使用者.txt"
     headers = {"Authorization": f"token {token}"}
     response = requests.get(url, headers=headers)
     return response.json()
