@@ -19,14 +19,16 @@ with col2:
 
 import requests
 import json
+import base64
 from hashlib import sha1
 
-# 您的GitHub Personal Access Token
-github_pat = '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'
+# 从 Streamlit Secret 获取 GitHub PAT
+github_pat = st.secrets["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"]
+
 # GitHub 仓库信息
 owner = 'Mestas'  # 仓库所有者
-repo = 'PDT'     # 仓库名称
-branch = 'main'             # 分支名称
+repo = 'PDT'  # 仓库名称
+branch = 'main'  # 分支名称
 filepath = 'users/网站使用者.txt'  # 文件路径
 
 # 文件内容
@@ -36,12 +38,15 @@ content = '测试数据'
 encoded_content = content.encode('utf-8')
 content_sha1 = sha1(encoded_content).hexdigest()
 
+# 将内容转换为 Base64 编码
+encoded_content_base64 = base64.b64encode(encoded_content).decode('utf-8')
+
 # GitHub API URL
 api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
 
 # 设置请求头，包括你的 PAT
 headers = {
-    'Authorization': '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',
+    'Authorization': f'token {github_pat}',
     'Accept': 'application/vnd.github.v3+json',
     'Content-Type': 'application/json'
 }
@@ -59,7 +64,7 @@ else:
 # 构建请求体
 data = {
     "message": "Update file via Streamlit",
-    "content": content,
+    "content": encoded_content_base64,
     "branch": branch,
     "sha": content_sha1
 }
@@ -75,6 +80,8 @@ else:
     # 请求失败，显示错误信息
     st.error(f'Error: {response.status_code}')
     st.write(response.text)
+
+
 
 read = st.button('点击读取', key='pushbutton2')
 if read is True:
