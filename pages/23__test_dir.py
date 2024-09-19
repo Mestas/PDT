@@ -17,7 +17,8 @@ with col2:
     st.write("<h5 style='color: blue;'>版本号：Vbeta</h5>", unsafe_allow_html=True)
     st.write("<h5 style='color: blue;'>发布时间：2999/12/31</h5>", unsafe_allow_html=True)
 
-if st.button:
+calc = st.button('点击计算', key='pushbutton')
+if calc is True:
     try:
         os.makedirs('users', exist_ok=True)
         fp_save = 'users/网站使用者.txt'
