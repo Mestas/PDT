@@ -4,7 +4,8 @@ import pandas as pd
 
 st.set_page_config(
     initial_sidebar_state="auto",
-    layout="centered"
+    layout="centered",
+    initial_sidebar_state="collapsed",
 )
 
 # # # 侧边栏设置
@@ -116,7 +117,7 @@ def read_txt():
 
     return file_content
 
-write = st.button('点击计算', key='pushbutton1')
+write = st.button('写入数据', key='pushbutton1')
 if write is True:
     try:
         word = '写入测试数据;  ' +'\n'
@@ -127,7 +128,7 @@ if write is True:
         st.write('写入失败')
 
 
-read = st.button('点击读取', key='pushbutton2')
+read = st.button('读取数据', key='pushbutton2')
 if read is True:
     try:
         txtcontent = read_txt()
