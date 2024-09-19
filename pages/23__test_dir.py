@@ -17,8 +17,8 @@ with col2:
     st.write("<h5 style='color: blue;'>版本号：Vbeta</h5>", unsafe_allow_html=True)
     st.write("<h5 style='color: blue;'>发布时间：2999/12/31</h5>", unsafe_allow_html=True)
 
-calc = st.button('点击计算', key='pushbutton1')
-if calc is True:
+write = st.button('点击计算', key='pushbutton1')
+if write is True:
     try:
         os.makedirs('users', exist_ok=True)
         fp_save = 'users/网站使用者.txt'
@@ -27,11 +27,11 @@ if calc is True:
             f.write('使用了CA410数据处理工具' + '\n')
         st.write('写入成功')
     except Exception as e:
-        st.error(f"无法写入文件: {e}")
+        # st.error(f"无法写入文件: {e}")
         st.write('写入失败')
 
-calc1 = st.button('点击读取', key='pushbutton2')
-if calc is True:
+read = st.button('点击读取', key='pushbutton2')
+if read is True:
     try:
         fname = 'users/网站使用者.txt'
         data = pd.read_csv(fname, header=None, sep="\t", skip_blank_lines=True)
