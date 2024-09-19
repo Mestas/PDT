@@ -73,7 +73,7 @@ def write_txt(new_content):
         "message": "Update file via Streamlit",
         "content": encoded_content_base64,
         "branch": branch,
-        "sha": file_data['sha'] if response.status_code == 200 else None  # 如果文件不存在，这将被忽略
+        "sha": content_sha1  # 如果文件不存在，这将被忽略
     }
 
     # 发送请求以更新文件内容
