@@ -90,6 +90,7 @@ def write_txt(new_content):
 
 def read_txt():
     import requests
+    import base64
 
     # GitHub 仓库信息
     owner = 'Mestas'  # 仓库所有者
@@ -98,13 +99,20 @@ def read_txt():
     filepath = 'users/网站使用者.txt'  # 文件路径
 
     # GitHub API URL
-    file_url = f'https://raw.githubusercontent.com/{owner}/{repo}/{branch}/{filepath}'
+    api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
+
+    # 设置请求头
+    headers = {
+        'Accept': 'application/vnd.github.v3+json'
+    }
 
     # 发送请求以获取文件内容
-    response = requests.get(file_url)
-    
+    response = requests.get(api_url, headers=headers)
+
     if response.status_code == 200:
-        file_content = response.text
+        file_data = response.json()
+        # 解码 Base64 内容
+        file_content = base64.b64decode(file_data['content']).decode('utf-8')
         print(file_content)
     else:
         print(f'Error: {response.status_code}')
