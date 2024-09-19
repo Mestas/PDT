@@ -5,7 +5,7 @@ import pandas as pd
 st.set_page_config(
     initial_sidebar_state="auto",
     layout="centered",
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="collapsed"
 )
 
 # # # 侧边栏设置
