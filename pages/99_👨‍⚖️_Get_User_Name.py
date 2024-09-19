@@ -8,15 +8,15 @@ st.set_page_config(
 )
 
 # # # 侧边栏设置
-st.sidebar.write("<h4 style='color: blue;'>本工具确认是否存在网站使用者.txt</h4>", unsafe_allow_html=True)
+st.sidebar.write("<h4 style='color: blue;'>本工具用来获取网站使用者.txt</h4>", unsafe_allow_html=True)
 
 
 # # # 工具名称、版本号
-st.write("# 内部测试用 #")
+st.write("# 网站使用者获取 #")
 col1, col2 = st.columns([2, 1])
 with col2:
-    st.write("<h5 style='color: blue;'>版本号：Vbeta</h5>", unsafe_allow_html=True)
-    st.write("<h5 style='color: blue;'>发布时间：2999/12/31</h5>", unsafe_allow_html=True)
+    st.write("<h5 style='color: blue;'>版本号：V9999</h5>", unsafe_allow_html=True)
+    st.write("<h5 style='color: blue;'>发布时间：9999/99/99</h5>", unsafe_allow_html=True)
 
 def write_txt(new_content):
     import requests
@@ -137,13 +137,17 @@ if read is True:
         # st.error(f"无法读取文件: {e}")
         st.write('读取失败')
 
-# check = st.button('点击查看', key='pushbutton3')
-# if check is True:
-#     try:
-#         files_and_dirs = os.listdir('.')
-#         for item in files_and_dirs:
-#             st.write(item)
-#     except Exception as e:
-#         # st.error(f"无法读取文件: {e}")
-#         st.write('读取失败')
-
+# 设置按钮底色
+st.markdown(
+    '''
+    <style>
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-1y4p8pa.ea3mdgi2 > div > div > div > div:nth-child(4) > div > button
+    {
+         background-color: rgb(220, 240, 220);
+         height: 60px;
+         width: 120px;
+    }
+    </style>
+    ''',
+    unsafe_allow_html=True
+)
