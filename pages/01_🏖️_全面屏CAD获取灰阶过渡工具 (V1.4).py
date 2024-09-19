@@ -114,7 +114,7 @@ def pixel_array(x0, y0, xmax, ymax, entity_polygon):
 col51, col52, col53, col54, col55, col56, col57, col58, col59 = st.columns([1, 5, 1, 5, 1, 5, 1, 4, 1])
 col511, col521, col531 = st.columns([1, 20, 1])
 with col52:
-    btn_AA_csv = st.button('***生成AA区CSV和图片***')
+    btn_AA_csv = st.button('***点击生成AA区CSV和图片***')
     if btn_AA_csv is True:  
         try:
             start_time = time.time()
@@ -245,7 +245,7 @@ with col52:
             st.write(':red[未输入Pixel信息, 请输入后再生成]')
 
 with col54:
-    btn_D1_cp = st.button('***生成Dummy1区CSV***')
+    btn_D1_cp = st.button('***点击生成Dummy1区CSV***')
     if btn_D1_cp is True:  
         try:
             start_time = time.time()
@@ -343,7 +343,7 @@ with col54:
             st.write(':red[未输入Pixel信息, 请输入后再生成]') 
 
 with col56:
-    btn_D2_cp = st.button('***生成Dummy2区CSV***')
+    btn_D2_cp = st.button('***点击生成Dummy2区CSV***')
     if btn_D2_cp is True:  
         try:
             start_time = time.time()
