@@ -117,9 +117,7 @@ def read_txt():
     return file_content
 
 # 输入用户名
-col5, col6, col7 = st.columns([1, 4, 10])
-with col6:
-    name = st.text_input('请输入姓名后查看', key=1)
+name = st.text_input('请输入用户名后进行查看', key=1)
 p = len(name)
 namelist = ['administrator']
 
@@ -134,7 +132,7 @@ if read is True:
             # st.error(f"无法读取文件: {e}")
             st.write('读取失败')
     else:
-        st.write('无权限查看')
+        st.write("<h6 style='color: red;'>对不起，您无权限查看该文件内容！</h6>", unsafe_allow_html=True)
         
 # if btn is True:
 #     if p > 0 and name in namelist:
@@ -164,6 +162,10 @@ st.markdown(
         background-color: rgb(220, 240, 220);
         height: 60px;
         width: 120px;
+    }
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-1y4p8pa.ea3mdgi2 > div > div > div > div:nth-child(3) > div.st-emotion-cache-ndxjbj.e1f1d6gn3 > div > div > div > div > div > div > div
+    {
+        background-color: rgb(220, 240, 220);
     }
     </style>
     ''',
