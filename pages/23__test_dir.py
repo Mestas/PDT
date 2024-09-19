@@ -115,7 +115,7 @@ def read_txt():
 write = st.button('点击计算', key='pushbutton1')
 if write is True:
     try:
-        word = '使用了CA410数据处理工具'
+        word = '使用了CA410数据处理工'
         write_txt(word)
         st.write('写入成功')
     except Exception as e:
