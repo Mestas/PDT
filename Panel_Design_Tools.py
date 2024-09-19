@@ -183,3 +183,16 @@ st.markdown(
     ''',
     unsafe_allow_html=True
 )
+# 设置名字输入栏底色
+st.markdown(
+    '''
+    <style>
+    input
+    {
+        visibility: collapsed !important;
+        background-color: rgb(220, 240, 220) !important;
+    }
+    </style>
+    ''',
+    unsafe_allow_html=True
+)
