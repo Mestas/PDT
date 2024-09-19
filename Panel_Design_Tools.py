@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
-import time
+from datetime import datetime
+import pytz
 
 # 设置主页标题
 st.set_page_config(
@@ -126,7 +127,13 @@ if btn is True:
         filepath = 'users/网站使用者.txt'  # 文件路径
 
         # 文件内容
-        date = time.strftime("%a %b %d %H:%M:%S %Y", time.localtime())
+        # 获取特定时区
+        timezone = pytz.timezone('Asia/Shanghai')  # 例如，获取东八区的时间
+
+        # 获取当前时间，并将其本地化到特定时区
+        local_time = datetime.now(timezone)
+        # 格式化时间
+        date = local_time.strftime('%Y-%m-%d %H:%M:%S')
         new_content = name + '于' + date + '进行了登录:  ' + '\n'
 
     # GitHub API URL
