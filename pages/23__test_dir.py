@@ -20,25 +20,18 @@ with col2:
 import requests
 
 # 您的GitHub Personal Access Token
-githup_pat = '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'
+github_pat = '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'
 
-# GitHub API URL，这里以获取用户信息为例
-api_url = 'https://api.github.com/user'
-
-# 设置请求头，包括您的FPAT
-headers = {
-    'Authorization': f'token {githup_pat}',
-    'Accept': 'application/vnd.github.v3+json'
-}
+# GitHub 上的文件 URL
+file_url = 'https://raw.githubusercontent.com/Mestas/PDT/main/users/网站使用者.txt'
 
 # 发送请求
-response = requests.get('https://github.com/Mestas/PDT/blob/main/users/网站使用者.txt', headers=headers)
-
+response = requests.get(file_url)
 # 检查响应状态
 if response.status_code == 200:
     # 请求成功，解析响应数据
-    user_info = response.json()
-    st.write(user_info)
+    file_content = response.text
+    st.write(file_content)
 else:
     # 请求失败，显示错误信息
     st.error(f'Error: {response.status_code}')
