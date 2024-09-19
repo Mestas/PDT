@@ -36,14 +36,7 @@ def write_txt(new_content):
     # # 文件内容
     # content = '测试数据'
 
-    # 计算内容的 SHA1 哈希值
-    encoded_content = new_content.encode('utf-8')
-    content_sha1 = sha1(encoded_content).hexdigest()
-
-    # 将内容转换为 Base64 编码
-    encoded_content_base64 = base64.b64encode(encoded_content).decode('utf-8')
-
-    # GitHub API URL
+   # GitHub API URL
     api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
 
     # 设置请求头，包括你的 PAT
@@ -58,22 +51,25 @@ def write_txt(new_content):
     if response.status_code == 200:
         file_data = response.json()
         # 读取现有文件内容
-        existing_content = base64.b64decode(file_data['content'])
+        existing_content = base64.b64decode(file_data['content']).decode('utf-8')
         # 将新内容追加到现有内容
-        updated_content = existing_content + new_content.encode('utf-8')
+        updated_content = existing_content + new_content
         # 计算更新后内容的 SHA1 哈希值
-        content_sha1 = sha1(updated_content).hexdigest()
+        content_sha1 = sha1(updated_content.encode('utf-8')).hexdigest()
     else:
         # 如果文件不存在，就创建新文件
-        updated_content = new_content.encode('utf-8')
-        content_sha1 = sha1(updated_content).hexdigest()
+        updated_content = new_content
+        content_sha1 = sha1(new_content.encode('utf-8')).hexdigest()
+
+    # 将更新后的内容转换为 Base64 编码
+    encoded_content = base64.b64encode(updated_content.encode('utf-8')).decode('utf-8')
 
     # 构建请求体
     data = {
-        "message": "Update file via Streamlit",
-        "content": encoded_content_base64,
+        "message": "Append to file via Streamlit",
+        "content": encoded_content,
         "branch": branch,
-        "sha": content_sha1  # 如果文件不存在，这将被忽略
+        "sha": file_data['sha'] if response.status_code == 200 else None  # 如果文件不存在，这将被忽略
     }
 
     # 发送请求以更新文件内容
@@ -82,11 +78,11 @@ def write_txt(new_content):
     # 检查响应状态
     if response.status_code == 200:
         # 请求成功，显示成功信息
-        st.success('File updated successfully on GitHub!')
+        print('File updated successfully on GitHub!')
     else:
         # 请求失败，显示错误信息
-        st.error(f'Error: {response.status_code}')
-        st.write(response.text)
+        print(f'Error: {response.status_code}')
+        print(response.text)
 
 def read_txt():
     import requests
