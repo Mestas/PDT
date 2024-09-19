@@ -41,7 +41,7 @@ api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
 
 # 设置请求头，包括你的 PAT
 headers = {
-    'Authorization': f'token {github_pat}',
+    'Authorization': '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',
     'Accept': 'application/vnd.github.v3+json',
     'Content-Type': 'application/json'
 }
