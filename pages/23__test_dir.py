@@ -32,7 +32,7 @@ headers = {
 }
 
 # 发送请求
-response = requests.get('https://github.com/Mestas/PDT/users/网站使用者.txt', headers=headers)
+response = requests.get('https://github.com/repos/Mestas/PDT/contents/users/网站使用者.txt', headers=headers)
 
 # 检查响应状态
 if response.status_code == 200:
