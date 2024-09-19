@@ -20,7 +20,7 @@ with col2:
 import requests
 
 # 您的GitHub Personal Access Token
-githup_pat = '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'
+githup_pat = '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'
 
 # GitHub API URL，这里以获取用户信息为例
 api_url = 'https://api.github.com/user'
