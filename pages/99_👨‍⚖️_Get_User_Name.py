@@ -117,7 +117,9 @@ def read_txt():
     return file_content
 
 # 输入用户名
-name = st.text_input('请输入用户名后进行查看', key=1)
+col11, col12 = st.columns([2, 8])
+with col11:
+    name = st.text_input('请输入用户名后进行查看', key=1)
 p = len(name)
 namelist = ['administrator']
 
