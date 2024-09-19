@@ -24,7 +24,7 @@ def get_github_user_info(token):
     response = requests.get(url, headers=headers)
     return response.json()
 
-user_info = get_github_user_info(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)
+user_info = get_github_user_info('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')
 st.write(user_info)
 
 write = st.button('点击计算', key='pushbutton1')
