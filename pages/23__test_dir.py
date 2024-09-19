@@ -17,11 +17,14 @@ with col2:
     st.write("<h5 style='color: blue;'>版本号：Vbeta</h5>", unsafe_allow_html=True)
     st.write("<h5 style='color: blue;'>发布时间：2999/12/31</h5>", unsafe_allow_html=True)
 
-try:
-    os.makedirs('users', exist_ok=True)
-    fp_save = 'users/网站使用者.txt'
-    mode = 'a'
-    with open(fp_save, mode) as f:
-        f.write('使用了CA410数据处理工具' + '\n')
-except Exception as e:
-    st.error(f"无法写入文件: {e}")
+if st.button:
+    try:
+        os.makedirs('users', exist_ok=True)
+        fp_save = 'users/网站使用者.txt'
+        mode = 'a'
+        with open(fp_save, mode) as f:
+            f.write('使用了CA410数据处理工具' + '\n')
+        st.write('写入成功')
+    except Exception as e:
+        st.error(f"无法写入文件: {e}")
+        st.write('写入失败')
