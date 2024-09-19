@@ -40,3 +40,13 @@ if read is True:
     except Exception as e:
         # st.error(f"无法读取文件: {e}")
         st.write('读取失败')
+
+check = st.button('点击查看', key='pushbutton3')
+if check is True:
+    try:
+        files_and_dirs = os.listdir('.')
+        for item in files_and_dirs:
+            st.write(item)
+    except Exception as e:
+        # st.error(f"无法读取文件: {e}")
+        st.write('读取失败')
