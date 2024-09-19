@@ -18,10 +18,6 @@ with col2:
     st.write("<h5 style='color: blue;'>版本号：V9999</h5>", unsafe_allow_html=True)
     st.write("<h5 style='color: blue;'>发布时间：9999/99/99</h5>", unsafe_allow_html=True)
     
-
-        
-
-
 def write_txt(new_content):
     import requests
     import json
@@ -123,33 +119,35 @@ def read_txt():
 # 输入用户名
 col5, col6, col7 = st.columns([1, 4, 10])
 with col6:
-    name = st.text_input('请输入姓名并点击登录', key=1)
-    btn = st.button('点击登录')
+    name = st.text_input('请输入姓名后查看', key=1)
 p = len(name)
 namelist = ['administrator']
-if btn is True:
+
+read = st.button('读取数据', key='pushbutton2')
+if read is True:
     if p > 0 and name in namelist:
-        write = st.button('写入数据', key='pushbutton1')
-        if write is True:
-            try:
-                word = '写入测试数据;  ' +'\n'
-                write_txt(word)
-                st.write('写入成功')
-            except Exception as e:
-                # st.error(f"无法写入文件: {e}")
-                st.write('写入失败')
+        try:
+            txtcontent = read_txt()
+            st.write(txtcontent)
+    
+        except Exception as e:
+            # st.error(f"无法读取文件: {e}")
+            st.write('读取失败')
+    else:
+        st.write('无权限查看')
         
+# if btn is True:
+#     if p > 0 and name in namelist:
+#         write = st.button('写入数据', key='pushbutton1')
+#         if write is True:
+#             try:
+#                 word = '写入测试数据;  ' +'\n'
+#                 write_txt(word)
+#                 st.write('写入成功')
+#             except Exception as e:
+#                 # st.error(f"无法写入文件: {e}")
+#                 st.write('写入失败')
         
-        read = st.button('读取数据', key='pushbutton2')
-        if read is True:
-            try:
-                txtcontent = read_txt()
-                st.write(txtcontent)
-        
-            except Exception as e:
-                # st.error(f"无法读取文件: {e}")
-                st.write('读取失败')
-                
 
 # 设置按钮底色
 st.markdown(
