@@ -147,6 +147,12 @@ st.markdown(
         height: 60px;
         width: 120px;
     }
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-1y4p8pa.ea3mdgi2 > div > div > div > div:nth-child(3) > div > button
+    {
+        background-color: rgb(220, 240, 220);
+        height: 60px;
+        width: 120px;
+    }
     </style>
     ''',
     unsafe_allow_html=True
