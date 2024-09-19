@@ -16,15 +16,18 @@ col1, col2 = st.columns([2, 1])
 with col2:
     st.write("<h5 style='color: blue;'>版本号：Vbeta</h5>", unsafe_allow_html=True)
     st.write("<h5 style='color: blue;'>发布时间：2999/12/31</h5>", unsafe_allow_html=True)
+
 import requests
+github_token = st.secrets["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"]
+
 
 def get_github_user_info(token):
-    url = "https://api.github.com/PDT/users/网站使用者.txt"
+    url = "https://api.github.com/user"
     headers = {"Authorization": f"token {token}"}
     response = requests.get(url, headers=headers)
     return response.json()
 
-user_info = get_github_user_info('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')
+user_info = get_github_user_info(github_token)
 st.write(user_info)
 
 write = st.button('点击计算', key='pushbutton1')
