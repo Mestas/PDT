@@ -76,7 +76,7 @@ with col2_3:
     st.write('<span style="color: blue; font-size: 16px">39代表透过率精度2.5%, 59代表透过率精度1.67%, 79代表透过率精度1.25%  <br>全灰阶建议填写199, 代表透过率精度0.5%  <br>450 ~ 350PPI用39灰阶, 350 ~ 250PPI用59灰阶, 150 ~ 250PPI用79灰阶', unsafe_allow_html=True)
 
 # # # 设置步骤5
-st.write("<h6>步骤5: 点击按钮生成灰阶过渡CSV文件</h6>", unsafe_allow_html=True)
+st.write("<h6>步骤5: 点击按钮生成灰阶过渡CSV和图片</h6>", unsafe_allow_html=True)
 # 功能模块1 - 判断透过率精度
 def check_trans(calc_tr):
     # 根据输入的灰阶过渡灰阶精度，生成透过率T_list
@@ -114,7 +114,7 @@ def pixel_array(x0, y0, xmax, ymax, entity_polygon):
 col51, col52, col53, col54, col55, col56, col57, col58, col59 = st.columns([1, 5, 1, 5, 1, 5, 1, 4, 1])
 col511, col521, col531 = st.columns([1, 20, 1])
 with col52:
-    btn_AA_csv = st.button('***生成AA区CSV数据***')
+    btn_AA_csv = st.button('***生成AA区CSV和图片***')
     if btn_AA_csv is True:  
         try:
             start_time = time.time()
@@ -245,7 +245,7 @@ with col52:
             st.write(':red[未输入Pixel信息, 请输入后再生成]')
 
 with col54:
-    btn_D1_cp = st.button('***生成Dummy1区CSV数据***')
+    btn_D1_cp = st.button('***生成Dummy1区CSV***')
     if btn_D1_cp is True:  
         try:
             start_time = time.time()
@@ -343,7 +343,7 @@ with col54:
             st.write(':red[未输入Pixel信息, 请输入后再生成]') 
 
 with col56:
-    btn_D2_cp = st.button('***生成Dummy2区CSV数据***')
+    btn_D2_cp = st.button('***生成Dummy2区CSV***')
     if btn_D2_cp is True:  
         try:
             start_time = time.time()
