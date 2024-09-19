@@ -23,7 +23,7 @@ import base64
 from hashlib import sha1
 
 # 从 Streamlit Secret 获取 GitHub PAT
-github_pat = st.secrets['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']
+github_pat = st.secrets[github_token]
 
 # GitHub 仓库信息
 owner = 'Mestas'  # 仓库所有者
