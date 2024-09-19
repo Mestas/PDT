@@ -184,7 +184,7 @@ with col52:
             with col521:
                 st.write(str0, unsafe_allow_html=True)
             with col521:
-                st.write(AA_DF)
+                st.dataframe(AA_DF)
 
             # # # 获取AA区灰阶过渡图片信息
             M_AA0 = np.array(AA_area_list)
@@ -310,7 +310,7 @@ with col54:
             with col521:
                 st.write(str1, unsafe_allow_html=True)
             with col521:
-                st.write(D1_DF)
+                st.dataframe(D1_DF)
             # 清理：删除临时文件
             os.unlink(temp.name)
             
@@ -391,7 +391,7 @@ with col56:
             with col521:
                 st.write(str1, unsafe_allow_html=True)
             with col521:
-                st.write(D2_DF)
+                st.dataframe(D2_DF)
             # 清理：删除临时文件
             os.unlink(temp.name)
 
