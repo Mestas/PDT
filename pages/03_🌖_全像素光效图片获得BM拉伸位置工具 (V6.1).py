@@ -61,15 +61,93 @@ with col32:
 st.write("<h6>步骤4：点击按钮获取数据</h6>", unsafe_allow_html=True)
 bz41, bz42, bz43 = st.columns([1, 6, 15])
 bz44, bz45, bz46 = st.columns([1, 11, 10])
-try:
-    with bz42:
-        calc = st.button('***点击计算***', key=4)
-    if calc is True:
-        # 将使用者保存到txt文件中
-        fp_save = 'users/网站使用者.txt'
-        mode = 'a'
-        with open(fp_save, mode) as f:
-            f.write('使用了全像素光效图片获得BM拉伸距离' + '\n')
+with bz42:
+    calc = st.button('***点击计算***', key=4)
+if calc is True:
+    # 将登陆者信息传递过来
+    if 'user_name' in st.session_state:
+        user_name = st.session_state['user_name']
+        # st.write(user_name)
+
+    # 将登录者以及使用的信息保存到《网站使用者.txt》文件中
+    import requests
+    import json
+    import base64
+    from hashlib import sha1
+    from datetime import datetime
+    import pytz
+
+    # 从 Streamlit Secret 获取 GitHub PAT
+    github_pat = st.secrets['github_token']
+
+    # GitHub 仓库信息
+    owner = 'Mestas'  # 仓库所有者
+    repo = 'PDT'  # 仓库名称
+    branch = 'main'  # 分支名称
+    filepath = 'users/网站使用者.txt'  # 文件路径
+
+    # 文件内容
+    # 获取特定时区
+    timezone = pytz.timezone('Asia/Shanghai')  # 例如，获取东八区的时间
+
+    # 获取当前时间，并将其本地化到特定时区
+    local_time = datetime.now(timezone)
+    # 格式化时间
+    date = local_time.strftime('%Y-%m-%d %H:%M:%S')
+    new_content = user_name + '于' + date + '使用了《03-全像素光效图片获得BM拉伸位置工具 (V6.1)》;  ' + '\n'
+
+    # GitHub API URL
+    api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
+
+    # 设置请求头，包括你的 PAT
+    headers = {
+        'Authorization': f'token {github_pat}',
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+    }
+
+    # 发送请求以获取当前文件内容
+    response = requests.get(api_url, headers=headers)
+    if response.status_code == 200:
+        file_data = response.json()
+        # 读取现有文件内容
+        existing_content = base64.b64decode(file_data['content']).decode('utf-8')
+        # 将新内容追加到现有内容
+        updated_content = existing_content + new_content
+        # 计算更新后内容的 SHA1 哈希值
+        content_sha1 = sha1(updated_content.encode('utf-8')).hexdigest()
+    else:
+        # 如果文件不存在，就创建新文件
+        updated_content = new_content
+        content_sha1 = sha1(new_content.encode('utf-8')).hexdigest()
+
+    # 将更新后的内容转换为 Base64 编码
+    encoded_content = base64.b64encode(updated_content.encode('utf-8')).decode('utf-8')
+
+    # 构建请求体
+    data = {
+        "message": "Append to file via Streamlit",
+        "content": encoded_content,
+        "branch": branch,
+        "sha": file_data['sha'] if response.status_code == 200 else None  # 如果文件不存在，这将被忽略
+    }
+
+    # 发送请求以更新文件内容
+    response = requests.put(api_url, headers=headers, data=json.dumps(data))
+
+    # # 检查响应状态
+    # if response.status_code == 200:
+    #     # 请求成功，显示成功信息
+    #     print('File updated successfully on GitHub!')
+    # else:
+    #     # 请求失败，显示错误信息
+    #     print(f'Error: {response.status_code}')
+    #     print(response.text)
+
+    # # # # # # # # # # # # 分隔符，以上为保存使用者信息 # # # # # # # # # # # #
+    # # # # # # # # # # # # 分隔符，以下为正式代码 # # # # # # # # # # # #
+
+    try:
         # # 从techwiz图片中找到Pixel边界
         for iu in range(120, 530):
             if Pic_gray.getpixel((850, iu)) == 255 and Pic_gray.getpixel((850, iu + 1)) == 0:
@@ -297,26 +375,26 @@ try:
             st.write("<h7>像素开口区</h7>", unsafe_allow_html=True)
             st.image(Pic_AR, clamp=True)
 
-except AttributeError:
-    with bz43:
-        st.write(' ')
-        st.write(' ')
-        st.write(':red[请确认所有项目已填写完成1!]')
-# except ValueError:
-#     with bz43:
-#         st.write(' ')
-#         st.write(' ')
-#         st.write(':red[请确认所有项目已填写完成2!]')
-except NameError:
-    with bz43:
-        st.write(' ')
-        st.write(' ')
-        st.write(':red[请加载Techwiz图片!]')
-# except ZeroDivisionError:
-#     with bz43:
-#         st.write(' ')
-#         st.write(' ')
-#         st.write(':red[请检查<步骤2：仿真参数>是否正确!]')
+    except AttributeError:
+        with bz43:
+            st.write(' ')
+            st.write(' ')
+            st.write(':red[请确认所有项目已填写完成1!]')
+    # except ValueError:
+    #     with bz43:
+    #         st.write(' ')
+    #         st.write(' ')
+    #         st.write(':red[请确认所有项目已填写完成2!]')
+    except NameError:
+        with bz43:
+            st.write(' ')
+            st.write(' ')
+            st.write(':red[请加载Techwiz图片!]')
+    # except ZeroDivisionError:
+    #     with bz43:
+    #         st.write(' ')
+    #         st.write(' ')
+    #         st.write(':red[请检查<步骤2：仿真参数>是否正确!]')
 
 # 编辑button - Final计算
 st.markdown(
