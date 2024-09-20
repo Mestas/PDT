@@ -145,7 +145,7 @@ with col52:
         local_time = datetime.now(timezone)
         # 格式化时间
         date = local_time.strftime('%Y-%m-%d %H:%M:%S')
-        new_content = user_name + '于' + date + '使用了《01-全面屏CAD获取灰阶过渡工具 (V1.4) - AA区灰阶过渡生成》:  ' + '\n'
+        new_content = user_name + '于' + date + '使用了《01-全面屏CAD获取灰阶过渡工具 (V1.4) - AA区灰阶过渡生成》;  ' + '\n'
 
         # GitHub API URL
         api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
@@ -359,7 +359,7 @@ with col54:
         local_time = datetime.now(timezone)
         # 格式化时间
         date = local_time.strftime('%Y-%m-%d %H:%M:%S')
-        new_content = user_name + '于' + date + '使用了《01-全面屏CAD获取灰阶过渡工具 (V1.4) - Dummy1区灰阶过渡生成》:  ' + '\n'
+        new_content = user_name + '于' + date + '使用了《01-全面屏CAD获取灰阶过渡工具 (V1.4) - Dummy1区灰阶过渡生成》;  ' + '\n'
 
         # GitHub API URL
         api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
@@ -540,7 +540,7 @@ with col56:
         local_time = datetime.now(timezone)
         # 格式化时间
         date = local_time.strftime('%Y-%m-%d %H:%M:%S')
-        new_content = user_name + '于' + date + '使用了《01-全面屏CAD获取灰阶过渡工具 (V1.4) - Dummy2区灰阶过渡生成》:  ' + '\n'
+        new_content = user_name + '于' + date + '使用了《01-全面屏CAD获取灰阶过渡工具 (V1.4) - Dummy2区灰阶过渡生成》;  ' + '\n'
 
         # GitHub API URL
         api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
