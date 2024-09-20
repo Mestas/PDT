@@ -72,7 +72,6 @@ with col2_2:
     Gray0 = st.number_input(label='过渡灰阶数', format='%f', key='Gray')
     Gray = int(Gray0)
 with col2_3:
-
     st.write('<span style="color: blue; font-size: 16px">39代表透过率精度2.5%, 59代表透过率精度1.67%, 79代表透过率精度1.25%  <br>全灰阶建议填写199, 代表透过率精度0.5%  <br>450 ~ 350PPI用39灰阶, 350 ~ 250PPI用59灰阶, 150 ~ 250PPI用79灰阶', unsafe_allow_html=True)
 
 # # # 设置步骤5
@@ -115,7 +114,90 @@ col51, col52, col53, col54, col55, col56, col57, col58, col59 = st.columns([1, 5
 col511, col521, col531 = st.columns([1, 20, 1])
 with col52:
     btn_AA_csv = st.button('***点击生成AA区CSV和图片***')
-    if btn_AA_csv is True:  
+    if btn_AA_csv is True:
+        # 这是另一个页面
+        if 'user_name' in st.session_state:
+            user_name = st.session_state['user_name']
+            # st.write(user_name)
+
+        # 将登录者以及使用的信息保存到《网站使用者.txt》文件中
+        import requests
+        import json
+        import base64
+        from hashlib import sha1
+        from datetime import datetime
+        import pytz
+
+        # 从 Streamlit Secret 获取 GitHub PAT
+        github_pat = st.secrets['github_token']
+
+        # GitHub 仓库信息
+        owner = 'Mestas'  # 仓库所有者
+        repo = 'test'  # 仓库名称
+        branch = 'main'  # 分支名称
+        filepath = 'user_info.txt'  # 文件路径
+
+        # 文件内容
+        # 获取特定时区
+        timezone = pytz.timezone('Asia/Shanghai')  # 例如，获取东八区的时间
+
+        # 获取当前时间，并将其本地化到特定时区
+        local_time = datetime.now(timezone)
+        # 格式化时间
+        date = local_time.strftime('%Y-%m-%d %H:%M:%S')
+        new_content = user_name + '于' + date + '使用了《01-全面屏CAD获取灰阶过渡工具 (V1.4) - AA区灰阶过渡生成》:  ' + '\n'
+
+        # GitHub API URL
+        api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
+
+        # 设置请求头，包括你的 PAT
+        headers = {
+            'Authorization': f'token {github_pat}',
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+        }
+
+        # 发送请求以获取当前文件内容
+        response = requests.get(api_url, headers=headers)
+        if response.status_code == 200:
+            file_data = response.json()
+            # 读取现有文件内容
+            existing_content = base64.b64decode(file_data['content']).decode('utf-8')
+            # 将新内容追加到现有内容
+            updated_content = existing_content + new_content
+            # 计算更新后内容的 SHA1 哈希值
+            content_sha1 = sha1(updated_content.encode('utf-8')).hexdigest()
+        else:
+            # 如果文件不存在，就创建新文件
+            updated_content = new_content
+            content_sha1 = sha1(new_content.encode('utf-8')).hexdigest()
+
+        # 将更新后的内容转换为 Base64 编码
+        encoded_content = base64.b64encode(updated_content.encode('utf-8')).decode('utf-8')
+
+        # 构建请求体
+        data = {
+            "message": "Append to file via Streamlit",
+            "content": encoded_content,
+            "branch": branch,
+            "sha": file_data['sha'] if response.status_code == 200 else None  # 如果文件不存在，这将被忽略
+        }
+
+        # 发送请求以更新文件内容
+        response = requests.put(api_url, headers=headers, data=json.dumps(data))
+
+        # # 检查响应状态
+        # if response.status_code == 200:
+        #     # 请求成功，显示成功信息
+        #     print('File updated successfully on GitHub!')
+        # else:
+        #     # 请求失败，显示错误信息
+        #     print(f'Error: {response.status_code}')
+        #     print(response.text)
+
+        # # # # # # # # # # # # 分隔符，以上为保存使用者信息 # # # # # # # # # # # #
+        # # # # # # # # # # # # 分隔符，以下为正式代码 # # # # # # # # # # # #
+
         try:
             start_time = time.time()
             # 创建工作区
@@ -246,7 +328,90 @@ with col52:
 
 with col54:
     btn_D1_cp = st.button('***点击生成Dummy1区CSV***')
-    if btn_D1_cp is True:  
+    if btn_D1_cp is True:
+        # 这是另一个页面
+        if 'user_name' in st.session_state:
+            user_name = st.session_state['user_name']
+            # st.write(user_name)
+
+        # 将登录者以及使用的信息保存到《网站使用者.txt》文件中
+        import requests
+        import json
+        import base64
+        from hashlib import sha1
+        from datetime import datetime
+        import pytz
+
+        # 从 Streamlit Secret 获取 GitHub PAT
+        github_pat = st.secrets['github_token']
+
+        # GitHub 仓库信息
+        owner = 'Mestas'  # 仓库所有者
+        repo = 'test'  # 仓库名称
+        branch = 'main'  # 分支名称
+        filepath = 'user_info.txt'  # 文件路径
+
+        # 文件内容
+        # 获取特定时区
+        timezone = pytz.timezone('Asia/Shanghai')  # 例如，获取东八区的时间
+
+        # 获取当前时间，并将其本地化到特定时区
+        local_time = datetime.now(timezone)
+        # 格式化时间
+        date = local_time.strftime('%Y-%m-%d %H:%M:%S')
+        new_content = user_name + '于' + date + '使用了《01-全面屏CAD获取灰阶过渡工具 (V1.4) - Dummy1区灰阶过渡生成》:  ' + '\n'
+
+        # GitHub API URL
+        api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
+
+        # 设置请求头，包括你的 PAT
+        headers = {
+            'Authorization': f'token {github_pat}',
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+        }
+
+        # 发送请求以获取当前文件内容
+        response = requests.get(api_url, headers=headers)
+        if response.status_code == 200:
+            file_data = response.json()
+            # 读取现有文件内容
+            existing_content = base64.b64decode(file_data['content']).decode('utf-8')
+            # 将新内容追加到现有内容
+            updated_content = existing_content + new_content
+            # 计算更新后内容的 SHA1 哈希值
+            content_sha1 = sha1(updated_content.encode('utf-8')).hexdigest()
+        else:
+            # 如果文件不存在，就创建新文件
+            updated_content = new_content
+            content_sha1 = sha1(new_content.encode('utf-8')).hexdigest()
+
+        # 将更新后的内容转换为 Base64 编码
+        encoded_content = base64.b64encode(updated_content.encode('utf-8')).decode('utf-8')
+
+        # 构建请求体
+        data = {
+            "message": "Append to file via Streamlit",
+            "content": encoded_content,
+            "branch": branch,
+            "sha": file_data['sha'] if response.status_code == 200 else None  # 如果文件不存在，这将被忽略
+        }
+
+        # 发送请求以更新文件内容
+        response = requests.put(api_url, headers=headers, data=json.dumps(data))
+
+        # # 检查响应状态
+        # if response.status_code == 200:
+        #     # 请求成功，显示成功信息
+        #     print('File updated successfully on GitHub!')
+        # else:
+        #     # 请求失败，显示错误信息
+        #     print(f'Error: {response.status_code}')
+        #     print(response.text)
+
+        # # # # # # # # # # # # 分隔符，以上为保存使用者信息 # # # # # # # # # # # #
+        # # # # # # # # # # # # 分隔符，以下为正式代码 # # # # # # # # # # # #
+
         try:
             start_time = time.time()
             # 创建工作区
@@ -344,7 +509,90 @@ with col54:
 
 with col56:
     btn_D2_cp = st.button('***点击生成Dummy2区CSV***')
-    if btn_D2_cp is True:  
+    if btn_D2_cp is True:
+        # 这是另一个页面
+        if 'user_name' in st.session_state:
+            user_name = st.session_state['user_name']
+            # st.write(user_name)
+
+        # 将登录者以及使用的信息保存到《网站使用者.txt》文件中
+        import requests
+        import json
+        import base64
+        from hashlib import sha1
+        from datetime import datetime
+        import pytz
+
+        # 从 Streamlit Secret 获取 GitHub PAT
+        github_pat = st.secrets['github_token']
+
+        # GitHub 仓库信息
+        owner = 'Mestas'  # 仓库所有者
+        repo = 'test'  # 仓库名称
+        branch = 'main'  # 分支名称
+        filepath = 'user_info.txt'  # 文件路径
+
+        # 文件内容
+        # 获取特定时区
+        timezone = pytz.timezone('Asia/Shanghai')  # 例如，获取东八区的时间
+
+        # 获取当前时间，并将其本地化到特定时区
+        local_time = datetime.now(timezone)
+        # 格式化时间
+        date = local_time.strftime('%Y-%m-%d %H:%M:%S')
+        new_content = user_name + '于' + date + '使用了《01-全面屏CAD获取灰阶过渡工具 (V1.4) - Dummy2区灰阶过渡生成》:  ' + '\n'
+
+        # GitHub API URL
+        api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
+
+        # 设置请求头，包括你的 PAT
+        headers = {
+            'Authorization': f'token {github_pat}',
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+        }
+
+        # 发送请求以获取当前文件内容
+        response = requests.get(api_url, headers=headers)
+        if response.status_code == 200:
+            file_data = response.json()
+            # 读取现有文件内容
+            existing_content = base64.b64decode(file_data['content']).decode('utf-8')
+            # 将新内容追加到现有内容
+            updated_content = existing_content + new_content
+            # 计算更新后内容的 SHA1 哈希值
+            content_sha1 = sha1(updated_content.encode('utf-8')).hexdigest()
+        else:
+            # 如果文件不存在，就创建新文件
+            updated_content = new_content
+            content_sha1 = sha1(new_content.encode('utf-8')).hexdigest()
+
+        # 将更新后的内容转换为 Base64 编码
+        encoded_content = base64.b64encode(updated_content.encode('utf-8')).decode('utf-8')
+
+        # 构建请求体
+        data = {
+            "message": "Append to file via Streamlit",
+            "content": encoded_content,
+            "branch": branch,
+            "sha": file_data['sha'] if response.status_code == 200 else None  # 如果文件不存在，这将被忽略
+        }
+
+        # 发送请求以更新文件内容
+        response = requests.put(api_url, headers=headers, data=json.dumps(data))
+
+        # # 检查响应状态
+        # if response.status_code == 200:
+        #     # 请求成功，显示成功信息
+        #     print('File updated successfully on GitHub!')
+        # else:
+        #     # 请求失败，显示错误信息
+        #     print(f'Error: {response.status_code}')
+        #     print(response.text)
+
+        # # # # # # # # # # # # 分隔符，以上为保存使用者信息 # # # # # # # # # # # #
+        # # # # # # # # # # # # 分隔符，以下为正式代码 # # # # # # # # # # # # 
+        
         try:
             start_time = time.time()
             # 创建工作区
