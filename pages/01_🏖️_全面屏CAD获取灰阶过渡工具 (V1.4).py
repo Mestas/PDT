@@ -133,9 +133,9 @@ with col52:
 
         # GitHub 仓库信息
         owner = 'Mestas'  # 仓库所有者
-        repo = 'test'  # 仓库名称
+        repo = 'PDT'  # 仓库名称
         branch = 'main'  # 分支名称
-        filepath = 'user_info.txt'  # 文件路径
+        filepath = 'users/网站使用者.txt'  # 文件路径
 
         # 文件内容
         # 获取特定时区
@@ -347,9 +347,9 @@ with col54:
 
         # GitHub 仓库信息
         owner = 'Mestas'  # 仓库所有者
-        repo = 'test'  # 仓库名称
+        repo = 'PDT'  # 仓库名称
         branch = 'main'  # 分支名称
-        filepath = 'user_info.txt'  # 文件路径
+        filepath = 'users/网站使用者.txt'  # 文件路径
 
         # 文件内容
         # 获取特定时区
@@ -528,9 +528,9 @@ with col56:
 
         # GitHub 仓库信息
         owner = 'Mestas'  # 仓库所有者
-        repo = 'test'  # 仓库名称
+        repo = 'PDT'  # 仓库名称
         branch = 'main'  # 分支名称
-        filepath = 'user_info.txt'  # 文件路径
+        filepath = 'users/网站使用者.txt'  # 文件路径
 
         # 文件内容
         # 获取特定时区
