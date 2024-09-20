@@ -114,578 +114,578 @@ col51, col52, col53, col54, col55, col56, col57, col58, col59 = st.columns([1, 5
 col511, col521, col531 = st.columns([1, 20, 1])
 with col52:
     btn_AA_csv = st.button('***点击生成AA区CSV和图片***')
-    if btn_AA_csv is True:
-        # 这是另一个页面
-        if 'user_name' in st.session_state:
-            user_name = st.session_state['user_name']
-            # st.write(user_name)
+if btn_AA_csv is True:
+    # 将登陆者信息传递过来
+    if 'user_name' in st.session_state:
+        user_name = st.session_state['user_name']
+        # st.write(user_name)
 
-        # 将登录者以及使用的信息保存到《网站使用者.txt》文件中
-        import requests
-        import json
-        import base64
-        from hashlib import sha1
-        from datetime import datetime
-        import pytz
+    # 将登录者以及使用的信息保存到《网站使用者.txt》文件中
+    import requests
+    import json
+    import base64
+    from hashlib import sha1
+    from datetime import datetime
+    import pytz
 
-        # 从 Streamlit Secret 获取 GitHub PAT
-        github_pat = st.secrets['github_token']
+    # 从 Streamlit Secret 获取 GitHub PAT
+    github_pat = st.secrets['github_token']
 
-        # GitHub 仓库信息
-        owner = 'Mestas'  # 仓库所有者
-        repo = 'PDT'  # 仓库名称
-        branch = 'main'  # 分支名称
-        filepath = 'users/网站使用者.txt'  # 文件路径
+    # GitHub 仓库信息
+    owner = 'Mestas'  # 仓库所有者
+    repo = 'PDT'  # 仓库名称
+    branch = 'main'  # 分支名称
+    filepath = 'users/网站使用者.txt'  # 文件路径
 
-        # 文件内容
-        # 获取特定时区
-        timezone = pytz.timezone('Asia/Shanghai')  # 例如，获取东八区的时间
+    # 文件内容
+    # 获取特定时区
+    timezone = pytz.timezone('Asia/Shanghai')  # 例如，获取东八区的时间
 
-        # 获取当前时间，并将其本地化到特定时区
-        local_time = datetime.now(timezone)
-        # 格式化时间
-        date = local_time.strftime('%Y-%m-%d %H:%M:%S')
-        new_content = user_name + '于' + date + '使用了《01-全面屏CAD获取灰阶过渡工具 (V1.4) - AA区灰阶过渡生成》;  ' + '\n'
+    # 获取当前时间，并将其本地化到特定时区
+    local_time = datetime.now(timezone)
+    # 格式化时间
+    date = local_time.strftime('%Y-%m-%d %H:%M:%S')
+    new_content = user_name + '于' + date + '使用了《01-全面屏CAD获取灰阶过渡工具 (V1.4) - AA区灰阶过渡生成》;  ' + '\n'
 
-        # GitHub API URL
-        api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
+    # GitHub API URL
+    api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
 
-        # 设置请求头，包括你的 PAT
-        headers = {
-            'Authorization': f'token {github_pat}',
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
-        }
+    # 设置请求头，包括你的 PAT
+    headers = {
+        'Authorization': f'token {github_pat}',
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+    }
 
-        # 发送请求以获取当前文件内容
-        response = requests.get(api_url, headers=headers)
-        if response.status_code == 200:
-            file_data = response.json()
-            # 读取现有文件内容
-            existing_content = base64.b64decode(file_data['content']).decode('utf-8')
-            # 将新内容追加到现有内容
-            updated_content = existing_content + new_content
-            # 计算更新后内容的 SHA1 哈希值
-            content_sha1 = sha1(updated_content.encode('utf-8')).hexdigest()
+    # 发送请求以获取当前文件内容
+    response = requests.get(api_url, headers=headers)
+    if response.status_code == 200:
+        file_data = response.json()
+        # 读取现有文件内容
+        existing_content = base64.b64decode(file_data['content']).decode('utf-8')
+        # 将新内容追加到现有内容
+        updated_content = existing_content + new_content
+        # 计算更新后内容的 SHA1 哈希值
+        content_sha1 = sha1(updated_content.encode('utf-8')).hexdigest()
+    else:
+        # 如果文件不存在，就创建新文件
+        updated_content = new_content
+        content_sha1 = sha1(new_content.encode('utf-8')).hexdigest()
+
+    # 将更新后的内容转换为 Base64 编码
+    encoded_content = base64.b64encode(updated_content.encode('utf-8')).decode('utf-8')
+
+    # 构建请求体
+    data = {
+        "message": "Append to file via Streamlit",
+        "content": encoded_content,
+        "branch": branch,
+        "sha": file_data['sha'] if response.status_code == 200 else None  # 如果文件不存在，这将被忽略
+    }
+
+    # 发送请求以更新文件内容
+    response = requests.put(api_url, headers=headers, data=json.dumps(data))
+
+    # # 检查响应状态
+    # if response.status_code == 200:
+    #     # 请求成功，显示成功信息
+    #     print('File updated successfully on GitHub!')
+    # else:
+    #     # 请求失败，显示错误信息
+    #     print(f'Error: {response.status_code}')
+    #     print(response.text)
+
+    # # # # # # # # # # # # 分隔符，以上为保存使用者信息 # # # # # # # # # # # #
+    # # # # # # # # # # # # 分隔符，以下为正式代码 # # # # # # # # # # # #
+
+    try:
+        start_time = time.time()
+        # 创建工作区
+        msp = doc.modelspace()
+        if hole == 0:
+            # 根据layer name读取图形
+            AA = msp.query('*[layer=="AA"]').first
+            # 获取每个多段线图形的坐标
+            AA_xy = [(point[0], point[1]) for point in AA]
+            # 将每个多段线图形转换为polygon
+            AA_polygon = Polygon(AA_xy)
         else:
-            # 如果文件不存在，就创建新文件
-            updated_content = new_content
-            content_sha1 = sha1(new_content.encode('utf-8')).hexdigest()
+            # 根据layer name读取图形
+            AA = msp.query('*[layer=="AA"]').first
+            Hole_AA = msp.query('*[layer=="Hole_AA"]').first
 
-        # 将更新后的内容转换为 Base64 编码
-        encoded_content = base64.b64encode(updated_content.encode('utf-8')).decode('utf-8')
+            # 获取每个多段线图形的坐标
+            AA_xy = [(point[0], point[1]) for point in AA]
+            Hole_AA_pos = Hole_AA.dxf.center
+            Hole_AA_xy = Point(Hole_AA_pos.x, Hole_AA_pos.y)
+            Hole_AA_rad = Hole_AA.dxf.radius
 
-        # 构建请求体
-        data = {
-            "message": "Append to file via Streamlit",
-            "content": encoded_content,
-            "branch": branch,
-            "sha": file_data['sha'] if response.status_code == 200 else None  # 如果文件不存在，这将被忽略
-        }
+            # 将每个多段线图形转换为polygon
+            AA_polygon0 = Polygon(AA_xy)
+            Hole_AA_polygon = Hole_AA_xy.buffer(Hole_AA_rad, resolution=512)
 
-        # 发送请求以更新文件内容
-        response = requests.put(api_url, headers=headers, data=json.dumps(data))
+            # 获取带孔的polygon
+            AA_polygon = AA_polygon0.difference(Hole_AA_polygon)
 
-        # # 检查响应状态
-        # if response.status_code == 200:
-        #     # 请求成功，显示成功信息
-        #     print('File updated successfully on GitHub!')
-        # else:
-        #     # 请求失败，显示错误信息
-        #     print(f'Error: {response.status_code}')
-        #     print(response.text)
+        # 获取每个多段线图形的最小xy坐标和最大xy坐标
+        AA_x0 = float('inf')
+        AA_y0 = float('inf')
+        AA_xmax = float('-inf')
+        AA_ymax = float('-inf')
 
-        # # # # # # # # # # # # 分隔符，以上为保存使用者信息 # # # # # # # # # # # #
-        # # # # # # # # # # # # 分隔符，以下为正式代码 # # # # # # # # # # # #
+        for point in AA:  # 遍历多段线中的每个顶点。
+            x, y, *_ = point  # 从顶点中解包x和y坐标，*_表示忽略其他可能存在的值（如z坐标、起始宽度、结束宽度和凸度）。
+            if x < AA_x0:
+                AA_x0 = x
+            if y < AA_y0:
+                AA_y0 = y
+            if x > AA_xmax:
+                AA_xmax = x
+            if y > AA_ymax:
+                AA_ymax = y
 
-        try:
-            start_time = time.time()
-            # 创建工作区
-            msp = doc.modelspace()
-            if hole == 0:
-                # 根据layer name读取图形
-                AA = msp.query('*[layer=="AA"]').first
-                # 获取每个多段线图形的坐标
-                AA_xy = [(point[0], point[1]) for point in AA]
-                # 将每个多段线图形转换为polygon
-                AA_polygon = Polygon(AA_xy)
-            else:
-                # 根据layer name读取图形
-                AA = msp.query('*[layer=="AA"]').first
-                Hole_AA = msp.query('*[layer=="Hole_AA"]').first
+        # # # 输入灰阶精度，并生成透过率T_list
+        tr_acc = 1 / (Gray + 1)
+        T_list = []
+        for i in range(Gray + 2):
+            Tr = i * tr_acc
+            T_list.append(Tr)
 
-                # 获取每个多段线图形的坐标
-                AA_xy = [(point[0], point[1]) for point in AA]
-                Hole_AA_pos = Hole_AA.dxf.center
-                Hole_AA_xy = Point(Hole_AA_pos.x, Hole_AA_pos.y)
-                Hole_AA_rad = Hole_AA.dxf.radius
+        # # # 获取布满AA区时的开口率信息
+        AA_area = pixel_array(AA_x0, AA_y0, AA_xmax, AA_ymax, AA_polygon)
+        sublist_size1 = round((AA_xmax - AA_x0) / pix_x)
+        AA_area_list = [AA_area[i:i + sublist_size1] for i in range(0, len(AA_area), sublist_size1)]
+        AA_DF = pd.DataFrame(AA_area_list)
 
-                # 将每个多段线图形转换为polygon
-                AA_polygon0 = Polygon(AA_xy)
-                Hole_AA_polygon = Hole_AA_xy.buffer(Hole_AA_rad, resolution=512)
+        end_time = time.time()
+        dis_time = round(end_time - start_time, 2)
 
-                # 获取带孔的polygon
-                AA_polygon = AA_polygon0.difference(Hole_AA_polygon)
+        str0 = 'AA区灰阶过渡CSV和图片已生成，请点击右侧下载按钮；' + '数据生成时间：<span style="color: #11CC11; font-weight: bold;">' + str(dis_time) + '</span>s'
+        # 显示CSV数据
+        with col521:
+            st.write(str0, unsafe_allow_html=True)
+        # with col521:
+        #     # st.write(AA_DF)
+        #     st.dataframe(AA_DF)
 
-            # 获取每个多段线图形的最小xy坐标和最大xy坐标
-            AA_x0 = float('inf')
-            AA_y0 = float('inf')
-            AA_xmax = float('-inf')
-            AA_ymax = float('-inf')
+        # # # 获取AA区灰阶过渡图片信息
+        M_AA0 = np.array(AA_area_list)
+        M_AA = np.int16(M_AA0)
+        aa_h = M_AA.shape[0]
+        aa_l = M_AA.shape[1]
 
-            for point in AA:  # 遍历多段线中的每个顶点。
-                x, y, *_ = point  # 从顶点中解包x和y坐标，*_表示忽略其他可能存在的值（如z坐标、起始宽度、结束宽度和凸度）。
-                if x < AA_x0:
-                    AA_x0 = x
-                if y < AA_y0:
-                    AA_y0 = y
-                if x > AA_xmax:
-                    AA_xmax = x
-                if y > AA_ymax:
-                    AA_ymax = y
+        M_Al = np.ones((aa_h, aa_l), dtype=np.int16) * 255
+        M_Alpha = M_Al - M_AA
+        ZZ = np.zeros((aa_h, aa_l), dtype=np.int16)
+        ONE = np.ones((aa_h, aa_l), dtype=np.int16) * 255
 
-            # # # 输入灰阶精度，并生成透过率T_list
-            tr_acc = 1 / (Gray + 1)
-            T_list = []
-            for i in range(Gray + 2):
-                Tr = i * tr_acc
-                T_list.append(Tr)
+        AA_R1 = cv2.merge([ZZ, ZZ, M_AA])
+        AA_R2 = cv2.merge([ZZ, ZZ, ONE, M_Alpha])
 
-            # # # 获取布满AA区时的开口率信息
-            AA_area = pixel_array(AA_x0, AA_y0, AA_xmax, AA_ymax, AA_polygon)
-            sublist_size1 = round((AA_xmax - AA_x0) / pix_x)
-            AA_area_list = [AA_area[i:i + sublist_size1] for i in range(0, len(AA_area), sublist_size1)]
-            AA_DF = pd.DataFrame(AA_area_list)
+        AA_G1 = cv2.merge([ZZ, M_AA, ZZ])
+        AA_G2 = cv2.merge([ZZ, ONE, ZZ, M_Alpha])
 
-            end_time = time.time()
-            dis_time = round(end_time - start_time, 2)
+        AA_B1 = cv2.merge([M_AA, ZZ, ZZ])
+        AA_B2 = cv2.merge([ONE, ZZ, ZZ, M_Alpha])
 
-            str0 = 'AA区灰阶过渡CSV和图片已生成，请点击右侧下载按钮；' + '数据生成时间：<span style="color: #11CC11; font-weight: bold;">' + str(dis_time) + '</span>s'
-            # 显示CSV数据
-            with col521:
-                st.write(str0, unsafe_allow_html=True)
-            # with col521:
-            #     # st.write(AA_DF)
-            #     st.dataframe(AA_DF)
+        AA_W1 = cv2.merge([M_AA, M_AA, M_AA])
+        AA_W2 = cv2.merge([ZZ, ZZ, ZZ, M_Alpha])
 
-            # # # 获取AA区灰阶过渡图片信息
-            M_AA0 = np.array(AA_area_list)
-            M_AA = np.int16(M_AA0)
-            aa_h = M_AA.shape[0]
-            aa_l = M_AA.shape[1]
+        pics = [AA_R1, AA_R2, AA_G1, AA_G2, AA_B1, AA_B2, AA_W1, AA_W2]
 
-            M_Al = np.ones((aa_h, aa_l), dtype=np.int16) * 255
-            M_Alpha = M_Al - M_AA
-            ZZ = np.zeros((aa_h, aa_l), dtype=np.int16)
-            ONE = np.ones((aa_h, aa_l), dtype=np.int16) * 255
+        # 创建ZIP文件
+        zip_file_AA = BytesIO()
+        with zipfile.ZipFile(zip_file_AA, 'w', zipfile.ZIP_DEFLATED) as zf_AA:
+            for i, img_array in enumerate(pics):
+                img = cv2.imencode('.png', img_array)[1]
+                zip_info = zipfile.ZipInfo(f'image_{i}.png')
+                zf_AA.writestr(zip_info, img.tobytes())
 
-            AA_R1 = cv2.merge([ZZ, ZZ, M_AA])
-            AA_R2 = cv2.merge([ZZ, ZZ, ONE, M_Alpha])
+            csv_AA = AA_DF.to_csv().encode('utf-8')
+            zf_AA.writestr('Gray_Data_AA.csv', csv_AA)
 
-            AA_G1 = cv2.merge([ZZ, M_AA, ZZ])
-            AA_G2 = cv2.merge([ZZ, ONE, ZZ, M_Alpha])
+        zip_file_AA.seek(0)  # 移动到ZIP文件的开头
 
-            AA_B1 = cv2.merge([M_AA, ZZ, ZZ])
-            AA_B2 = cv2.merge([ONE, ZZ, ZZ, M_Alpha])
+        with col58:
+            btn_download_AA = st.download_button(
+                label="下载AA区灰阶过渡数据",
+                data=zip_file_AA.getvalue(),
+                file_name="AA区灰阶过渡CSV和图片.zip",
+                mime="application/zip",
+            )
 
-            AA_W1 = cv2.merge([M_AA, M_AA, M_AA])
-            AA_W2 = cv2.merge([ZZ, ZZ, ZZ, M_Alpha])
-
-            pics = [AA_R1, AA_R2, AA_G1, AA_G2, AA_B1, AA_B2, AA_W1, AA_W2]
-
-            # 创建ZIP文件
-            zip_file_AA = BytesIO()
-            with zipfile.ZipFile(zip_file_AA, 'w', zipfile.ZIP_DEFLATED) as zf_AA:
-                for i, img_array in enumerate(pics):
-                    img = cv2.imencode('.png', img_array)[1]
-                    zip_info = zipfile.ZipInfo(f'image_{i}.png')
-                    zf_AA.writestr(zip_info, img.tobytes())
-
-                csv_AA = AA_DF.to_csv().encode('utf-8')
-                zf_AA.writestr('Gray_Data_AA.csv', csv_AA)
-
-            zip_file_AA.seek(0)  # 移动到ZIP文件的开头
-
-            with col58:
-                btn_download_AA = st.download_button(
-                    label="下载AA区灰阶过渡数据",
-                    data=zip_file_AA.getvalue(),
-                    file_name="AA区灰阶过渡CSV和图片.zip",
-                    mime="application/zip",
-                )
-
-            # 清理：删除临时文件
-            os.unlink(temp.name)
-            
-        except NameError:
-            st.write(':red[DXF文件未上传或DXF文件未解密, 请确认后重新上传]')
-        except TypeError:
-            st.write(':red[DXF文件未包含正确图层, 请确认后重新上传]')
-        except AttributeError:
-            st.write(':red[DXF图层不正确, 请确认后重新上传]')
-        except OverflowError:
-            st.write(':red[未输入Pixel信息, 请输入后再生成]')
+        # 清理：删除临时文件
+        os.unlink(temp.name)
+        
+    except NameError:
+        st.write(':red[DXF文件未上传或DXF文件未解密, 请确认后重新上传]')
+    except TypeError:
+        st.write(':red[DXF文件未包含正确图层, 请确认后重新上传]')
+    except AttributeError:
+        st.write(':red[DXF图层不正确, 请确认后重新上传]')
+    except OverflowError:
+        st.write(':red[未输入Pixel信息, 请输入后再生成]')
 
 with col54:
     btn_D1_cp = st.button('***点击生成Dummy1区CSV***')
-    if btn_D1_cp is True:
-        # 这是另一个页面
-        if 'user_name' in st.session_state:
-            user_name = st.session_state['user_name']
-            # st.write(user_name)
+if btn_D1_cp is True:
+    # 将登陆者信息传递过来
+    if 'user_name' in st.session_state:
+        user_name = st.session_state['user_name']
+        # st.write(user_name)
 
-        # 将登录者以及使用的信息保存到《网站使用者.txt》文件中
-        import requests
-        import json
-        import base64
-        from hashlib import sha1
-        from datetime import datetime
-        import pytz
+    # 将登录者以及使用的信息保存到《网站使用者.txt》文件中
+    import requests
+    import json
+    import base64
+    from hashlib import sha1
+    from datetime import datetime
+    import pytz
 
-        # 从 Streamlit Secret 获取 GitHub PAT
-        github_pat = st.secrets['github_token']
+    # 从 Streamlit Secret 获取 GitHub PAT
+    github_pat = st.secrets['github_token']
 
-        # GitHub 仓库信息
-        owner = 'Mestas'  # 仓库所有者
-        repo = 'PDT'  # 仓库名称
-        branch = 'main'  # 分支名称
-        filepath = 'users/网站使用者.txt'  # 文件路径
+    # GitHub 仓库信息
+    owner = 'Mestas'  # 仓库所有者
+    repo = 'PDT'  # 仓库名称
+    branch = 'main'  # 分支名称
+    filepath = 'users/网站使用者.txt'  # 文件路径
 
-        # 文件内容
-        # 获取特定时区
-        timezone = pytz.timezone('Asia/Shanghai')  # 例如，获取东八区的时间
+    # 文件内容
+    # 获取特定时区
+    timezone = pytz.timezone('Asia/Shanghai')  # 例如，获取东八区的时间
 
-        # 获取当前时间，并将其本地化到特定时区
-        local_time = datetime.now(timezone)
-        # 格式化时间
-        date = local_time.strftime('%Y-%m-%d %H:%M:%S')
-        new_content = user_name + '于' + date + '使用了《01-全面屏CAD获取灰阶过渡工具 (V1.4) - Dummy1区灰阶过渡生成》;  ' + '\n'
+    # 获取当前时间，并将其本地化到特定时区
+    local_time = datetime.now(timezone)
+    # 格式化时间
+    date = local_time.strftime('%Y-%m-%d %H:%M:%S')
+    new_content = user_name + '于' + date + '使用了《01-全面屏CAD获取灰阶过渡工具 (V1.4) - Dummy1区灰阶过渡生成》;  ' + '\n'
 
-        # GitHub API URL
-        api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
+    # GitHub API URL
+    api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
 
-        # 设置请求头，包括你的 PAT
-        headers = {
-            'Authorization': f'token {github_pat}',
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
-        }
+    # 设置请求头，包括你的 PAT
+    headers = {
+        'Authorization': f'token {github_pat}',
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+    }
 
-        # 发送请求以获取当前文件内容
-        response = requests.get(api_url, headers=headers)
-        if response.status_code == 200:
-            file_data = response.json()
-            # 读取现有文件内容
-            existing_content = base64.b64decode(file_data['content']).decode('utf-8')
-            # 将新内容追加到现有内容
-            updated_content = existing_content + new_content
-            # 计算更新后内容的 SHA1 哈希值
-            content_sha1 = sha1(updated_content.encode('utf-8')).hexdigest()
+    # 发送请求以获取当前文件内容
+    response = requests.get(api_url, headers=headers)
+    if response.status_code == 200:
+        file_data = response.json()
+        # 读取现有文件内容
+        existing_content = base64.b64decode(file_data['content']).decode('utf-8')
+        # 将新内容追加到现有内容
+        updated_content = existing_content + new_content
+        # 计算更新后内容的 SHA1 哈希值
+        content_sha1 = sha1(updated_content.encode('utf-8')).hexdigest()
+    else:
+        # 如果文件不存在，就创建新文件
+        updated_content = new_content
+        content_sha1 = sha1(new_content.encode('utf-8')).hexdigest()
+
+    # 将更新后的内容转换为 Base64 编码
+    encoded_content = base64.b64encode(updated_content.encode('utf-8')).decode('utf-8')
+
+    # 构建请求体
+    data = {
+        "message": "Append to file via Streamlit",
+        "content": encoded_content,
+        "branch": branch,
+        "sha": file_data['sha'] if response.status_code == 200 else None  # 如果文件不存在，这将被忽略
+    }
+
+    # 发送请求以更新文件内容
+    response = requests.put(api_url, headers=headers, data=json.dumps(data))
+
+    # # 检查响应状态
+    # if response.status_code == 200:
+    #     # 请求成功，显示成功信息
+    #     print('File updated successfully on GitHub!')
+    # else:
+    #     # 请求失败，显示错误信息
+    #     print(f'Error: {response.status_code}')
+    #     print(response.text)
+
+    # # # # # # # # # # # # 分隔符，以上为保存使用者信息 # # # # # # # # # # # #
+    # # # # # # # # # # # # 分隔符，以下为正式代码 # # # # # # # # # # # #
+
+    try:
+        start_time = time.time()
+        # 创建工作区
+        msp = doc.modelspace()
+        if hole == 0:
+            # 根据layer name读取图形
+            Dummy1 = msp.query('*[layer=="Dummy1"]').first
+            # 获取每个多段线图形的坐标
+            D1_xy = [(point[0], point[1]) for point in Dummy1]
+            # 将每个多段线图形转换为polygon
+            D1_polygon = Polygon(D1_xy)
         else:
-            # 如果文件不存在，就创建新文件
-            updated_content = new_content
-            content_sha1 = sha1(new_content.encode('utf-8')).hexdigest()
+            # 根据layer name读取图形
+            Dummy1 = msp.query('*[layer=="Dummy1"]').first
+            Hole_Dummy1 = msp.query('*[layer=="Hole_Dummy1"]').first
+            # 获取每个多段线图形的坐标
+            D1_xy = [(point[0], point[1]) for point in Dummy1]
+            Hole_Dummy1_pos = Hole_Dummy1.dxf.center
+            Hole_Dummy1_xy = Point(Hole_Dummy1_pos.x, Hole_Dummy1_pos.y)
+            Hole_Dummy1_rad = Hole_Dummy1.dxf.radius
+            # 将每个多段线图形转换为polygon
+            D1_polygon0 = Polygon(D1_xy)
+            Hole_Dummy1_polygon = Hole_Dummy1_xy.buffer(Hole_Dummy1_rad, resolution=512)
 
-        # 将更新后的内容转换为 Base64 编码
-        encoded_content = base64.b64encode(updated_content.encode('utf-8')).decode('utf-8')
+            # 获取带孔的polygon
+            D1_polygon = D1_polygon0.difference(Hole_Dummy1_polygon)
 
-        # 构建请求体
-        data = {
-            "message": "Append to file via Streamlit",
-            "content": encoded_content,
-            "branch": branch,
-            "sha": file_data['sha'] if response.status_code == 200 else None  # 如果文件不存在，这将被忽略
-        }
+        # 获取每个多段线图形的最小xy坐标和最大xy坐标
+        D1_x0 = float('inf')
+        D1_y0 = float('inf')
+        D1_xmax = float('-inf')
+        D1_ymax = float('-inf')
 
-        # 发送请求以更新文件内容
-        response = requests.put(api_url, headers=headers, data=json.dumps(data))
+        for point in Dummy1:  # 遍历多段线中的每个顶点。
+            x, y, *_ = point  # 从顶点中解包x和y坐标，*_表示忽略其他可能存在的值（如z坐标、起始宽度、结束宽度和凸度）。
+            if x < D1_x0:
+                D1_x0 = x
+            if y < D1_y0:
+                D1_y0 = y
+            if x > D1_xmax:
+                D1_xmax = x
+            if y > D1_ymax:
+                D1_ymax = y
 
-        # # 检查响应状态
-        # if response.status_code == 200:
-        #     # 请求成功，显示成功信息
-        #     print('File updated successfully on GitHub!')
-        # else:
-        #     # 请求失败，显示错误信息
-        #     print(f'Error: {response.status_code}')
-        #     print(response.text)
+        # # # 输入灰阶精度，并生成透过率T_list
+        tr_acc = 1 / (Gray + 1)
+        T_list = []
+        for i in range(Gray + 2):
+            Tr = i * tr_acc
+            T_list.append(Tr)
 
-        # # # # # # # # # # # # 分隔符，以上为保存使用者信息 # # # # # # # # # # # #
-        # # # # # # # # # # # # 分隔符，以下为正式代码 # # # # # # # # # # # #
+        # # # 布满Dummy1区时的面积获得
+        D1_area = pixel_array(D1_x0, D1_y0, D1_xmax, D1_ymax, D1_polygon)
+        sublist_size2 = round((D1_xmax - D1_x0) / pix_x)
+        D1_area_list = [D1_area[i:i + sublist_size2] for i in range(0, len(D1_area), sublist_size2)]
+        D1_DF = pd.DataFrame(D1_area_list)
 
-        try:
-            start_time = time.time()
-            # 创建工作区
-            msp = doc.modelspace()
-            if hole == 0:
-                # 根据layer name读取图形
-                Dummy1 = msp.query('*[layer=="Dummy1"]').first
-                # 获取每个多段线图形的坐标
-                D1_xy = [(point[0], point[1]) for point in Dummy1]
-                # 将每个多段线图形转换为polygon
-                D1_polygon = Polygon(D1_xy)
-            else:
-                # 根据layer name读取图形
-                Dummy1 = msp.query('*[layer=="Dummy1"]').first
-                Hole_Dummy1 = msp.query('*[layer=="Hole_Dummy1"]').first
-                # 获取每个多段线图形的坐标
-                D1_xy = [(point[0], point[1]) for point in Dummy1]
-                Hole_Dummy1_pos = Hole_Dummy1.dxf.center
-                Hole_Dummy1_xy = Point(Hole_Dummy1_pos.x, Hole_Dummy1_pos.y)
-                Hole_Dummy1_rad = Hole_Dummy1.dxf.radius
-                # 将每个多段线图形转换为polygon
-                D1_polygon0 = Polygon(D1_xy)
-                Hole_Dummy1_polygon = Hole_Dummy1_xy.buffer(Hole_Dummy1_rad, resolution=512)
+        end_time = time.time()
+        dis_time = round(end_time - start_time, 2)
+        str1 = 'Dummy1区灰阶过渡CSV已生成，请点击右侧下载按钮；' + '数据生成时间：<span style="color: #11CC11; font-weight: bold;">' + str(dis_time) + '</span>s'
 
-                # 获取带孔的polygon
-                D1_polygon = D1_polygon0.difference(Hole_Dummy1_polygon)
+        # 显示CSV数据
+        with col521:
+            st.write(str1, unsafe_allow_html=True)
+        # with col521:
+        #     st.dataframe(D1_DF)
 
-            # 获取每个多段线图形的最小xy坐标和最大xy坐标
-            D1_x0 = float('inf')
-            D1_y0 = float('inf')
-            D1_xmax = float('-inf')
-            D1_ymax = float('-inf')
+        # 创建ZIP文件
+        zip_file_D1 = BytesIO()
+        with zipfile.ZipFile(zip_file_D1, 'w', zipfile.ZIP_DEFLATED) as zf_D1:
+            csv_D1 = D1_DF.to_csv().encode('utf-8')
+            zf_D1.writestr('Gray_Data_Dummy1.csv', csv_D1)
 
-            for point in Dummy1:  # 遍历多段线中的每个顶点。
-                x, y, *_ = point  # 从顶点中解包x和y坐标，*_表示忽略其他可能存在的值（如z坐标、起始宽度、结束宽度和凸度）。
-                if x < D1_x0:
-                    D1_x0 = x
-                if y < D1_y0:
-                    D1_y0 = y
-                if x > D1_xmax:
-                    D1_xmax = x
-                if y > D1_ymax:
-                    D1_ymax = y
+        zip_file_D1.seek(0)  # 移动到ZIP文件的开头
 
-            # # # 输入灰阶精度，并生成透过率T_list
-            tr_acc = 1 / (Gray + 1)
-            T_list = []
-            for i in range(Gray + 2):
-                Tr = i * tr_acc
-                T_list.append(Tr)
+        with col58:
+            btn_download_D1 = st.download_button(
+                label="下载Dummy1区灰阶过渡数据",
+                data=zip_file_D1.getvalue(),
+                file_name="Dummy1区灰阶过渡CSV.zip",
+                mime="application/zip",
+            )
 
-            # # # 布满Dummy1区时的面积获得
-            D1_area = pixel_array(D1_x0, D1_y0, D1_xmax, D1_ymax, D1_polygon)
-            sublist_size2 = round((D1_xmax - D1_x0) / pix_x)
-            D1_area_list = [D1_area[i:i + sublist_size2] for i in range(0, len(D1_area), sublist_size2)]
-            D1_DF = pd.DataFrame(D1_area_list)
-
-            end_time = time.time()
-            dis_time = round(end_time - start_time, 2)
-            str1 = 'Dummy1区灰阶过渡CSV已生成，请点击右侧下载按钮；' + '数据生成时间：<span style="color: #11CC11; font-weight: bold;">' + str(dis_time) + '</span>s'
-
-            # 显示CSV数据
-            with col521:
-                st.write(str1, unsafe_allow_html=True)
-            # with col521:
-            #     st.dataframe(D1_DF)
-
-            # 创建ZIP文件
-            zip_file_D1 = BytesIO()
-            with zipfile.ZipFile(zip_file_D1, 'w', zipfile.ZIP_DEFLATED) as zf_D1:
-                csv_D1 = D1_DF.to_csv().encode('utf-8')
-                zf_D1.writestr('Gray_Data_Dummy1.csv', csv_D1)
-
-            zip_file_D1.seek(0)  # 移动到ZIP文件的开头
-
-            with col58:
-                btn_download_D1 = st.download_button(
-                    label="下载Dummy1区灰阶过渡数据",
-                    data=zip_file_D1.getvalue(),
-                    file_name="Dummy1区灰阶过渡CSV.zip",
-                    mime="application/zip",
-                )
-
-            # 清理：删除临时文件
-            os.unlink(temp.name)
-            
-        except NameError:
-            st.write(':red[DXF文件未上传或DXF文件未解密, 请确认后重新上传]')
-        except TypeError:
-            st.write(':red[DXF文件未包含正确图层, 请确认后重新上传]')
-        except AttributeError:
-            st.write(':red[DXF图层不正确, 请确认后重新上传]')
-        except OverflowError:
-            st.write(':red[未输入Pixel信息, 请输入后再生成]') 
+        # 清理：删除临时文件
+        os.unlink(temp.name)
+        
+    except NameError:
+        st.write(':red[DXF文件未上传或DXF文件未解密, 请确认后重新上传]')
+    except TypeError:
+        st.write(':red[DXF文件未包含正确图层, 请确认后重新上传]')
+    except AttributeError:
+        st.write(':red[DXF图层不正确, 请确认后重新上传]')
+    except OverflowError:
+        st.write(':red[未输入Pixel信息, 请输入后再生成]') 
 
 with col56:
     btn_D2_cp = st.button('***点击生成Dummy2区CSV***')
-    if btn_D2_cp is True:
-        # 这是另一个页面
-        if 'user_name' in st.session_state:
-            user_name = st.session_state['user_name']
-            # st.write(user_name)
+if btn_D2_cp is True:
+    # 将登陆者信息传递过来
+    if 'user_name' in st.session_state:
+        user_name = st.session_state['user_name']
+        # st.write(user_name)
 
-        # 将登录者以及使用的信息保存到《网站使用者.txt》文件中
-        import requests
-        import json
-        import base64
-        from hashlib import sha1
-        from datetime import datetime
-        import pytz
+    # 将登录者以及使用的信息保存到《网站使用者.txt》文件中
+    import requests
+    import json
+    import base64
+    from hashlib import sha1
+    from datetime import datetime
+    import pytz
 
-        # 从 Streamlit Secret 获取 GitHub PAT
-        github_pat = st.secrets['github_token']
+    # 从 Streamlit Secret 获取 GitHub PAT
+    github_pat = st.secrets['github_token']
 
-        # GitHub 仓库信息
-        owner = 'Mestas'  # 仓库所有者
-        repo = 'PDT'  # 仓库名称
-        branch = 'main'  # 分支名称
-        filepath = 'users/网站使用者.txt'  # 文件路径
+    # GitHub 仓库信息
+    owner = 'Mestas'  # 仓库所有者
+    repo = 'PDT'  # 仓库名称
+    branch = 'main'  # 分支名称
+    filepath = 'users/网站使用者.txt'  # 文件路径
 
-        # 文件内容
-        # 获取特定时区
-        timezone = pytz.timezone('Asia/Shanghai')  # 例如，获取东八区的时间
+    # 文件内容
+    # 获取特定时区
+    timezone = pytz.timezone('Asia/Shanghai')  # 例如，获取东八区的时间
 
-        # 获取当前时间，并将其本地化到特定时区
-        local_time = datetime.now(timezone)
-        # 格式化时间
-        date = local_time.strftime('%Y-%m-%d %H:%M:%S')
-        new_content = user_name + '于' + date + '使用了《01-全面屏CAD获取灰阶过渡工具 (V1.4) - Dummy2区灰阶过渡生成》;  ' + '\n'
+    # 获取当前时间，并将其本地化到特定时区
+    local_time = datetime.now(timezone)
+    # 格式化时间
+    date = local_time.strftime('%Y-%m-%d %H:%M:%S')
+    new_content = user_name + '于' + date + '使用了《01-全面屏CAD获取灰阶过渡工具 (V1.4) - Dummy2区灰阶过渡生成》;  ' + '\n'
 
-        # GitHub API URL
-        api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
+    # GitHub API URL
+    api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
 
-        # 设置请求头，包括你的 PAT
-        headers = {
-            'Authorization': f'token {github_pat}',
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
-        }
+    # 设置请求头，包括你的 PAT
+    headers = {
+        'Authorization': f'token {github_pat}',
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+    }
 
-        # 发送请求以获取当前文件内容
-        response = requests.get(api_url, headers=headers)
-        if response.status_code == 200:
-            file_data = response.json()
-            # 读取现有文件内容
-            existing_content = base64.b64decode(file_data['content']).decode('utf-8')
-            # 将新内容追加到现有内容
-            updated_content = existing_content + new_content
-            # 计算更新后内容的 SHA1 哈希值
-            content_sha1 = sha1(updated_content.encode('utf-8')).hexdigest()
+    # 发送请求以获取当前文件内容
+    response = requests.get(api_url, headers=headers)
+    if response.status_code == 200:
+        file_data = response.json()
+        # 读取现有文件内容
+        existing_content = base64.b64decode(file_data['content']).decode('utf-8')
+        # 将新内容追加到现有内容
+        updated_content = existing_content + new_content
+        # 计算更新后内容的 SHA1 哈希值
+        content_sha1 = sha1(updated_content.encode('utf-8')).hexdigest()
+    else:
+        # 如果文件不存在，就创建新文件
+        updated_content = new_content
+        content_sha1 = sha1(new_content.encode('utf-8')).hexdigest()
+
+    # 将更新后的内容转换为 Base64 编码
+    encoded_content = base64.b64encode(updated_content.encode('utf-8')).decode('utf-8')
+
+    # 构建请求体
+    data = {
+        "message": "Append to file via Streamlit",
+        "content": encoded_content,
+        "branch": branch,
+        "sha": file_data['sha'] if response.status_code == 200 else None  # 如果文件不存在，这将被忽略
+    }
+
+    # 发送请求以更新文件内容
+    response = requests.put(api_url, headers=headers, data=json.dumps(data))
+
+    # # 检查响应状态
+    # if response.status_code == 200:
+    #     # 请求成功，显示成功信息
+    #     print('File updated successfully on GitHub!')
+    # else:
+    #     # 请求失败，显示错误信息
+    #     print(f'Error: {response.status_code}')
+    #     print(response.text)
+
+    # # # # # # # # # # # # 分隔符，以上为保存使用者信息 # # # # # # # # # # # #
+    # # # # # # # # # # # # 分隔符，以下为正式代码 # # # # # # # # # # # # 
+    
+    try:
+        start_time = time.time()
+        # 创建工作区
+        msp = doc.modelspace()
+        if hole == 0:
+            # 根据layer name读取图形
+            Dummy2 = msp.query('*[layer=="Dummy2"]').first
+            # 获取每个多段线图形的坐标
+            D2_xy = [(point[0], point[1]) for point in Dummy2]
+            # 将每个多段线图形转换为polygon
+            D2_polygon = Polygon(D2_xy)
         else:
-            # 如果文件不存在，就创建新文件
-            updated_content = new_content
-            content_sha1 = sha1(new_content.encode('utf-8')).hexdigest()
+            # 根据layer name读取图形
+            Dummy2 = msp.query('*[layer=="Dummy2"]').first
+            Hole_Dummy2 = msp.query('*[layer=="Hole_Dummy2"]').first
+            # 获取每个多段线图形的坐标
+            D2_xy = [(point[0], point[1]) for point in Dummy2]
+            Hole_Dummy2_pos = Hole_Dummy2.dxf.center
+            Hole_Dummy2_xy = Point(Hole_Dummy2_pos.x, Hole_Dummy2_pos.y)
+            Hole_Dummy2_rad = Hole_Dummy2.dxf.radius
+            # 将每个多段线图形转换为polygon
+            D2_polygon0 = Polygon(D2_xy)
+            Hole_Dummy2_polygon = Hole_Dummy2_xy.buffer(Hole_Dummy2_rad, resolution=512)
+            # 获取带孔的polygon
+            D2_polygon = D2_polygon0.difference(Hole_Dummy2_polygon)
 
-        # 将更新后的内容转换为 Base64 编码
-        encoded_content = base64.b64encode(updated_content.encode('utf-8')).decode('utf-8')
+        # 获取每个多段线图形的最小xy坐标和最大xy坐标
+        D2_x0 = float('inf')
+        D2_y0 = float('inf')
+        D2_xmax = float('-inf')
+        D2_ymax = float('-inf')
 
-        # 构建请求体
-        data = {
-            "message": "Append to file via Streamlit",
-            "content": encoded_content,
-            "branch": branch,
-            "sha": file_data['sha'] if response.status_code == 200 else None  # 如果文件不存在，这将被忽略
-        }
+        for point in Dummy2:  # 遍历多段线中的每个顶点。
+            x, y, *_ = point  # 从顶点中解包x和y坐标，*_表示忽略其他可能存在的值（如z坐标、起始宽度、结束宽度和凸度）。
+            if x < D2_x0:
+                D2_x0 = x
+            if y < D2_y0:
+                D2_y0 = y
+            if x > D2_xmax:
+                D2_xmax = x
+            if y > D2_ymax:
+                D2_ymax = y
 
-        # 发送请求以更新文件内容
-        response = requests.put(api_url, headers=headers, data=json.dumps(data))
+        # # # 输入灰阶精度，并生成透过率T_list
+        tr_acc = 1 / (Gray + 1)
+        T_list = []
+        for i in range(Gray + 2):
+            Tr = i * tr_acc
+            T_list.append(Tr)
 
-        # # 检查响应状态
-        # if response.status_code == 200:
-        #     # 请求成功，显示成功信息
-        #     print('File updated successfully on GitHub!')
-        # else:
-        #     # 请求失败，显示错误信息
-        #     print(f'Error: {response.status_code}')
-        #     print(response.text)
+        # # # 布满Dummy2区时的面积获得
+        D2_area = pixel_array(D2_x0, D2_y0, D2_xmax, D2_ymax, D2_polygon)
+        sublist_size3 = round((D2_xmax - D2_x0) / pix_x)
+        D2_area_list = [D2_area[i:i + sublist_size3] for i in range(0, len(D2_area), sublist_size3)]
+        D2_DF = pd.DataFrame(D2_area_list)
 
-        # # # # # # # # # # # # 分隔符，以上为保存使用者信息 # # # # # # # # # # # #
-        # # # # # # # # # # # # 分隔符，以下为正式代码 # # # # # # # # # # # # 
-        
-        try:
-            start_time = time.time()
-            # 创建工作区
-            msp = doc.modelspace()
-            if hole == 0:
-                # 根据layer name读取图形
-                Dummy2 = msp.query('*[layer=="Dummy2"]').first
-                # 获取每个多段线图形的坐标
-                D2_xy = [(point[0], point[1]) for point in Dummy2]
-                # 将每个多段线图形转换为polygon
-                D2_polygon = Polygon(D2_xy)
-            else:
-                # 根据layer name读取图形
-                Dummy2 = msp.query('*[layer=="Dummy2"]').first
-                Hole_Dummy2 = msp.query('*[layer=="Hole_Dummy2"]').first
-                # 获取每个多段线图形的坐标
-                D2_xy = [(point[0], point[1]) for point in Dummy2]
-                Hole_Dummy2_pos = Hole_Dummy2.dxf.center
-                Hole_Dummy2_xy = Point(Hole_Dummy2_pos.x, Hole_Dummy2_pos.y)
-                Hole_Dummy2_rad = Hole_Dummy2.dxf.radius
-                # 将每个多段线图形转换为polygon
-                D2_polygon0 = Polygon(D2_xy)
-                Hole_Dummy2_polygon = Hole_Dummy2_xy.buffer(Hole_Dummy2_rad, resolution=512)
-                # 获取带孔的polygon
-                D2_polygon = D2_polygon0.difference(Hole_Dummy2_polygon)
+        end_time = time.time()
+        dis_time = round(end_time - start_time, 2)
+        str1 = 'Dummy2区灰阶过渡CSV已生成，请点击右侧下载按钮；' + '数据生成时间：<span style="color: #11CC11; font-weight: bold;">' + str(dis_time) + '</span>s'
 
-            # 获取每个多段线图形的最小xy坐标和最大xy坐标
-            D2_x0 = float('inf')
-            D2_y0 = float('inf')
-            D2_xmax = float('-inf')
-            D2_ymax = float('-inf')
+        # 显示CSV数据
+        with col521:
+            st.write(str1, unsafe_allow_html=True)
+        # with col521:
+        #     st.dataframe(D2_DF)
 
-            for point in Dummy2:  # 遍历多段线中的每个顶点。
-                x, y, *_ = point  # 从顶点中解包x和y坐标，*_表示忽略其他可能存在的值（如z坐标、起始宽度、结束宽度和凸度）。
-                if x < D2_x0:
-                    D2_x0 = x
-                if y < D2_y0:
-                    D2_y0 = y
-                if x > D2_xmax:
-                    D2_xmax = x
-                if y > D2_ymax:
-                    D2_ymax = y
+        # 创建ZIP文件
+        zip_file_D2 = BytesIO()
+        with zipfile.ZipFile(zip_file_D2, 'w', zipfile.ZIP_DEFLATED) as zf_D2:
+            csv_D2 = D2_DF.to_csv().encode('utf-8')
+            zf_D2.writestr('Gray_Data_Dummy2.csv', csv_D2)
 
-            # # # 输入灰阶精度，并生成透过率T_list
-            tr_acc = 1 / (Gray + 1)
-            T_list = []
-            for i in range(Gray + 2):
-                Tr = i * tr_acc
-                T_list.append(Tr)
+        zip_file_D2.seek(0)  # 移动到ZIP文件的开头
 
-            # # # 布满Dummy2区时的面积获得
-            D2_area = pixel_array(D2_x0, D2_y0, D2_xmax, D2_ymax, D2_polygon)
-            sublist_size3 = round((D2_xmax - D2_x0) / pix_x)
-            D2_area_list = [D2_area[i:i + sublist_size3] for i in range(0, len(D2_area), sublist_size3)]
-            D2_DF = pd.DataFrame(D2_area_list)
+        with col58:
+            btn_download_D2 = st.download_button(
+                label="下载Dummy2区灰阶过渡数据",
+                data=zip_file_D2.getvalue(),
+                file_name="Dummy2区灰阶过渡CSV.zip",
+                mime="application/zip",
+            )
 
-            end_time = time.time()
-            dis_time = round(end_time - start_time, 2)
-            str1 = 'Dummy2区灰阶过渡CSV已生成，请点击右侧下载按钮；' + '数据生成时间：<span style="color: #11CC11; font-weight: bold;">' + str(dis_time) + '</span>s'
+        # 清理：删除临时文件
+        os.unlink(temp.name)
 
-            # 显示CSV数据
-            with col521:
-                st.write(str1, unsafe_allow_html=True)
-            # with col521:
-            #     st.dataframe(D2_DF)
-
-            # 创建ZIP文件
-            zip_file_D2 = BytesIO()
-            with zipfile.ZipFile(zip_file_D2, 'w', zipfile.ZIP_DEFLATED) as zf_D2:
-                csv_D2 = D2_DF.to_csv().encode('utf-8')
-                zf_D2.writestr('Gray_Data_Dummy2.csv', csv_D2)
-
-            zip_file_D2.seek(0)  # 移动到ZIP文件的开头
-
-            with col58:
-                btn_download_D2 = st.download_button(
-                    label="下载Dummy2区灰阶过渡数据",
-                    data=zip_file_D2.getvalue(),
-                    file_name="Dummy2区灰阶过渡CSV.zip",
-                    mime="application/zip",
-                )
-
-            # 清理：删除临时文件
-            os.unlink(temp.name)
-
-        except NameError:
-            st.write(':red[DXF文件未上传或DXF文件未解密, 请确认后重新上传]')
-        except TypeError:
-            st.write(':red[DXF文件未包含正确图层, 请确认后重新上传]')
-        except AttributeError:
-            st.write(':red[DXF图层不正确, 请确认后重新上传]')
-        except OverflowError:
-            st.write(':red[未输入Pixel信息, 请输入后再生成]') 
+    except NameError:
+        st.write(':red[DXF文件未上传或DXF文件未解密, 请确认后重新上传]')
+    except TypeError:
+        st.write(':red[DXF文件未包含正确图层, 请确认后重新上传]')
+    except AttributeError:
+        st.write(':red[DXF图层不正确, 请确认后重新上传]')
+    except OverflowError:
+        st.write(':red[未输入Pixel信息, 请输入后再生成]') 
 
 # 编辑点击计算按钮
 st.markdown(
