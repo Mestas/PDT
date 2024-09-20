@@ -86,7 +86,7 @@ if btn is True:
         local_time = datetime.now(timezone)
         # 格式化时间
         date = local_time.strftime('%Y-%m-%d %H:%M:%S')
-        new_content = name + '于' + date + '进行了登录:  ' + '\n'
+        new_content = name + '于' + date + '进行了登录;  ' + '\n'
 
         # GitHub API URL
         api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
