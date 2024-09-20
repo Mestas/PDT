@@ -1231,72 +1231,125 @@ def main_code():
                 if start5[j] < F5[i] <= end5[j]:
                 # 如果key在该区间内，则将该区间的value累加
                     Final_lum_step[j, 1] += V5[i]
-                        
-# main_code(trans2, l, m, start1, end1, start2, end2, start3, end3, trans_step, Final_trans_step, Final_lum_step)
 
-# TT = pd.DataFrame(Final_trans_step, columns=['透过率比例', '概率分布'])
-# LL = pd.DataFrame(Final_lum_step, columns=['亮度比例', '概率分布'])
+# # # 设置步骤2
+col5, col6 = st.columns([2, 1])
+bz3_1, bz3_2 = st.columns([1, 20])
+with col5:
+    st.write("<h6>步骤3：点击计算结果</h6>", unsafe_allow_html=True)
+with bz3_2:
+    calc_button = st.button('***点击计算***')
+if calc_button is True:
+    # 将登陆者信息传递过来
+    if 'user_name' in st.session_state:
+        user_name = st.session_state['user_name']
+        # st.write(user_name)
 
-# print(TT)
-# print(LL)
-# data1 = pd.DataFrame(TT)
-# path1 = 'D:/Samui_Final_Trans_step.csv'
-# data1.index = np.arange(1, data1.shape[0] + 1)
-# data1.columns = np.arange(1, data1.shape[1] + 1)
-# data1.to_csv(path1)
+    # 将登录者以及使用的信息保存到《网站使用者.txt》文件中
+    import requests
+    import json
+    import base64
+    from hashlib import sha1
+    from datetime import datetime
+    import pytz
 
-# data2 = pd.DataFrame(LL)
-# path2 = 'D:/Samui_Final_Lum_step.csv'
-# data2.index = np.arange(1, data2.shape[0] + 1)
-# data2.columns = np.arange(1, data2.shape[1] + 1)
-# data2.to_csv(path2)
+    # 从 Streamlit Secret 获取 GitHub PAT
+    github_pat = st.secrets['github_token']
 
-# end_time = time.time()
-# # 计算执行时间
-# run_time = round(end_time - start_time, 2)
-# print("代码执行时间为：{}秒".format(run_time))
-# # print(T_step)
+    # GitHub 仓库信息
+    owner = 'Mestas'  # 仓库所有者
+    repo = 'PDT'  # 仓库名称
+    branch = 'main'  # 分支名称
+    filepath = 'users/网站使用者.txt'  # 文件路径
 
+    # 文件内容
+    # 获取特定时区
+    timezone = pytz.timezone('Asia/Shanghai')  # 例如，获取东八区的时间
 
-try:
-    # # # 设置步骤2
-    col5, col6 = st.columns([2, 1])
-    bz3_1, bz3_2 = st.columns([1, 20])
-    with col5:
-        st.write("<h6>步骤3：点击计算结果</h6>", unsafe_allow_html=True)
-    with bz3_2:
-        if st.button('***点击计算***'):
-            # 将使用者保存到txt文件中
-            fp_save = 'D:\\python_work\\project\\1_PDT\\users\\网站使用者.txt'
-            mode = 'a'
-            with open(fp_save, mode) as f:
-                f.write('使用了透过率波动1step工具' + '\n')
+    # 获取当前时间，并将其本地化到特定时区
+    local_time = datetime.now(timezone)
+    # 格式化时间
+    date = local_time.strftime('%Y-%m-%d %H:%M:%S')
+    new_content = user_name + '于' + date + '使用了《07-亮度波动概率分布预估工具 (V2.1)》;  ' + '\n'
 
-            # main_code(trans2, l, m, start1, end1, stp1, start2, end2, stp2, start3, end3, stp3, start4, end4, stp4, trans_step, trans_step1, trans_step2, Final_trans_step, Final_lum_step)
-            main_code()
-            bz3_3, bz3_4, bz3_5, bz3_6 = st.columns([1, 5, 5, 8])
-            with bz3_4:
-                st.write('透过率概率分布', Final_trans_step)
-            with bz3_5:
-                st.write('亮度概率分布', Final_lum_step)
+    # GitHub API URL
+    api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
 
-            TT = pd.DataFrame(Final_trans_step, columns=['透过率比例', '概率分布'])
-            LL = pd.DataFrame(Final_lum_step, columns=['亮度比例', '概率分布'])
+    # 设置请求头，包括你的 PAT
+    headers = {
+        'Authorization': f'token {github_pat}',
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+    }
 
-            st.line_chart(TT, x='透过率比例', y='概率分布')
-            st.line_chart(LL, x='亮度比例', y='概率分布')
-            # 获取代码执行后时间戳
-            end_time = time.time()
-            # 计算执行时间
-            run_time = round(end_time - start_time, 2)
-            st.write("代码执行时间为：{}秒".format(run_time))
+    # 发送请求以获取当前文件内容
+    response = requests.get(api_url, headers=headers)
+    if response.status_code == 200:
+        file_data = response.json()
+        # 读取现有文件内容
+        existing_content = base64.b64decode(file_data['content']).decode('utf-8')
+        # 将新内容追加到现有内容
+        updated_content = existing_content + new_content
+        # 计算更新后内容的 SHA1 哈希值
+        content_sha1 = sha1(updated_content.encode('utf-8')).hexdigest()
+    else:
+        # 如果文件不存在，就创建新文件
+        updated_content = new_content
+        content_sha1 = sha1(new_content.encode('utf-8')).hexdigest()
 
-except FileNotFoundError:
-    print('aa')
-# except NameError:
-#     bz5_3, bz5_4, bz5_5 = st.columns([1, 6, 19])
-#     with bz5_5:
-#         st.write(':red[请加载TXT文件后在点击计算!]')
+    # 将更新后的内容转换为 Base64 编码
+    encoded_content = base64.b64encode(updated_content.encode('utf-8')).decode('utf-8')
+
+    # 构建请求体
+    data = {
+        "message": "Append to file via Streamlit",
+        "content": encoded_content,
+        "branch": branch,
+        "sha": file_data['sha'] if response.status_code == 200 else None  # 如果文件不存在，这将被忽略
+    }
+
+    # 发送请求以更新文件内容
+    response = requests.put(api_url, headers=headers, data=json.dumps(data))
+
+    # # 检查响应状态
+    # if response.status_code == 200:
+    #     # 请求成功，显示成功信息
+    #     print('File updated successfully on GitHub!')
+    # else:
+    #     # 请求失败，显示错误信息
+    #     print(f'Error: {response.status_code}')
+    #     print(response.text)
+
+    # # # # # # # # # # # # 分隔符，以上为保存使用者信息 # # # # # # # # # # # #
+    # # # # # # # # # # # # 分隔符，以下为正式代码 # # # # # # # # # # # #
+
+    try:
+        main_code()
+        bz3_3, bz3_4, bz3_5, bz3_6 = st.columns([1, 5, 5, 8])
+        with bz3_4:
+            st.write('透过率概率分布', Final_trans_step)
+        with bz3_5:
+            st.write('亮度概率分布', Final_lum_step)
+
+        TT = pd.DataFrame(Final_trans_step, columns=['透过率比例', '概率分布'])
+        LL = pd.DataFrame(Final_lum_step, columns=['亮度比例', '概率分布'])
+
+        st.line_chart(TT, x='透过率比例', y='概率分布')
+        st.line_chart(LL, x='亮度比例', y='概率分布')
+        # 获取代码执行后时间戳
+        end_time = time.time()
+        # 计算执行时间
+        run_time = round(end_time - start_time, 2)
+        st.write("代码执行时间为：{}秒".format(run_time))
+
+    except FileNotFoundError:
+        bz5_3, bz5_4, bz5_5 = st.columns([1, 6, 19])
+        with bz5_5:
+            st.write(':red[请加载TXT文件后在点击计算!]')
+    # except NameError:
+    #     bz5_3, bz5_4, bz5_5 = st.columns([1, 6, 19])
+    #     with bz5_5:
+    #         st.write(':red[请加载TXT文件后在点击计算!]')
 
 # 编辑button - Final计算
 st.markdown(
