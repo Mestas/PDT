@@ -50,7 +50,7 @@ with col6:
     # code = st.text_input('请输入密码', key=2)
     btn = st.button('点击登录')
 p = len(name)
-namelist = ['admin', '刘晓辉', '刘瑞超', '任静峰', '陈凯', '李泽亮', '吴兆君', '李小艳', '张小凤', '纪浩晨', '许曦', '佟洁', '栗晓亚', '梁鹏', '王宁', '李忻放']
+namelist = ['cyan', '刘晓辉', '刘瑞超', '任静峰', '陈凯', '李泽亮', '吴兆君', '李小艳', '张小凤', '纪浩晨', '许曦', '佟洁', '栗晓亚', '梁鹏', '王宁', '李忻放']
 if btn is True:
     if p > 0 and name in namelist:
         load_name = str(name + ' 登录成功，欢迎使用')
