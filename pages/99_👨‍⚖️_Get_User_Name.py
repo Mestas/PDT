@@ -121,7 +121,7 @@ col11, col12 = st.columns([2, 6])
 with col11:
     name = st.text_input('请输入用户名后进行查看', key=1)
 p = len(name)
-namelist = ['administrator']
+namelist = ['cyan']
 
 read = st.button('读取数据', key='pushbutton2')
 if read is True:
