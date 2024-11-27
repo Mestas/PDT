@@ -367,7 +367,7 @@ if final_click is True:
         BZ = sum(sum(BZ0))
 
         # # 从techwiz数据中找到RGB对应的透过率
-        sub_Pixel_l = math.floor(m / 3)  # sub Pixel对应的列数，用floor防止Right的数据超过范围
+        sub_Pixel_l = math.floor(n / 3)  # sub Pixel对应的列数，用floor防止Right的数据超过范围
         shift_X_l = round(m * math.tan(Slit_Angle / 180 * math.pi))
 
         # # 创建正视角观察的三个子像素
