@@ -312,9 +312,9 @@ with bz0_2:
             # 发送请求以创建或更新文件内容
             response = requests.put(api_url, headers=headers, data=json.dumps(data))
             if response.status_code == 201 or response.status_code == 200:
-                st.success(f"File {file_name} uploaded to {repo} successfully!")
+                st.success(f"文件 {file_name} 上传成功!")
             else:
-                st.error(f"Failed to upload file {file_name}: {response.text}")
+                st.error(f"文件 {file_name}: {response.text}")
             
 # # # 步骤1
 st.write("<h6>步骤1：请进行仿真模式设置</h6>", unsafe_allow_html=True)
