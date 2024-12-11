@@ -23,6 +23,7 @@ st.set_page_config(
 
 
 # # # 上传NK值txt文件
+from github import Github
 from base64 import b64encode
 
 # 文件上传
