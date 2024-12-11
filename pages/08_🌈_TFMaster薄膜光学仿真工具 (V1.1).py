@@ -258,7 +258,8 @@ from github import Github
 from base64 import b64encode
 
 # 文件上传
-with col2:
+bz0_1, bz0_2, bz0_3 = st.columns([1, 8, 20])
+with bz0_2:
     uploaded_file = st.file_uploader("Choose a TXT file", type=['txt'])
     if uploaded_file is not None:
         # 显示文件信息
