@@ -280,14 +280,10 @@ with bz0_2:
         # 遍历上传的文件
         for uploaded_file in uploaded_files:
             file_name = uploaded_file.name
-            # st.write(f"File selected: {file_name}")
 
             # 读取文件内容并编码为base64
             file_content = uploaded_file.read().decode('utf-8')
             # encoded_content = b64encode(file_content.encode('utf-8')).decode('utf-8')
-
-            # # 构造文件路径
-            # file_path = f"{folder_path}/{file_name}"
 
             # GitHub API URL
             owner = 'Mestas'
@@ -308,19 +304,18 @@ with bz0_2:
             else:
                 # 如果文件不存在，就创建新文件
                 updated_content = file_content
-                content_sha1 = sha1(file_content.encode('utf-8')).hexdigest()
 
             # 将更新后的内容转换为 Base64 编码
             encoded_content = base64.b64encode(updated_content.encode('utf-8')).decode('utf-8')
-            
+
             # 构建请求体
             data = {
                 "message": "Append to file via Streamlit",
                 "content": encoded_content,
-                # 'committer': committer,
-                "branch": branch_name
+                "branch": branch_name,
                 "sha": file_data['sha'] if response.status_code == 200 else None  # 如果文件不存在，这将被忽略
             }
+
             # 发送请求以更新文件内容
             response = requests.put(api_url, headers=headers, data=json.dumps(data))
             
