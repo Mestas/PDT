@@ -37,7 +37,7 @@ if uploaded_file is not None:
     repo_full_name = "Mestas/PDT"
     branch_name = "main"
     folder_path = "source/material"
-    pat = st.secrets['github_token']
+    pat = st.secrets['github_token']  # 确保你已经在Streamlit的Secrets Manager中设置了github_token
 
     # 创建 Github 对象
     g = Github(pat)
@@ -54,17 +54,16 @@ if uploaded_file is not None:
 
     # 上传文件到 GitHub
     try:
-        # 创建一个 GitTreeElement 对象
-        element = repo.create_git_tree([file_path], base_tree=repo.get_git_ref(f"heads/{branch_name}").object.sha)
-        # 创建一个 commit 对象
-        commit = repo.create_git_commit(f"Upload {file_name}", element.sha, [repo.get_git_ref(f"heads/{branch_name}").object.sha])
-        # 更新分支
-        repo.update_git_ref(f"heads/{branch_name}", commit.sha)
+        # 上传文件
+        repo.create_file(
+            file_path,
+            f"Upload {file_name}",
+            encoded_content,
+            branch=branch_name
+        )
         st.success(f"File {file_name} uploaded to {repo_full_name} successfully!")
-    except NameError as e:
+    except Exception as e:
         st.error(f"Failed to upload file: {e}")
-    # except Exception as e:
-    #     st.error(f"Failed to upload file: {e}")
 
 
 wl_min = 380.0
