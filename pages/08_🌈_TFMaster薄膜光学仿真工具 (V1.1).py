@@ -254,18 +254,16 @@ with col2:
 st.sidebar.write("<h4 style='color: blue;'>本工具可以计算多层薄膜堆叠的反射和透射光学</h4>", unsafe_allow_html=True)
 
 # # # 步骤0：上传NK值txt
+st.write("<h6>步骤0：请上传所需要的NK值txt文件</h6>", unsafe_allow_html=True)
 from github import Github
 from base64 import b64encode
 
 # 文件上传
 bz0_1, bz0_2, bz0_3 = st.columns([1, 8, 20])
 with bz0_2:
-    uploaded_file = st.file_uploader("Choose a TXT file", type=['txt'])
-    if uploaded_file is not None:
-        # 显示文件信息
-        file_name = uploaded_file.name
-        st.write(f"File selected: {file_name}")
-
+    # 文件上传
+    uploaded_files = st.file_uploader("请选择txt文件", type=['txt'], accept_multiple_files=True)
+    if uploaded_files is not None:
         # 用户输入
         repo_full_name = "Mestas/PDT"
         branch_name = "main"
@@ -278,25 +276,30 @@ with bz0_2:
         # 获取仓库对象
         repo = g.get_repo(repo_full_name)
 
-        # 读取文件内容并编码为base64
-        file_content = uploaded_file.read().decode('utf-8')
-        encoded_content = b64encode(file_content.encode('utf-8')).decode('utf-8')
+        # 遍历上传的文件
+        for uploaded_file in uploaded_files:
+            file_name = uploaded_file.name
+            st.write(f"File selected: {file_name}")
 
-        # 构造文件路径
-        file_path = f"{folder_path}/{file_name}"
+            # 读取文件内容并编码为base64
+            file_content = uploaded_file.read().decode('utf-8')
+            encoded_content = b64encode(file_content.encode('utf-8')).decode('utf-8')
 
-        # 上传文件到 GitHub
-        try:
-            # 上传文件
-            repo.create_file(
-                file_path,
-                f"Upload {file_name}",
-                encoded_content,
-                branch=branch_name
-            )
-            st.success(f"File {file_name} uploaded to {repo_full_name} successfully!")
-        except Exception as e:
-            st.error(f"Failed to upload file: {e}")
+            # 构造文件路径
+            file_path = f"{folder_path}/{file_name}"
+
+            # 上传文件到 GitHub
+            try:
+                # 上传文件
+                repo.create_file(
+                    file_path,
+                    f"Upload {file_name}",
+                    encoded_content,
+                    branch=branch_name
+                )
+                st.success(f"文件 {file_name} 成功上传至 {repo_full_name} !")
+            except Exception as e:
+                st.error(f"文件上传失败 {file_name}: {e}")
             
 # # # 步骤1
 st.write("<h6>步骤1：请进行仿真模式设置</h6>", unsafe_allow_html=True)
