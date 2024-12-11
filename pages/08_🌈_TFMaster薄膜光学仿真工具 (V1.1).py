@@ -282,8 +282,8 @@ with bz0_2:
             st.write(f"File selected: {file_name}")
 
             # 读取文件内容并编码为base64
-            file_content = uploaded_file.read().decode('utf-8', errors='ignore')
-            encoded_content = b64encode(file_content.encode('utf-8')).decode('utf-8')
+            file_content = uploaded_file.read().decode('gbk').encode('utf-8')
+            encoded_content = b64encode(file_content).decode('utf-8')
 
             # 构造文件路径
             file_path = f"{folder_path}/{file_name}"
