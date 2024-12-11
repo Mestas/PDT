@@ -283,8 +283,8 @@ with bz0_2:
             # st.write(f"File selected: {file_name}")
 
             # 读取文件内容并编码为base64
-            file_content = base64.b64encode(uploaded_file.read()).decode('utf-8')
-            # encoded_content = b64encode(file_content.encode('utf-8')).decode('utf-8')
+            file_content = uploaded_file.read().decode('utf-8')
+            encoded_content = b64encode(file_content.encode('utf-8')).decode('utf-8')
 
             # # 构造文件路径
             # file_path = f"{folder_path}/{file_name}"
@@ -296,7 +296,7 @@ with bz0_2:
             # 构建请求体
             data = {
                 # 'message': message,
-                'content': file_content,
+                'content': encoded_content,
                 # 'committer': committer,
                 'branch': branch_name
             }
