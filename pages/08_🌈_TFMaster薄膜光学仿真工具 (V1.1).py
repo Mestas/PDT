@@ -257,7 +257,7 @@ st.sidebar.write("<h4 style='color: blue;'>本工具可以计算多层薄膜堆�
 st.write("<h6>步骤0：请上传所需要的NK值txt文件</h6>", unsafe_allow_html=True)
 import requests
 import base64
-import streamlit as st
+import json
 
 # 从 Streamlit Secret 获取 GitHub PAT
 github_pat = st.secrets['github_token']
@@ -273,48 +273,48 @@ bz0_1, bz0_2, bz0_3 = st.columns([1, 8, 20])
 with bz0_2:
     # 文件上传
     uploaded_files = st.file_uploader("请选择txt文件", type=['txt'], accept_multiple_files=True)
-if uploaded_files is not None:
-    # 遍历上传的文件
-    for uploaded_file in uploaded_files:
-        file_name = uploaded_file.name
-        # 读取文件内容并编码为base64
-        file_content = uploaded_file.read().decode('utf-8')
-        encoded_content = base64.b64encode(file_content.encode('utf-8')).decode('utf-8')
-
-        # GitHub API URL
-        api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}/{file_name}'
-
-        # 设置请求头，包括你的 PAT
-        headers = {
-            'Authorization': f'token {github_pat}',
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
-        }
-
-        # 发送请求以获取当前文件内容
-        response = requests.get(api_url, headers=headers)
-        if response.status_code == 200:
-            file_data = response.json()
-            # 如果文件已存在，获取文件的SHA
-            file_sha = file_data['sha']
-        else:
-            # 如果文件不存在，SHA将不被使用（None）
-            file_sha = None
-
-        # 构建请求体
-        data = {
-            "message": f"Upload {file_name}",
-            "content": encoded_content,
-            "branch": branch,
-            "sha": file_sha  # 如果文件已存在，使用文件的SHA
-        }
-
-        # 发送请求以创建或更新文件内容
-        response = requests.put(api_url, headers=headers, data=json.dumps(data))
-        if response.status_code == 201 or response.status_code == 200:
-            st.success(f"File {file_name} uploaded to {repo} successfully!")
-        else:
-            st.error(f"Failed to upload file {file_name}: {response.text}")
+    if uploaded_files is not None:
+        # 遍历上传的文件
+        for uploaded_file in uploaded_files:
+            file_name = uploaded_file.name
+            # 读取文件内容并编码为base64
+            file_content = uploaded_file.read().decode('utf-8')
+            encoded_content = base64.b64encode(file_content.encode('utf-8')).decode('utf-8')
+    
+            # GitHub API URL
+            api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}/{file_name}'
+    
+            # 设置请求头，包括你的 PAT
+            headers = {
+                'Authorization': f'token {github_pat}',
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json'
+            }
+    
+            # 发送请求以获取当前文件内容
+            response = requests.get(api_url, headers=headers)
+            if response.status_code == 200:
+                file_data = response.json()
+                # 如果文件已存在，获取文件的SHA
+                file_sha = file_data['sha']
+            else:
+                # 如果文件不存在，SHA将不被使用（None）
+                file_sha = None
+    
+            # 构建请求体
+            data = {
+                "message": f"Upload {file_name}",
+                "content": encoded_content,
+                "branch": branch,
+                "sha": file_sha  # 如果文件已存在，使用文件的SHA
+            }
+    
+            # 发送请求以创建或更新文件内容
+            response = requests.put(api_url, headers=headers, data=json.dumps(data))
+            if response.status_code == 201 or response.status_code == 200:
+                st.success(f"File {file_name} uploaded to {repo} successfully!")
+            else:
+                st.error(f"Failed to upload file {file_name}: {response.text}")
             
 # # # 步骤1
 st.write("<h6>步骤1：请进行仿真模式设置</h6>", unsafe_allow_html=True)
