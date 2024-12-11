@@ -61,8 +61,10 @@ if uploaded_file is not None:
         # 更新分支
         repo.update_git_ref(f"heads/{branch_name}", commit.sha)
         st.success(f"File {file_name} uploaded to {repo_full_name} successfully!")
-    except Exception as e:
+    except NameError as e:
         st.error(f"Failed to upload file: {e}")
+    # except Exception as e:
+    #     st.error(f"Failed to upload file: {e}")
 
 
 wl_min = 380.0
