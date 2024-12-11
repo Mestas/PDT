@@ -255,11 +255,19 @@ st.sidebar.write("<h4 style='color: blue;'>本工具可以计算多层薄膜堆�
 
 # # # 步骤0：上传NK值txt
 st.write("<h6>步骤0：请上传所需要的NK值txt文件</h6>", unsafe_allow_html=True)
-from github import Github
-from base64 import b64encode
-from hashlib import sha1
 import requests
 import json
+import base64
+from hashlib import sha1
+
+# 从 Streamlit Secret 获取 GitHub PAT
+github_pat = st.secrets['github_token']
+
+# GitHub 仓库信息
+owner = 'Mestas'  # 仓库所有者
+repo = 'PDT'  # 仓库名称
+branch = 'main'  # 分支名称
+filepath = 'source/material'  # 文件夹路径
 
 # 文件上传
 bz0_1, bz0_2, bz0_3 = st.columns([1, 8, 20])
@@ -267,33 +275,20 @@ with bz0_2:
     # 文件上传
     uploaded_files = st.file_uploader("请选择txt文件", type=['txt'], accept_multiple_files=True)
     if uploaded_files is not None:
-        # 用户输入
-        repo_full_name = "Mestas/PDT"
-        branch_name = "main"
-        folder_path = "source/material"
-        pat = st.secrets['github_token']  # 确保你已经在Streamlit的Secrets Manager中设置了github_token
-
-        # 创建 Github 对象
-        g = Github(pat)
-
-        # 获取仓库对象
-        repo = g.get_repo(repo_full_name)
-
         # 遍历上传的文件
         for uploaded_file in uploaded_files:
             file_name = uploaded_file.name
+            # st.write(f"File selected: {file_name}")
 
             # 读取文件内容并编码为base64
-            file_content = uploaded_file.read().decode('utf-8')
-            # encoded_content = b64encode(file_content.encode('utf-8')).decode('utf-8')
+            new_content = uploaded_file.read().decode('utf-8')
 
             # GitHub API URL
-            owner = 'Mestas'
-            api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{folder_path}'
+            api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
 
             # 设置请求头，包括你的 PAT
             headers = {
-                'Authorization': f'token {pat}',
+                'Authorization': f'token {github_pat}',
                 'Accept': 'application/vnd.github.v3+json',
                 'Content-Type': 'application/json'
             }
@@ -302,19 +297,25 @@ with bz0_2:
             response = requests.get(api_url, headers=headers)
             if response.status_code == 200:
                 file_data = response.json()
-                st.write('已存在该txt文件，请确认后重新上传')
+                # 读取现有文件内容
+                existing_content = base64.b64decode(file_data['content']).decode('utf-8')
+                # 将新内容追加到现有内容
+                updated_content = existing_content
+                # 计算更新后内容的 SHA1 哈希值
+                content_sha1 = sha1(updated_content.encode('utf-8')).hexdigest()
             else:
                 # 如果文件不存在，就创建新文件
-                updated_content = file_content
-
+                updated_content = new_content
+                content_sha1 = sha1(new_content.encode('utf-8')).hexdigest()
+            
             # 将更新后的内容转换为 Base64 编码
-            encoded_content = b64encode(updated_content.encode('utf-8')).decode('utf-8')
+            encoded_content = base64.b64encode(updated_content.encode('utf-8')).decode('utf-8')
 
             # 构建请求体
             data = {
                 "message": "Append to file via Streamlit",
                 "content": encoded_content,
-                "branch": branch_name,
+                "branch": branch,
                 "sha": file_data['sha'] if response.status_code == 200 else None  # 如果文件不存在，这将被忽略
             }
 
