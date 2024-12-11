@@ -280,21 +280,20 @@ with bz0_2:
         # 遍历上传的文件
         for uploaded_file in uploaded_files:
             file_name = uploaded_file.name
-            st.write(f"File selected: {file_name}")
+            # st.write(f"File selected: {file_name}")
 
             # 读取文件内容并编码为base64
-            file_content = uploaded_file.read().decode('utf-8')
-            encoded_content = b64encode(file_content.encode('utf-8')).decode('utf-8')
-    
+            file_content = base64.b64encode(uploaded_file.read()).decode('utf-8')
+            # encoded_content = b64encode(file_content.encode('utf-8')).decode('utf-8')
+
             # # 构造文件路径
             # file_path = f"{folder_path}/{file_name}"
-    
+
             # GitHub API URL
             owner = 'Mestas'
             api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{folder_path}'
 
             # 构建请求体
-            message = 'Upload file via API'
             data = {
                 # 'message': message,
                 'content': file_content,
