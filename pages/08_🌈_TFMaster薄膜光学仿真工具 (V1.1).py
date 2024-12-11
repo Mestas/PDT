@@ -284,7 +284,7 @@ with bz0_2:
 
             # 读取文件内容并编码为base64
             file_content = uploaded_file.read().decode('utf-8')
-            encoded_content = b64encode(file_content.encode('utf-8')).decode('utf-8')
+            # encoded_content = b64encode(file_content.encode('utf-8')).decode('utf-8')
 
             # # 构造文件路径
             # file_path = f"{folder_path}/{file_name}"
@@ -293,23 +293,36 @@ with bz0_2:
             owner = 'Mestas'
             api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{folder_path}'
 
-            # 构建请求体
-            data = {
-                # 'message': message,
-                'content': encoded_content,
-                # 'committer': committer,
-                'branch': branch_name
+            # 设置请求头，包括你的 PAT
+            headers = {
+                'Authorization': f'token {pat}',
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json'
             }
 
-            # 发送PUT请求
-            headers = {'Authorization': f'token {pat}'}
-            response = requests.put(api_url, json=data, headers=headers)
-
-            # 检查响应
-            if response.status_code == 201:
-                print('File uploaded successfully')
+            # 发送请求以获取当前文件内容
+            response = requests.get(api_url, headers=headers)
+            if response.status_code == 200:
+                file_data = response.json()
+                st.write('已存在该txt文件，请确认后重新上传')
             else:
-                print('Failed to upload file:', response.text)
+                # 如果文件不存在，就创建新文件
+                updated_content = file_content
+                content_sha1 = sha1(file_content.encode('utf-8')).hexdigest()
+
+            # 将更新后的内容转换为 Base64 编码
+            encoded_content = base64.b64encode(updated_content.encode('utf-8')).decode('utf-8')
+            
+            # 构建请求体
+            data = {
+                "message": "Append to file via Streamlit",
+                "content": encoded_content,
+                # 'committer': committer,
+                "branch": branch_name
+                "sha": file_data['sha'] if response.status_code == 200 else None  # 如果文件不存在，这将被忽略
+            }
+            # 发送请求以更新文件内容
+            response = requests.put(api_url, headers=headers, data=json.dumps(data))
             
 # # # 步骤1
 st.write("<h6>步骤1：请进行仿真模式设置</h6>", unsafe_allow_html=True)
