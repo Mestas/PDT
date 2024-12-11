@@ -21,51 +21,6 @@ st.set_page_config(
     layout="wide"
 )
 
-
-# # # 上传NK值txt文件
-from github import Github
-from base64 import b64encode
-
-# 文件上传
-uploaded_file = st.file_uploader("Choose a TXT file", type=['txt'])
-if uploaded_file is not None:
-    # 显示文件信息
-    file_name = uploaded_file.name
-    st.write(f"File selected: {file_name}")
-
-    # 用户输入
-    repo_full_name = "Mestas/PDT"
-    branch_name = "main"
-    folder_path = "source/material"
-    pat = st.secrets['github_token']  # 确保你已经在Streamlit的Secrets Manager中设置了github_token
-
-    # 创建 Github 对象
-    g = Github(pat)
-
-    # 获取仓库对象
-    repo = g.get_repo(repo_full_name)
-
-    # 读取文件内容并编码为base64
-    file_content = uploaded_file.read().decode('utf-8')
-    encoded_content = b64encode(file_content.encode('utf-8')).decode('utf-8')
-
-    # 构造文件路径
-    file_path = f"{folder_path}/{file_name}"
-
-    # 上传文件到 GitHub
-    try:
-        # 上传文件
-        repo.create_file(
-            file_path,
-            f"Upload {file_name}",
-            encoded_content,
-            branch=branch_name
-        )
-        st.success(f"File {file_name} uploaded to {repo_full_name} successfully!")
-    except Exception as e:
-        st.error(f"Failed to upload file: {e}")
-
-
 wl_min = 380.0
 wl_max = 780.0
 wl_pitch = 1.0
@@ -298,6 +253,50 @@ with col2:
 # # # 侧边栏设置
 st.sidebar.write("<h4 style='color: blue;'>本工具可以计算多层薄膜堆叠的反射和透射光学</h4>", unsafe_allow_html=True)
 
+# # # 步骤0：上传NK值txt
+from github import Github
+from base64 import b64encode
+
+# 文件上传
+with col2:
+    uploaded_file = st.file_uploader("Choose a TXT file", type=['txt'])
+    if uploaded_file is not None:
+        # 显示文件信息
+        file_name = uploaded_file.name
+        st.write(f"File selected: {file_name}")
+
+        # 用户输入
+        repo_full_name = "Mestas/PDT"
+        branch_name = "main"
+        folder_path = "source/material"
+        pat = st.secrets['github_token']  # 确保你已经在Streamlit的Secrets Manager中设置了github_token
+
+        # 创建 Github 对象
+        g = Github(pat)
+
+        # 获取仓库对象
+        repo = g.get_repo(repo_full_name)
+
+        # 读取文件内容并编码为base64
+        file_content = uploaded_file.read().decode('utf-8')
+        encoded_content = b64encode(file_content.encode('utf-8')).decode('utf-8')
+
+        # 构造文件路径
+        file_path = f"{folder_path}/{file_name}"
+
+        # 上传文件到 GitHub
+        try:
+            # 上传文件
+            repo.create_file(
+                file_path,
+                f"Upload {file_name}",
+                encoded_content,
+                branch=branch_name
+            )
+            st.success(f"File {file_name} uploaded to {repo_full_name} successfully!")
+        except Exception as e:
+            st.error(f"Failed to upload file: {e}")
+            
 # # # 步骤1
 st.write("<h6>步骤1：请进行仿真模式设置</h6>", unsafe_allow_html=True)
 bz1_1, bz1_2, bz1_3 = st.columns([1, 8, 20])
