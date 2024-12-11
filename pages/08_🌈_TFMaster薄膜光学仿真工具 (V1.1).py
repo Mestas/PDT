@@ -282,12 +282,12 @@ with bz0_2:
             st.write(f"File selected: {file_name}")
 
             # 读取文件内容并编码为base64
-            file_content = uploaded_file.read().decode('gbk').encode('utf-8')
-            encoded_content = b64encode(file_content).decode('utf-8')
-
+            file_content = uploaded_file.read().decode('utf-8')
+            encoded_content = b64encode(file_content.encode('utf-8')).decode('utf-8')
+    
             # 构造文件路径
             file_path = f"{folder_path}/{file_name}"
-
+    
             # 上传文件到 GitHub
             try:
                 # 上传文件
@@ -297,9 +297,9 @@ with bz0_2:
                     encoded_content,
                     branch=branch_name
                 )
-                st.success(f"文件 {file_name} 成功上传至 {repo_full_name} !")
+                st.success(f"File {file_name} uploaded to {repo_full_name} successfully!")
             except Exception as e:
-                st.error(f"文件上传失败 {file_name}: {e}")
+                st.error(f"Failed to upload file {file_name}: {e}")
             
 # # # 步骤1
 st.write("<h6>步骤1：请进行仿真模式设置</h6>", unsafe_allow_html=True)
