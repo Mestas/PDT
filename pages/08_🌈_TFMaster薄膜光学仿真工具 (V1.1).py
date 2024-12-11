@@ -306,7 +306,7 @@ with bz0_2:
                 updated_content = file_content
 
             # 将更新后的内容转换为 Base64 编码
-            encoded_content = base64.b64encode(updated_content.encode('utf-8')).decode('utf-8')
+            encoded_content = b64encode(updated_content.encode('utf-8')).decode('utf-8')
 
             # 构建请求体
             data = {
