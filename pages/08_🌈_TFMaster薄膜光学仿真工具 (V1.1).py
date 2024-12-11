@@ -285,21 +285,31 @@ with bz0_2:
             file_content = uploaded_file.read().decode('utf-8')
             encoded_content = b64encode(file_content.encode('utf-8')).decode('utf-8')
     
-            # 构造文件路径
-            file_path = f"{folder_path}/{file_name}"
+            # # 构造文件路径
+            # file_path = f"{folder_path}/{file_name}"
     
-            # 上传文件到 GitHub
-            try:
-                # 上传文件
-                repo.create_file(
-                    file_path,
-                    f"Upload {file_name}",
-                    encoded_content,
-                    branch=branch_name
-                )
-                st.success(f"File {file_name} uploaded to {repo_full_name} successfully!")
-            except Exception as e:
-                st.error(f"Failed to upload file {file_name}: {e}")
+            # GitHub API URL
+            owner = 'Mestas'
+            api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{folder_path}'
+
+            # 构建请求体
+            message = 'Upload file via API'
+            data = {
+                # 'message': message,
+                'content': file_content,
+                # 'committer': committer,
+                'branch': branch_name
+            }
+
+            # 发送PUT请求
+            headers = {'Authorization': f'token {pat}'}
+            response = requests.put(api_url, json=data, headers=headers)
+
+            # 检查响应
+            if response.status_code == 201:
+                print('File uploaded successfully')
+            else:
+                print('Failed to upload file:', response.text)
             
 # # # 步骤1
 st.write("<h6>步骤1：请进行仿真模式设置</h6>", unsafe_allow_html=True)
