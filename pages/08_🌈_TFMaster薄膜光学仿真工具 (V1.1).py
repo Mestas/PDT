@@ -257,7 +257,9 @@ st.sidebar.write("<h4 style='color: blue;'>本工具可以计算多层薄膜堆�
 st.write("<h6>步骤0：请上传所需要的NK值txt文件</h6>", unsafe_allow_html=True)
 from github import Github
 from base64 import b64encode
+from hashlib import sha1
 import requests
+import json
 
 # 文件上传
 bz0_1, bz0_2, bz0_3 = st.columns([1, 8, 20])
