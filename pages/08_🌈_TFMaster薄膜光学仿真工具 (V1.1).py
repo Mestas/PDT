@@ -23,7 +23,7 @@ st.set_page_config(
 
 
 # # # 上传NK值txt文件
-from github import Github
+from base64 import b64encode
 
 # 文件上传
 uploaded_file = st.file_uploader("Choose a TXT file", type=['txt'])
@@ -32,27 +32,34 @@ if uploaded_file is not None:
     file_name = uploaded_file.name
     st.write(f"File selected: {file_name}")
 
-    # GitHub PAT
-    github_pat = st.secrets['github_token']
-    pat = 'your_github_pat'
-    # g = Github(pat)
+    # 用户输入
+    repo_full_name = "Mestas/PDT"
+    branch_name = "main"
+    folder_path = "source/material"
+    pat = st.secrets['github_token']
 
-    # 获取GitHub仓库对象
-    owner = 'Mestas'  # 仓库所有者
-    repo = 'PDT'  # 仓库名称
-    branch = 'main'  # 分支名称
-    # filepath = 'users/网站使用者.txt'  # 文件路径
-    repo_name = 'Mestas/PDT'
-    # repo = g.get_repo(repo_name)
+    # 创建 Github 对象
+    g = Github(pat)
 
-    # 指定文件路径和内容
-    file_path = '/source/material/' + file_name  # 目标GitHub路径
-    file_content = uploaded_file.read()
+    # 获取仓库对象
+    repo = g.get_repo(repo_full_name)
 
-    # 上传文件到GitHub
+    # 读取文件内容并编码为base64
+    file_content = uploaded_file.read().decode('utf-8')
+    encoded_content = b64encode(file_content.encode('utf-8')).decode('utf-8')
+
+    # 构造文件路径
+    file_path = f"{folder_path}/{file_name}"
+
+    # 上传文件到 GitHub
     try:
-        repo.put_file_contents(file_path, 'Uploading ' + file_name, file_content, branch='main')
-        st.success(f"File {file_name} uploaded to {repo_name} successfully!")
+        # 创建一个 GitTreeElement 对象
+        element = repo.create_git_tree([file_path], base_tree=repo.get_git_ref(f"heads/{branch_name}").object.sha)
+        # 创建一个 commit 对象
+        commit = repo.create_git_commit(f"Upload {file_name}", element.sha, [repo.get_git_ref(f"heads/{branch_name}").object.sha])
+        # 更新分支
+        repo.update_git_ref(f"heads/{branch_name}", commit.sha)
+        st.success(f"File {file_name} uploaded to {repo_full_name} successfully!")
     except Exception as e:
         st.error(f"Failed to upload file: {e}")
 
