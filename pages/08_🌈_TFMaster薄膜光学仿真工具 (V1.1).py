@@ -298,15 +298,15 @@ with bz0_2:
             if response.status_code == 200:
                 file_data = response.json()
                 # 读取现有文件内容
-                existing_content = base64.b64decode(file_data['content']).decode('utf-8')
-                # 将新内容追加到现有内容
-                updated_content = existing_content
-                # 计算更新后内容的 SHA1 哈希值
-                content_sha1 = sha1(updated_content.encode('utf-8')).hexdigest()
+                # existing_content = base64.b64decode(file_data['content']).decode('utf-8')
+                # # 将新内容追加到现有内容
+                # updated_content = existing_content
+                # # 计算更新后内容的 SHA1 哈希值
+                # content_sha1 = sha1(updated_content.encode('utf-8')).hexdigest()
             else:
                 # 如果文件不存在，就创建新文件
                 updated_content = new_content
-                content_sha1 = sha1(new_content.encode('utf-8')).hexdigest()
+                # content_sha1 = sha1(new_content.encode('utf-8')).hexdigest()
             
             # 将更新后的内容转换为 Base64 编码
             encoded_content = base64.b64encode(updated_content.encode('utf-8')).decode('utf-8')
