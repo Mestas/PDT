@@ -39,12 +39,12 @@ nk_idx_film = 0
 def order_n(i):
     return {1: "1st (top)", 2: "2nd", 3: "3rd"}.get(i) or "%dth" % i
 
-@st.cache_data
+# @st.cache_data
 def convert_df(df):
     # IMPORTANT: Cache the conversion to prevent computation on every rerun
     return df.to_csv().encode('utf-8')
 
-@st.cache_data
+# @st.cache_data
 def get_nk_list():
     """
     获取指定目录中的 nk 文件名列表
