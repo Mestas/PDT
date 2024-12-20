@@ -1048,7 +1048,7 @@ st.markdown(
     {
     background-color: rgb(220, 240, 220);
     }
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(7) > div.st-emotion-cache-tqfcjc.e1f1d6gn3 > div > div > div > div:nth-child(3) > div > div.st-emotion-cache-kskxxl.e116k4er3 > div.st-c6.st-ae.st-cc.st-c7.st-dq.st-dr.st-ds.st-dt.st-cj.st-ck.st-cl.st-cm.st-du.st-be.st-bf.st-c8.st-c9.st-dv.st-dw.st-bt.st-bu.st-bv.st-bw.st-bx.st-by.st-co.st-cp.st-cq.st-cr.st-bg.st-dx.st-dy > div
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(7) > div.st-emotion-cache-tqfcjc.e1f1d6gn3 > div > div > div > div:nth-child(3) > div > div.st-emotion-cache-kskxxl.e116k4er3 > div.st-c6.st-ae.st-cc.st-c7.st-dq.st-dr.st-ds.st-dt.st-cj.st-ck.st-cl.st-cm.st-du.st-be.st-bf.st-c8.st-c9.st-dv.st-dw.st-bt.st-bu.st-bv.st-bw.st-bx.st-by.st-co.st-cp.st-cq.st-cr.st-bg.st-dx.st-dy > div > input
     {
     background-color: rgb(220, 240, 220);
     }
