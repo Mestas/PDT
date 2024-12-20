@@ -247,8 +247,8 @@ def generate_layer_combinations(layer_ranges):
 st.write("# Thin Film Master #")
 col1, col2 = st.columns([2, 1])
 with col2:
-    st.write("<h5 style='color: blue;'>版本号：V1.1</h5>", unsafe_allow_html=True)
-    st.write("<h5 style='color: blue;'>发布时间：2024/03/29</h5>", unsafe_allow_html=True)
+    st.write("<h5 style='color: blue;'>版本号：V1.2</h5>", unsafe_allow_html=True)
+    st.write("<h5 style='color: blue;'>发布时间：2024/12/20</h5>", unsafe_allow_html=True)
 
 # # # 侧边栏设置
 st.sidebar.write("<h4 style='color: blue;'>本工具可以计算多层薄膜堆叠的反射和透射光学</h4>", unsafe_allow_html=True)
@@ -1010,13 +1010,13 @@ if cal_button_clicked_trans:
 st.markdown(
     '''
     <style>
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(13) > div.st-emotion-cache-12d0wtz.e1f1d6gn3 > div > div > div > div:nth-child(1) > div > button
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(14) > div.st-emotion-cache-12d0wtz.e1f1d6gn3 > div > div > div > div:nth-child(1) > div > button
     {
     background-color: rgb(220, 240, 220);
     height: 70px !important;
     width: 150px !important;
     }
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(13) > div.st-emotion-cache-12d0wtz.e1f1d6gn3 > div > div > div > div:nth-child(2) > div > button
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(14) > div.st-emotion-cache-12d0wtz.e1f1d6gn3 > div > div > div > div:nth-child(2) > div > button
     {
     background-color: rgb(220, 240, 220);
     height: 70px !important;
@@ -1031,6 +1031,11 @@ st.markdown(
 st.markdown(
     '''
     <style>
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(4) > div.st-emotion-cache-12d0wtz.e1f1d6gn3 > div > div > div > div > div > section > button
+    {
+    background-color: rgb(220, 240, 220);
+    }
+    
     #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(5) > div.st-emotion-cache-tqfcjc.e1f1d6gn3 > div > div > div > div:nth-child(1) > div > div > div
     {
     background-color: rgb(220, 240, 220);
