@@ -1,0 +1,62 @@
+产品型号	5.46 Olivia 773PPI LTPS产品	Tokki 1218
+cg_name	No Cover	No Cover
+cg_value	1.000000000	1
+pol1_name	Fresnel HC	Pancake AR-日东
+pol1_value	0.430000000	0.445
+BITO_name	B-ITO 175A	TDDI/Bridge ITO
+BITO_value	0.970000000	1
+Glass1_value	0.910000000	0.91
+RGB_name	BY-4000	Tokki 5th Demo实测0017/0008/0012
+BLU_name	AOT YAG GT21	日亚氮化物v3g
+Color_Gamut	0.708	0.709
+RY_value0	0.185868620	0.201937081
+GY_value0	0.526276613	0.557180403
+BY_value0	0.041097377	0.09486708
+RGB_Ratio_value	1.000000000	0.93
+RY_value	0.185868620	0.217136646
+GY_value	0.526276613	0.599118712
+BY_value	0.041097377	0.102007613
+Ratio	1:1:1	1:1:0.748
+SDCD	2.5	2.5
+BMCD	3.5/11	3.5/11
+AR_R_value0	0.091259333	0.113221653
+AR_G_value0	0.135063443	0.113221653
+AR_B_value0	0.135063443	0.075036374
+AR_Ratio_value	0.980000000	1
+AR_R_value	0.089434147	0.113221653
+AR_G_value	0.132362174	0.113221653
+AR_B_value	0.132362174	0.075036374
+AR_poly_R_value	0.000000000	0
+AR_poly_G_value	0.008497645	0
+AR_poly_B_value	0.008497645	0
+poly_value	0.317000000	0.317
+LC	LCCC-17-740	BOE-F049/20-1
+Cell_Gap	1.4um	1.68um
+P_ITO1	1 Slit 	0Slit 10°
+P_ITO2	CITO W/S=2.0/2.575um	PITO4.8 CITO Space 2.65
+P_ITO3	PITO间距3.55um	相邻PITO间距2.15
+LC_R_value	0.5240000	0.584
+LC_G_value	0.4980000	0.584
+LC_B_value	0.4980000	0.651
+domain_name	1P1D	1P1D
+domain_value	1.0000000	1
+PI_name	SE-RB229	SE-RB229
+PI_value	1.0000000	1
+PLN_name	JSR PC760 2.3um	JSR PC760 2.3um
+PLN_value	0.9700000	0.97
+ILD_name	LTPO-15Mask	LTPS-10Mask
+ILD_value	1.0000000	1
+Glass2_value	0.9100000	0.91
+pol2_name	Clear	Clear
+pol2_value	1.0000000	1
+apcf_name	with APCF	with APCF
+apcf_value	1.0000000	1
+prism_name	上下棱镜	上下棱镜
+prism_value	0.9600000	0.96
+ref_name	ESR	ESR
+ref_value	1.0000000	1
+assy_value	0.9800000	0.98
+gamma_name	无3Gamma	进行3Gamma
+gamma_value	1.0000000	0.95
+trans_calc_value	0.0147739	0.01921894
+trans_value	0.0190000	0.0252
