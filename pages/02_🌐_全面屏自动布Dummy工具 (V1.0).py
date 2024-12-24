@@ -34,7 +34,7 @@ if fp_AA is not None:
     AA0 = pd.read_csv(fp_AA, header=None, sep="\t", skip_blank_lines=True)
     AA = np.int16(AA0)
 with col12:
-    fp_Dummy1 = st.file_uploader("请上传DUmmy1区灰阶过渡TXT文件", type=['txt'], help="请选择TXT文件进行上传", key='Dummy1')
+    fp_Dummy1 = st.file_uploader("请上传Dummy1区灰阶过渡TXT文件", type=['txt'], help="请选择TXT文件进行上传", key='Dummy1')
 if fp_Dummy1 is not None:
     Dummy10 = pd.read_csv(fp_Dummy1, header=None, sep="\t", skip_blank_lines=True)
     Dummy1 = np.int16(Dummy10)
