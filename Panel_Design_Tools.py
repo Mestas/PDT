@@ -54,7 +54,7 @@ namelist = ['cyan', '刘晓辉', '刘瑞超', '任静峰', '陈凯', '李泽亮'
 if btn is True:
     if p > 0 and name in namelist:
         load_name = str(name + ' 登录成功，欢迎使用')
-        print(load_name)
+
         with col16:
             st.write(f"<span style='color: blue;'>{load_name}</span>", unsafe_allow_html=True)
         
@@ -187,6 +187,40 @@ if btn is True:
         with col26:
             st.write('请输入姓名，登录后使用')
 
+# # # 增加cyan账户权限
+import requests
+import base64
+
+# GitHub 仓库信息
+owner = 'Mestas'  # 仓库所有者
+repo = 'PDT'  # 仓库名称
+branch = 'main'  # 分支名称
+filepath = 'users/网站使用者.txt'  # 文件路径
+
+# GitHub API URL
+api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
+
+# 设置请求头
+headers = {
+    'Accept': 'application/vnd.github.v3+json'
+}
+
+# 发送请求以获取文件内容
+response = requests.get(api_url, headers=headers)
+
+if response.status_code == 200:
+    file_data = response.json()
+    # 解码 Base64 内容
+    file_content = base64.b64decode(file_data['content']).decode('utf-8')
+    print(file_content)
+else:
+    print(f'Error: {response.status_code}')
+    print(response.text)
+
+if name == 'cyan':
+    st.write(file_content)
+else:
+    st.write(' ')
 # 设置按钮底色
 st.markdown(
     '''
