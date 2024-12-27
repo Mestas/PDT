@@ -11,11 +11,11 @@ st.set_page_config(
 )
 
 # # # 侧边栏设置
-st.sidebar.write("<h4 style='color: blue;'>本工具可以计算VR COA产品正视角Color difference</h4>", unsafe_allow_html=True)
+st.sidebar.write("<h4 style='color: blue;'>本工具可以计算LCD产品正视角混色水平</h4>", unsafe_allow_html=True)
 
 
 # # # 工具名称、版本号
-st.write("# LCD新产品串色评估工具(VR专版) #")
+st.write("# LCD产品正视角混色评估工具 #")
 col1, col2 = st.columns([2, 1])
 with col2:
     st.write("<h5 style='color: blue;'>版本号：V1.1</h5>", unsafe_allow_html=True)
