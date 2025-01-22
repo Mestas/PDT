@@ -28,7 +28,7 @@ col1, col2 = st.columns([1, 2])
 bz1_1, bz1_2, bz1_3, bz1_4 = st.columns([1, 2, 2, 8])
 with col1:
     st.write(' ')
-    st.write("<h6>step1: Input Sample Color Coordinate</h6>", unsafe_allow_html=True)
+    st.write("<h6>step1: 请输入样品色坐标</h6>", unsafe_allow_html=True)
 with bz1_2:
     Rx = st.number_input(label='**Rx**', format='%f', key='Rx')
     Gx = st.number_input(label='**Gx**', format='%f', key='Gx')
@@ -44,7 +44,7 @@ bz2_1, bz2_2, bz2_3, bz2_4 = st.columns([1, 4, 2, 6])
 bz2_11, bz2_12, bz2_13, bz2_14 = st.columns([1, 2, 2, 8])
 with col3:
     st.write(' ')
-    st.write("<h6>step2: Select Standard Color Coordinate</h6>", unsafe_allow_html=True)
+    st.write("<h6>step2: 请选择标准色系</h6>", unsafe_allow_html=True)
 with bz2_2:
     spMenu = ('sRGB', 'DCI-P3', 'Adobe', 'BT2020', 'NTSC')
     Standard_Color = st.selectbox('**Select Standard Color**', spMenu, key='Standard')
@@ -99,7 +99,7 @@ bz3_1, bz3_2, bz3_3, bz3_4, bz3_5 = st.columns([1, 4, 4, 4, 1])
 bz4_1, bz4_2, bz4_3, bz4_4, bz4_5 = st.columns([1, 4, 4, 4, 1])
 with col5:
     st.write(' ')
-    st.write("<h6>step3: Click to Calculate</h6>", unsafe_allow_html=True)
+    st.write("<h6>step3: 点击计算</h6>", unsafe_allow_html=True)
 
 # 点击button计算色域
 with bz3_2:
