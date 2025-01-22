@@ -47,7 +47,7 @@ with col3:
     st.write("<h6>step2: 请选择标准色系</h6>", unsafe_allow_html=True)
 with bz2_2:
     spMenu = ('sRGB', 'DCI-P3', 'Adobe', 'BT2020', 'NTSC')
-    Standard_Color = st.selectbox('**Select Standard Color**', spMenu, key='Standard')
+    Standard_Color = st.selectbox('**下拉选择标准色系**', spMenu, key='Standard')
     if Standard_Color == spMenu[0]:
         Rx0 = 0.640
         Ry0 = 0.330
@@ -103,7 +103,7 @@ with col5:
 
 # 点击button计算色域
 with bz3_2:
-    cal_color_gamut = st.button('***Calc Color Gamut***', key='color gamut')
+    cal_color_gamut = st.button('***点击计算色域***', key='color gamut')
 
 # # # main code
 if cal_color_gamut:
