@@ -209,11 +209,11 @@ if cal_color_gamut:
     str_standard_gamut = str(str(round(standard_gamut * 100, 2)) + '%')
     
     with bz4_2:
-        st.text_input(label='**Sample Color Gamut(NTSC)**', value=str_color_gamut, key='color_gamut')
+        st.text_input(label='**样品NTSC色域**', value=str_color_gamut, key='color_gamut')
     with bz4_3:
-        st.text_input(label='**Standard Color Gamut(NTSC)**', value=str_standard_gamut, key='standard_gamut')
+        st.text_input(label='**样品色域覆盖率**', value=str_color_coverage, key='color_coverage')
     with bz4_4:
-        st.text_input(label='**Sample Color Coverage**', value=str_color_coverage, key='color_coverage')
+        st.text_input(label='**标准色系NTSC色域**', value=str_standard_gamut, key='standard_gamut')
 
 # 编辑Standard color selectbox
 st.markdown(
