@@ -741,7 +741,7 @@ if cal_button_clicked_ref:
 
             # 计算400~700nm反射率平均值
             Ref_Meta = np.mean(R[int((400 - wl_min) / wl_pitch):int((700 - wl_min) / wl_pitch + 1)])
-            f_Ref_Meta = "{:.4f}".format(Ref_Meta)
+            f_Ref_Meta = "{:.6f}".format(Ref_Meta)
 
     
             # 设置final数据
