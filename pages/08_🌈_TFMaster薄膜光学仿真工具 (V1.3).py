@@ -677,7 +677,7 @@ if cal_button_clicked_ref:
         # 计算所有split的反射率Wx, Wy数据
         #设置输出文件
         m = len(d_lists) + 1
-        n = int(7 + nlayers + (wl_max - wl_min) / wl_pitch) # NO. / 入射介质 / 薄膜膜层 / 出射介质 / Wx / Wy / WY / 380~780光谱(81 or 401组)
+        n = int(8 + nlayers + (wl_max - wl_min) / wl_pitch) # NO. / 入射介质 / 薄膜膜层 / 出射介质 / Wx / Wy / WY / 380~780光谱(81 or 401组)
 
         final = np.empty((m, n), dtype=object)
         final[0, 0]="No."
@@ -688,8 +688,9 @@ if cal_button_clicked_ref:
         final[0, nlayers + 3] = "Wx"
         final[0, nlayers + 4] = "Wy"
         final[0, nlayers + 5] = "WY"
+        final[0, nlayers + 6] = "400~700nm平均值"
         for i in range(int((wl_max - wl_min) / wl_pitch + 1)):
-            final[0, i + nlayers + 6] = 380 + i * wl_pitch
+            final[0, i + nlayers + 7] = 380 + i * wl_pitch
 
         # 进入膜层厚度循环
         mm = len(d_lists)
@@ -738,21 +739,22 @@ if cal_button_clicked_ref:
             f_Wy = "{:.4f}".format(Wy)
             f_WY = "{:.4f}".format(WY)
 
-            for i in range(int((400 - wl_min) / wl_pitch + 1), int((700 - wl_min) / wl_pitch + 1)):
-                Ref_Meta = sum(R[i])
+            # 计算400~700nm反射率平均值
+            Ref_Meta = np.mean(R[int((400 - wl_min) / wl_pitch):int((700 - wl_min) / wl_pitch + 1)])
             f_Ref_Meta = "{:.4f}".format(Ref_Meta)
-            
+
+    
             # 设置final数据
             final[ind + 1, 0] = ind + 1
             for i in range(len(nk_name_list)):
                 final[ind + 1, i + 1] = d_list[i]
+
             g = len(nk_name_list)
             final[ind + 1, g + 1] = f_Wx
             final[ind + 1, g + 2] = f_Wy
             final[ind + 1, g + 3] = f_WY
             final[ind + 1, g + 4] = f_Ref_Meta
 
-            # print(g)
             for i in range(int((wl_max - wl_min) / wl_pitch + 1)):
                 final[ind + 1, g + 5 + i] = R[i]
 
