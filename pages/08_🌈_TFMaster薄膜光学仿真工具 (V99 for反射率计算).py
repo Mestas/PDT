@@ -605,7 +605,7 @@ if cal_button_clicked_ref:
 st.markdown(
     '''
     <style>
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-bm2z3a.ea3mdgi8 > div.block-container.st-emotion-cache-1jicfl2.ea3mdgi5 > div > div > div > div:nth-child(13) > div.st-emotion-cache-12d0wtz.e1f1d6gn3 > div > div > div > div:nth-child(1) > div > button
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(13) > div.st-emotion-cache-12d0wtz.e1f1d6gn3 > div > div > div > div > div > button
     {
     background-color: rgb(220, 240, 220);
     height: 70px !important;
@@ -620,23 +620,23 @@ st.markdown(
 st.markdown(
     '''
     <style>
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-bm2z3a.ea3mdgi8 > div.block-container.st-emotion-cache-1jicfl2.ea3mdgi5 > div > div > div > div:nth-child(5) > div.st-emotion-cache-tqfcjc.e1f1d6gn3 > div > div > div > div:nth-child(1) > div > div > div
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(5) > div.st-emotion-cache-tqfcjc.e1f1d6gn3 > div > div > div > div:nth-child(1) > div > div > div
     {
     background-color: rgb(220, 240, 220);
     }
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-bm2z3a.ea3mdgi8 > div.block-container.st-emotion-cache-1jicfl2.ea3mdgi5 > div > div > div > div:nth-child(5) > div.st-emotion-cache-tqfcjc.e1f1d6gn3 > div > div > div > div:nth-child(2) > div > div.st-emotion-cache-kskxxl.e116k4er3 > div.st-ae.st-af.st-ag.st-ah.st-bd.st-be.st-bf.st-bg.st-am.st-an.st-ao.st-ap.st-aq.st-ar.st-as.st-at.st-au.st-e8.st-e9.st-ax.st-ay.st-az.st-b0.st-b1.st-b2.st-b3.st-b4.st-b5.st-b6.st-b7.st-b8.st-b9 > div
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(5) > div.st-emotion-cache-tqfcjc.e1f1d6gn3 > div > div > div > div:nth-child(2) > div > div.st-emotion-cache-kskxxl.e116k4er3 > div.st-ae.st-af.st-ag.st-ah.st-bd.st-be.st-bf.st-bg.st-am.st-an.st-ao.st-ap.st-aq.st-ar.st-as.st-at.st-au.st-e7.st-e8.st-ax.st-ay.st-az.st-b0.st-b1.st-b2.st-b3.st-b4.st-b5.st-b6.st-b7.st-b8.st-b9 > div
     {
     background-color: rgb(220, 240, 220);
     }
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-bm2z3a.ea3mdgi8 > div.block-container.st-emotion-cache-1jicfl2.ea3mdgi5 > div > div > div > div:nth-child(5) > div.st-emotion-cache-tqfcjc.e1f1d6gn3 > div > div > div > div:nth-child(3) > div > div.st-emotion-cache-kskxxl.e116k4er3 > div.st-ae.st-af.st-ag.st-ah.st-bd.st-be.st-bf.st-bg.st-am.st-an.st-ao.st-ap.st-aq.st-ar.st-as.st-at.st-au.st-e8.st-e9.st-ax.st-ay.st-az.st-b0.st-b1.st-b2.st-b3.st-b4.st-b5.st-b6.st-b7.st-b8.st-b9 > div
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(5) > div.st-emotion-cache-tqfcjc.e1f1d6gn3 > div > div > div > div:nth-child(3) > div > div.st-emotion-cache-kskxxl.e116k4er3 > div.st-ae.st-af.st-ag.st-ah.st-bd.st-be.st-bf.st-bg.st-am.st-an.st-ao.st-ap.st-aq.st-ar.st-as.st-at.st-au.st-e7.st-e8.st-ax.st-ay.st-az.st-b0.st-b1.st-b2.st-b3.st-b4.st-b5.st-b6.st-b7.st-b8.st-b9 > div
     {
     background-color: rgb(220, 240, 220);
     }
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-bm2z3a.ea3mdgi8 > div.block-container.st-emotion-cache-1jicfl2.ea3mdgi5 > div > div > div > div:nth-child(6) > div.st-emotion-cache-tqfcjc.e1f1d6gn3 > div > div > div > div > div > section > button
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(6) > div.st-emotion-cache-tqfcjc.e1f1d6gn3 > div > div > div > div > div > section > button
     {
     background-color: rgb(220, 240, 220);
     }
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-bm2z3a.ea3mdgi8 > div.block-container.st-emotion-cache-1jicfl2.ea3mdgi5 > div > div > div > div:nth-child(8) > div.st-emotion-cache-12d0wtz.e1f1d6gn3 > div > div > div > div > div > section > button
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(8) > div.st-emotion-cache-12d0wtz.e1f1d6gn3 > div > div > div > div > div > section > button
     {
     background-color: rgb(220, 240, 220);
     }
