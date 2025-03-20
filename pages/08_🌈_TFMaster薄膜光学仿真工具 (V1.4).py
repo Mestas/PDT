@@ -281,7 +281,7 @@ with col2:
 st.sidebar.write("<h4 style='color: blue;'>本工具可以计算多层薄膜堆叠的反射和透射光学</h4>", unsafe_allow_html=True)
 
 # # # 步骤0：上传材料NK值txt文件
-st.write("<h6>步骤0：请上传所需要的NK值txt文件及Backlight txt文件</h6>", unsafe_allow_html=True)
+st.write("<h6>步骤0：请上传所需要的新材料NK值txt文件及新Backlight txt文件</h6>", unsafe_allow_html=True)
 import requests
 import base64
 import json
@@ -465,8 +465,6 @@ elif calc_mode == 'Angle Scan':
         inc_angle = np.arange(inc_angle_min, inc_angle_max + inc_angle_pitch, inc_angle_pitch)
         st.write(':red[该功能尚未完成，请期待]')
 
-
-
 # 获取backlight文件列表
 blu_namelist = get_blu_list()
 if len(blu_namelist) < 1:
@@ -476,8 +474,6 @@ if len(blu_namelist) < 1:
 with bz1_22:
     blu_name = st.selectbox('---请选择光源', blu_namelist, key='backlight')
     blu_path = 'source/backlight/' + blu_name + '.txt'
-
-
 
 # # # 步骤2
 st.write("<h6>步骤2：请设置膜层结构</h6>", unsafe_allow_html=True)
@@ -607,6 +603,7 @@ for i in range(len(combinations)):
     d.append(np.inf)
     d_lists.append(d)
 # print(d_lists)
+
 # # # 步骤3
 st.write("<h6>步骤3：点击计算</h6>", unsafe_allow_html=True)
 
