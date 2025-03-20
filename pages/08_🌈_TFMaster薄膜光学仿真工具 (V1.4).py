@@ -649,7 +649,7 @@ if cal_button_clicked_ref:
     local_time = datetime.now(timezone)
     # 格式化时间
     date = local_time.strftime('%Y-%m-%d %H:%M:%S')
-    new_content = user_name + '于' + date + '使用了《08-TFMaster薄膜光学仿真工具 (V1.3) - 反射部分》;  ' + '\n'
+    new_content = user_name + '于' + date + '使用了《08-TFMaster薄膜光学仿真工具 (V1.4) - 反射部分》;  ' + '\n'
 
     # GitHub API URL
     api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
@@ -914,7 +914,7 @@ if cal_button_clicked_trans:
     local_time = datetime.now(timezone)
     # 格式化时间
     date = local_time.strftime('%Y-%m-%d %H:%M:%S')
-    new_content = user_name + '于' + date + '使用了《08-TFMaster薄膜光学仿真工具 (V1.3) - 透射部分》;  ' + '\n'
+    new_content = user_name + '于' + date + '使用了《08-TFMaster薄膜光学仿真工具 (V1.4) - 透射部分》;  ' + '\n'
 
     # GitHub API URL
     api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
@@ -972,7 +972,7 @@ if cal_button_clicked_trans:
         wl_ar = np.arange(wl_min, wl_max + wl_pitch, wl_pitch, dtype=float)
 
         # 使用pandas的read_csv函数读取BLU数据，并将BLU数据按照wl_ar进行波长step选择
-        illuminant_data = pd.read_csv(file_path_read, header=None, sep="\t", skip_blank_lines=True)
+        illuminant_data = pd.read_csv(blu_path, header=None, sep="\t", skip_blank_lines=True)
         illuminant_data = np.float64(illuminant_data)
         wavelengths = pd.Series(illuminant_data[:, 0])
         intensities = pd.Series(illuminant_data[:, 1])
