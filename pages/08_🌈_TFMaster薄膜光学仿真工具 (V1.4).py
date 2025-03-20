@@ -446,12 +446,17 @@ elif calc_mode == 'Angle Scan':
         inc_angle_pitch = st.number_input('---Angle Step[deg]', min_value=0.01, max_value=15.0,
                                                 value=inc_angle_pitch, step=0.01, format='%3.2f')
         inc_angle = np.arange(inc_angle_min, inc_angle_max + inc_angle_pitch, inc_angle_pitch)
-
         st.write(':red[该功能尚未完成，请期待]')
 
+# 获取backlight文件列表
+blu_namelist = get_blu_list()
+if len(blu_namelist) < 1:
+    st.error('backlight list not find')
 
-
-
+# 上传BLU光谱
+with bz1_22:
+    blu_name = st.selectbox('---请选择光源', blu_namelist, key='backlight')
+    blu_path = 'source/backlight/' + blu_name + '.txt'
 
 # # # 步骤2
 st.write("<h6>步骤2：请设置膜层结构</h6>", unsafe_allow_html=True)
@@ -683,17 +688,7 @@ if cal_button_clicked_ref:
         # 根据用户输入生成波长数组
         wl_ar = np.arange(wl_min, wl_max + wl_pitch, wl_pitch, dtype=float)
 
-        # 使用pandas的read_csv函数读取BLU数据，并将BLU数据按照wl_ar进行波长step选择
-        # 获取backlight文件列表
-        blu_namelist = get_blu_list()
-        if len(blu_namelist) < 1:
-            st.error('backlight list not find')
-            
-        # 加载BLU光谱
-        with bz1_22:
-            blu_name = st.selectbox('---请选择光源', blu_namelist, key='backlight')
-            blu_path = 'source/backlight/' + blu_name + '.txt'
-            
+        # 使用pandas的read_csv函数读取BLU数据，并将BLU数据按照wl_ar进行波长step选择  
         illuminant_data = pd.read_csv(blu_path, header=None, sep="\t", skip_blank_lines=True)
         illuminant_data = np.float64(illuminant_data)
         wavelengths = pd.Series(illuminant_data[:, 0])
