@@ -281,113 +281,113 @@ with col2:
 st.sidebar.write("<h4 style='color: blue;'>本工具可以计算多层薄膜堆叠的反射和透射光学</h4>", unsafe_allow_html=True)
 
 # # # 步骤0：上传材料NK值txt及Backlight txt文件
-st.write("<h6>步骤0：请上传所需要的NK值txt文件及Backlight txt文件</h6>", unsafe_allow_html=True)
-import requests
-import base64
-import json
+# st.write("<h6>步骤0：请上传所需要的NK值txt文件及Backlight txt文件</h6>", unsafe_allow_html=True)
+# import requests
+# import base64
+# import json
 
-# 从 Streamlit Secret 获取 GitHub PAT
-github_pat = st.secrets['github_token']
+# # 从 Streamlit Secret 获取 GitHub PAT
+# github_pat = st.secrets['github_token']
 
-# GitHub 仓库信息
-owner = 'Mestas'  # 仓库所有者
-repo = 'PDT'  # 仓库名称
-branch = 'main'  # 分支名称
-filepath1 = 'source/material'  # 文件夹路径1
-filepath2 = 'source/backlight'  # 文件夹路径2
+# # GitHub 仓库信息
+# owner = 'Mestas'  # 仓库所有者
+# repo = 'PDT'  # 仓库名称
+# branch = 'main'  # 分支名称
+# filepath1 = 'source/material'  # 文件夹路径1
+# filepath2 = 'source/backlight'  # 文件夹路径2
 
-# 文件上传
-bz0_1, bz0_2, bz0_3 = st.columns([1, 8, 20])
-with bz0_2:
-    # NK值文件上传
-    uploaded_files = st.file_uploader("请上传材料NK值txt文件", type=['txt'], accept_multiple_files=True)
-    if uploaded_files is not None:
-        # 遍历上传的文件
-        for uploaded_file in uploaded_files:
-            file_name = uploaded_file.name
-            # 读取文件内容并编码为base64
-            file_content = uploaded_file.read().decode('utf-8')
-            encoded_content = base64.b64encode(file_content.encode('utf-8')).decode('utf-8')
+# # 文件上传
+# bz0_1, bz0_2, bz0_3 = st.columns([1, 8, 20])
+# with bz0_2:
+#     # NK值文件上传
+#     uploaded_files = st.file_uploader("请上传材料NK值txt文件", type=['txt'], accept_multiple_files=True)
+#     if uploaded_files is not None:
+#         # 遍历上传的文件
+#         for uploaded_file in uploaded_files:
+#             file_name = uploaded_file.name
+#             # 读取文件内容并编码为base64
+#             file_content = uploaded_file.read().decode('utf-8')
+#             encoded_content = base64.b64encode(file_content.encode('utf-8')).decode('utf-8')
     
-            # GitHub API URL
-            api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath1}/{file_name}'
+#             # GitHub API URL
+#             api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath1}/{file_name}'
     
-            # 设置请求头，包括你的 PAT
-            headers = {
-                'Authorization': f'token {github_pat}',
-                'Accept': 'application/vnd.github.v3+json',
-                'Content-Type': 'application/json'
-            }
+#             # 设置请求头，包括你的 PAT
+#             headers = {
+#                 'Authorization': f'token {github_pat}',
+#                 'Accept': 'application/vnd.github.v3+json',
+#                 'Content-Type': 'application/json'
+#             }
     
-            # 发送请求以获取当前文件内容
-            response = requests.get(api_url, headers=headers)
-            if response.status_code == 200:
-                file_data = response.json()
-                # 如果文件已存在，获取文件的SHA
-                file_sha = file_data['sha']
-            else:
-                # 如果文件不存在，SHA将不被使用（None）
-                file_sha = None
+#             # 发送请求以获取当前文件内容
+#             response = requests.get(api_url, headers=headers)
+#             if response.status_code == 200:
+#                 file_data = response.json()
+#                 # 如果文件已存在，获取文件的SHA
+#                 file_sha = file_data['sha']
+#             else:
+#                 # 如果文件不存在，SHA将不被使用（None）
+#                 file_sha = None
     
-            # 构建请求体
-            data = {
-                "message": f"Upload {file_name}",
-                "content": encoded_content,
-                "branch": branch,
-                "sha": file_sha  # 如果文件已存在，使用文件的SHA
-            }
+#             # 构建请求体
+#             data = {
+#                 "message": f"Upload {file_name}",
+#                 "content": encoded_content,
+#                 "branch": branch,
+#                 "sha": file_sha  # 如果文件已存在，使用文件的SHA
+#             }
     
-            # 发送请求以创建或更新文件内容
-            response = requests.put(api_url, headers=headers, data=json.dumps(data))
-            if response.status_code == 201 or response.status_code == 200:
-                st.success(f"文件 {file_name} 上传成功!")
-            else:
-                st.error(f"文件 {file_name}: {response.text}")
+#             # 发送请求以创建或更新文件内容
+#             response = requests.put(api_url, headers=headers, data=json.dumps(data))
+#             if response.status_code == 201 or response.status_code == 200:
+#                 st.success(f"文件 {file_name} 上传成功!")
+#             else:
+#                 st.error(f"文件 {file_name}: {response.text}")
                 
-    # Backlight文件上传
-    uploaded_files2 = st.file_uploader("请上传Backlight txt文件", type=['txt'], accept_multiple_files=True)
-    if uploaded_files2 is not None:
-        # 遍历上传的文件
-        for uploaded_file in uploaded_files2:
-            file_name = uploaded_file.name
-            # 读取文件内容并编码为base64
-            file_content = uploaded_file.read().decode('utf-8')
-            encoded_content = base64.b64encode(file_content.encode('utf-8')).decode('utf-8')
+#     # Backlight文件上传
+#     uploaded_files2 = st.file_uploader("请上传Backlight txt文件", type=['txt'], accept_multiple_files=True)
+#     if uploaded_files2 is not None:
+#         # 遍历上传的文件
+#         for uploaded_file in uploaded_files2:
+#             file_name = uploaded_file.name
+#             # 读取文件内容并编码为base64
+#             file_content = uploaded_file.read().decode('utf-8')
+#             encoded_content = base64.b64encode(file_content.encode('utf-8')).decode('utf-8')
     
-            # GitHub API URL
-            api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath2}/{file_name}'
+#             # GitHub API URL
+#             api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath2}/{file_name}'
     
-            # 设置请求头，包括你的 PAT
-            headers = {
-                'Authorization': f'token {github_pat}',
-                'Accept': 'application/vnd.github.v3+json',
-                'Content-Type': 'application/json'
-            }
+#             # 设置请求头，包括你的 PAT
+#             headers = {
+#                 'Authorization': f'token {github_pat}',
+#                 'Accept': 'application/vnd.github.v3+json',
+#                 'Content-Type': 'application/json'
+#             }
     
-            # 发送请求以获取当前文件内容
-            response = requests.get(api_url, headers=headers)
-            if response.status_code == 200:
-                file_data = response.json()
-                # 如果文件已存在，获取文件的SHA
-                file_sha = file_data['sha']
-            else:
-                # 如果文件不存在，SHA将不被使用（None）
-                file_sha = None
+#             # 发送请求以获取当前文件内容
+#             response = requests.get(api_url, headers=headers)
+#             if response.status_code == 200:
+#                 file_data = response.json()
+#                 # 如果文件已存在，获取文件的SHA
+#                 file_sha = file_data['sha']
+#             else:
+#                 # 如果文件不存在，SHA将不被使用（None）
+#                 file_sha = None
     
-            # 构建请求体
-            data = {
-                "message": f"Upload {file_name}",
-                "content": encoded_content,
-                "branch": branch,
-                "sha": file_sha  # 如果文件已存在，使用文件的SHA
-            }
+#             # 构建请求体
+#             data = {
+#                 "message": f"Upload {file_name}",
+#                 "content": encoded_content,
+#                 "branch": branch,
+#                 "sha": file_sha  # 如果文件已存在，使用文件的SHA
+#             }
     
-            # 发送请求以创建或更新文件内容
-            response = requests.put(api_url, headers=headers, data=json.dumps(data))
-            if response.status_code == 201 or response.status_code == 200:
-                st.success(f"文件 {file_name} 上传成功!")
-            else:
-                st.error(f"文件 {file_name}: {response.text}")
+#             # 发送请求以创建或更新文件内容
+#             response = requests.put(api_url, headers=headers, data=json.dumps(data))
+#             if response.status_code == 201 or response.status_code == 200:
+#                 st.success(f"文件 {file_name} 上传成功!")
+#             else:
+#                 st.error(f"文件 {file_name}: {response.text}")
             
 # # # 步骤1
 st.write("<h6>步骤1：请进行仿真模式设置</h6>", unsafe_allow_html=True)
