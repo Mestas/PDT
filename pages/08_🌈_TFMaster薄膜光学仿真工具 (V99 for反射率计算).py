@@ -72,7 +72,34 @@ def get_nk_list():
 
     nk_list.sort()  # 对文件名列表进行排序
     return nk_list
+    
+def get_blu_list():
+    """
+    获取指定目录中的blu文件名列表
+    Returns
+    blu_list : list of str
+        文件名列表
+    """
+    blu_list = []  # 存储文件名的列表
+    blu_dirs = "source/backlight/"  # 指定blu文件所在的目录
+    files = os.listdir(blu_dirs)  # 列出目录中的所有文件和子目录
+    blu_files = [f for f in files if os.path.isfile(os.path.join(blu_dirs, f))]  # 仅筛选出真正的文件
 
+    for blu_file in blu_files:
+        # 获取每个文件的基本名称，即去除扩展名的文件名
+        basename = os.path.splitext(os.path.basename(blu_file))[0]
+        blu_list.append(basename)  # 将文件的基本名称添加到列表中
+
+    # 如果找不到blu数据，输出错误消息
+    if len(blu_list) < 1:
+        st.error('在 ' + blu_dirs + ' 中未找到backlight数据')
+        files_data = glob.glob("data")
+        st.error('data 目录下的文件 =', files_data)
+        files_blu = glob.glob("source/backlight/")
+        st.error('backlight 目录下的文件 =', files_blu)
+
+    blu_list.sort()  # 对文件名列表进行排序
+    return blu_list
 
 def calc_nk_list(nk_fn_list, wl):
     """
@@ -313,10 +340,15 @@ elif calc_mode == 'Angle Scan':
 
         st.write(':red[该功能尚未完成，请期待]')
 
+# 获取backlight文件列表
+blu_namelist = get_blu_list()
+if len(blu_namelist) < 1:
+    st.error('backlight list not find')
 
 # 上传BLU光谱
 with bz1_22:
-    file_path_read = st.file_uploader('---请加载BLU光谱txt文件', type=['txt'])
+    blu_name = st.selectbox('---请选择光源', blu_namelist, key='backlight')
+    blu_path = 'source/backlight/' + blu_name + '.txt'
 
 # # # 步骤2
 st.write("<h6>步骤2：请设置膜层结构</h6>", unsafe_allow_html=True)
@@ -443,7 +475,7 @@ if cal_button_clicked_ref:
         wl_ar = np.arange(wl_min, wl_max + wl_pitch, wl_pitch, dtype=float)
 
         # 使用pandas的read_csv函数读取BLU数据，并将BLU数据按照wl_ar进行波长step选择
-        illuminant_data = pd.read_csv(file_path_read, header=None, sep="\t", skip_blank_lines=True)
+        illuminant_data = pd.read_csv(blu_path, header=None, sep="\t", skip_blank_lines=True)
         illuminant_data = np.float64(illuminant_data)
         wavelengths = pd.Series(illuminant_data[:, 0])
         intensities = pd.Series(illuminant_data[:, 1])
