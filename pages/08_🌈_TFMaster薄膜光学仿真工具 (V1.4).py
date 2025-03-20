@@ -300,7 +300,7 @@ filepath2 = 'source/backlight'  # 文件夹路径2
 bz0_1, bz0_2, bz0_3 = st.columns([1, 8, 20])
 with bz0_2:
     # NK值文件上传
-    uploaded_files = st.file_uploader("请选择NK值txt文件", type=['txt'], accept_multiple_files=True)
+    uploaded_files = st.file_uploader("请上传材料NK值txt文件", type=['txt'], accept_multiple_files=True)
     if uploaded_files is not None:
         # 遍历上传的文件
         for uploaded_file in uploaded_files:
@@ -345,7 +345,7 @@ with bz0_2:
                 st.error(f"文件 {file_name}: {response.text}")
                 
     # Backlight文件上传
-    uploaded_files2 = st.file_uploader("请选择Backlight txt文件", type=['txt'], accept_multiple_files=True)
+    uploaded_files2 = st.file_uploader("请上传Backlight txt文件", type=['txt'], accept_multiple_files=True)
     if uploaded_files2 is not None:
         # 遍历上传的文件
         for uploaded_file in uploaded_files2:
@@ -448,6 +448,8 @@ elif calc_mode == 'Angle Scan':
         inc_angle = np.arange(inc_angle_min, inc_angle_max + inc_angle_pitch, inc_angle_pitch)
         st.write(':red[该功能尚未完成，请期待]')
 
+
+
 # 获取backlight文件列表
 blu_namelist = get_blu_list()
 if len(blu_namelist) < 1:
@@ -457,6 +459,8 @@ if len(blu_namelist) < 1:
 with bz1_22:
     blu_name = st.selectbox('---请选择光源', blu_namelist, key='backlight')
     blu_path = 'source/backlight/' + blu_name + '.txt'
+
+
 
 # # # 步骤2
 st.write("<h6>步骤2：请设置膜层结构</h6>", unsafe_allow_html=True)
