@@ -73,6 +73,33 @@ def get_nk_list():
     nk_list.sort()  # 对文件名列表进行排序
     return nk_list
 
+def get_blu_list():
+    """
+    获取指定目录中的blu文件名列表
+    Returns
+    blu_list : list of str
+        文件名列表
+    """
+    blu_list = []  # 存储文件名的列表
+    blu_dirs = "source/backlight/"  # 指定blu文件所在的目录
+    files = os.listdir(blu_dirs)  # 列出目录中的所有文件和子目录
+    blu_files = [f for f in files if os.path.isfile(os.path.join(blu_dirs, f))]  # 仅筛选出真正的文件
+
+    for blu_file in blu_files:
+        # 获取每个文件的基本名称，即去除扩展名的文件名
+        basename = os.path.splitext(os.path.basename(blu_file))[0]
+        blu_list.append(basename)  # 将文件的基本名称添加到列表中
+
+    # 如果找不到blu数据，输出错误消息
+    if len(blu_list) < 1:
+        st.error('在 ' + blu_dirs + ' 中未找到backlight数据')
+        files_data = glob.glob("data")
+        st.error('data 目录下的文件 =', files_data)
+        files_blu = glob.glob("source/backlight/")
+        st.error('backlight 目录下的文件 =', files_blu)
+
+    blu_list.sort()  # 对文件名列表进行排序
+    return blu_list
 
 def calc_nk_list(nk_fn_list, wl):
     """
@@ -247,14 +274,14 @@ def generate_layer_combinations(layer_ranges):
 st.write("# Thin Film Master #")
 col1, col2 = st.columns([2, 1])
 with col2:
-    st.write("<h5 style='color: blue;'>版本号：V1.3</h5>", unsafe_allow_html=True)
-    st.write("<h5 style='color: blue;'>发布时间：2025/03/06</h5>", unsafe_allow_html=True)
+    st.write("<h5 style='color: blue;'>版本号：V1.4</h5>", unsafe_allow_html=True)
+    st.write("<h5 style='color: blue;'>发布时间：2025/03/20</h5>", unsafe_allow_html=True)
 
 # # # 侧边栏设置
 st.sidebar.write("<h4 style='color: blue;'>本工具可以计算多层薄膜堆叠的反射和透射光学</h4>", unsafe_allow_html=True)
 
-# # # 步骤0：上传NK值txt
-st.write("<h6>步骤0：请上传所需要的NK值txt文件</h6>", unsafe_allow_html=True)
+# # # 步骤0：上传材料NK值txt及Backlight txt文件
+st.write("<h6>步骤0：请上传所需要的NK值txt文件及Backlight txt文件</h6>", unsafe_allow_html=True)
 import requests
 import base64
 import json
@@ -266,13 +293,14 @@ github_pat = st.secrets['github_token']
 owner = 'Mestas'  # 仓库所有者
 repo = 'PDT'  # 仓库名称
 branch = 'main'  # 分支名称
-filepath = 'source/material'  # 文件夹路径
+filepath1 = 'source/material'  # 文件夹路径1
+filepath2 = 'source/backlight'  # 文件夹路径2
 
 # 文件上传
 bz0_1, bz0_2, bz0_3 = st.columns([1, 8, 20])
 with bz0_2:
-    # 文件上传
-    uploaded_files = st.file_uploader("请选择txt文件", type=['txt'], accept_multiple_files=True)
+    # NK值文件上传
+    uploaded_files = st.file_uploader("请选择NK值txt文件", type=['txt'], accept_multiple_files=True)
     if uploaded_files is not None:
         # 遍历上传的文件
         for uploaded_file in uploaded_files:
@@ -282,7 +310,52 @@ with bz0_2:
             encoded_content = base64.b64encode(file_content.encode('utf-8')).decode('utf-8')
     
             # GitHub API URL
-            api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}/{file_name}'
+            api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath1}/{file_name}'
+    
+            # 设置请求头，包括你的 PAT
+            headers = {
+                'Authorization': f'token {github_pat}',
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json'
+            }
+    
+            # 发送请求以获取当前文件内容
+            response = requests.get(api_url, headers=headers)
+            if response.status_code == 200:
+                file_data = response.json()
+                # 如果文件已存在，获取文件的SHA
+                file_sha = file_data['sha']
+            else:
+                # 如果文件不存在，SHA将不被使用（None）
+                file_sha = None
+    
+            # 构建请求体
+            data = {
+                "message": f"Upload {file_name}",
+                "content": encoded_content,
+                "branch": branch,
+                "sha": file_sha  # 如果文件已存在，使用文件的SHA
+            }
+    
+            # 发送请求以创建或更新文件内容
+            response = requests.put(api_url, headers=headers, data=json.dumps(data))
+            if response.status_code == 201 or response.status_code == 200:
+                st.success(f"文件 {file_name} 上传成功!")
+            else:
+                st.error(f"文件 {file_name}: {response.text}")
+                
+    # Backlight文件上传
+    uploaded_files2 = st.file_uploader("请选择Backlight txt文件", type=['txt'], accept_multiple_files=True)
+    if uploaded_files2 is not None:
+        # 遍历上传的文件
+        for uploaded_file in uploaded_files2:
+            file_name = uploaded_file.name
+            # 读取文件内容并编码为base64
+            file_content = uploaded_file.read().decode('utf-8')
+            encoded_content = base64.b64encode(file_content.encode('utf-8')).decode('utf-8')
+    
+            # GitHub API URL
+            api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath2}/{file_name}'
     
             # 设置请求头，包括你的 PAT
             headers = {
@@ -324,7 +397,7 @@ bz1_21, bz1_22, bz1_23 = st.columns([1, 15, 13])
 with bz1_2:
     # 选择仿真模式（Wavelength Scan 或 Angle Scan）
     calc_mode_menu = ['Wavelength Scan', 'Angle Scan']
-    calc_mode = st.radio("---Scan Mode", calc_mode_menu)
+    calc_mode = st.radio("---扫描模式选择", calc_mode_menu)
 
 # 如果是波长扫描模式
 if calc_mode == 'Wavelength Scan':
@@ -358,7 +431,7 @@ if calc_mode == 'Wavelength Scan':
                                     value=1, step=1)
     # 输入入射角
     with bz1_12:
-        inc_angle = st.number_input('---Incident Light Angle[deg]', value=0.0, format='%f')
+        inc_angle = st.number_input('---入射光角度[deg]', value=0.0, format='%f')
 elif calc_mode == 'Angle Scan':
     # 如果是角度扫描模式，输入波长
     with bz1_12:
@@ -377,9 +450,8 @@ elif calc_mode == 'Angle Scan':
         st.write(':red[该功能尚未完成，请期待]')
 
 
-# 上传BLU光谱
-with bz1_22:
-    file_path_read = st.file_uploader('---请加载BLU光谱txt文件', type=['txt'])
+
+
 
 # # # 步骤2
 st.write("<h6>步骤2：请设置膜层结构</h6>", unsafe_allow_html=True)
@@ -398,7 +470,6 @@ d_list_min = []
 d_list_max = []
 step_list = []
 c_list = []
-film_list = []
 
 # # #设置入射介质
 with bz2_2:
@@ -613,7 +684,17 @@ if cal_button_clicked_ref:
         wl_ar = np.arange(wl_min, wl_max + wl_pitch, wl_pitch, dtype=float)
 
         # 使用pandas的read_csv函数读取BLU数据，并将BLU数据按照wl_ar进行波长step选择
-        illuminant_data = pd.read_csv(file_path_read, header=None, sep="\t", skip_blank_lines=True)
+        # 获取backlight文件列表
+        blu_namelist = get_blu_list()
+        if len(blu_namelist) < 1:
+            st.error('backlight list not find')
+            
+        # 加载BLU光谱
+        with bz1_22:
+            blu_name = st.selectbox('---请选择光源', blu_namelist, key='backlight')
+            blu_path = 'source/backlight/' + blu_name + '.txt'
+            
+        illuminant_data = pd.read_csv(blu_path, header=None, sep="\t", skip_blank_lines=True)
         illuminant_data = np.float64(illuminant_data)
         wavelengths = pd.Series(illuminant_data[:, 0])
         intensities = pd.Series(illuminant_data[:, 1])
