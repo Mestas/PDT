@@ -1120,6 +1120,32 @@ if cal_button_clicked_trans:
         with bz5_4:
             st.write(':red[请加载BLU光谱txt文件!]')
 
+
+# 编辑button - Final计算状态
+st.markdown(
+    '''
+    <style>
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(15) > div.st-emotion-cache-12d0wtz.e1f1d6gn3 > div > div > div > div:nth-child(1) > div > button
+        {
+    background-color: rgb(220, 240, 220);
+    height: 70px !important;
+    width: 150px !important;
+    }
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(15) > div.st-emotion-cache-12d0wtz.e1f1d6gn3 > div > div > div > div:nth-child(2) > div > button
+        {
+    background-color: rgb(220, 240, 220);
+    height: 70px !important;
+    width: 150px !important;
+    }
+    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(4) > div.st-emotion-cache-12d0wtz.e1f1d6gn3 > div > div > div > div > div > section > button
+        {
+    background-color: rgb(220, 240, 220);
+    }
+    </style>
+    ''',
+    unsafe_allow_html=True
+)
+
 # 编辑按钮风格
 st.markdown(
     '''
@@ -1191,31 +1217,6 @@ st.markdown(
     }
     <!-- 出射介质 -->
     #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(13) > div.st-emotion-cache-12d0wtz.e1f1d6gn3 > div > div > div > div > div > div > div
-        {
-    background-color: rgb(220, 240, 220);
-    }
-    </style>
-    ''',
-    unsafe_allow_html=True
-)
-
-# 编辑button - Final计算状态
-st.markdown(
-    '''
-    <style>
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(15) > div.st-emotion-cache-12d0wtz.e1f1d6gn3 > div > div > div > div:nth-child(1) > div > button
-        {
-    background-color: rgb(220, 240, 220);
-    height: 70px !important;
-    width: 150px !important;
-    }
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(15) > div.st-emotion-cache-12d0wtz.e1f1d6gn3 > div > div > div > div:nth-child(2) > div > button
-        {
-    background-color: rgb(220, 240, 220);
-    height: 70px !important;
-    width: 150px !important;
-    }
-    #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(4) > div.st-emotion-cache-12d0wtz.e1f1d6gn3 > div > div > div > div > div > section > button
         {
     background-color: rgb(220, 240, 220);
     }
