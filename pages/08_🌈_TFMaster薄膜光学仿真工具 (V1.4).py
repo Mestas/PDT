@@ -1126,7 +1126,7 @@ st.markdown(
     <style>
     <!-- 上传材料NK -->
     #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.st-emotion-cache-uf99v8.ea3mdgi3 > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi2 > div > div > div > div:nth-child(4) > div.st-emotion-cache-12d0wtz.e1f1d6gn3 > div > div > div > div > div > section > button
-        {
+    {
     background-color: rgb(220, 240, 220);
     }
     <!-- 上传BLU光谱 -->
