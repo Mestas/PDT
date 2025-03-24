@@ -333,11 +333,11 @@ if Generate is True:
                     if Dummy2_Sub[i][j] > 210 and Dummy2_Sub[i][j+1] < 211:
                         PS_Final_Sub[i][j] = 0
 
-            # # # Stripe内包含AA区灰阶过度位置，若某个sub pixel上有PS，且PS占位的4个sub pixel中只要有一个灰阶低于Gray，则把该位置PS去掉，但是保留BM补偿，即PS 2-->4，开口率~83%进行删除PS
-            for i in range(d2_sub_h - 1):
-                for j in range(d2_sub_l - 1):
-                    if PS_Final_Sub[i][j] > 0 and (DummyAA_Sub[i][j] < Gray or DummyAA_Sub[i+1][j] < Gray or DummyAA_Sub[i+1][j+1] < Gray or DummyAA_Sub[i][j+1] < Gray) and Dummy11_Sub[i][j] > 210: # and (DummyAA_Sub[i][j] != 255 and DummyAA_Sub[i+1][j] != 0): # i != Top2 + aa_h - 1:
-                        PS_Final_Sub[i][j] = 4
+            # # # # Stripe内包含AA区灰阶过度位置，若某个sub pixel上有PS，且PS占位的4个sub pixel中只要有一个灰阶低于Gray，则把该位置PS去掉，但是保留BM补偿，即PS 2-->4，开口率~83%进行删除PS
+            # for i in range(d2_sub_h - 1):
+            #     for j in range(d2_sub_l - 1):
+            #         if PS_Final_Sub[i][j] > 0 and (DummyAA_Sub[i][j] < Gray or DummyAA_Sub[i+1][j] < Gray or DummyAA_Sub[i+1][j+1] < Gray or DummyAA_Sub[i][j+1] < Gray) and Dummy11_Sub[i][j] > 210: # and (DummyAA_Sub[i][j] != 255 and DummyAA_Sub[i+1][j] != 0): # i != Top2 + aa_h - 1:
+            #             PS_Final_Sub[i][j] = 4
 
             # # # Panel左侧，island区和stripe区接触的位置，如果有PS，则这个PS需去掉，防止island和stripe区RGB和PS干涉
             for i in range(d2_sub_h - 1):
