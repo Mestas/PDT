@@ -349,7 +349,24 @@ if len(blu_namelist) < 1:
 with bz1_22:
     blu_name = st.selectbox('---请选择光源', blu_namelist, key='backlight')
     blu_path = 'source/backlight/' + blu_name + '.txt'
+    
+# 选择入射、出射介质
+with bz1_22:
+    inputMenu = ('Air', 'B20_Glass_Wizus')
+    input_name = st.selectbox('---请选择入射介质', inputMenu, key='入射介质')
+    if input_name == inputMenu[0]:
+        input_para = 0
+    else:
+        input_para = 1
 
+with bz1_22:
+    outputMenu = ('Air', 'B20_Glass_Wizus')
+    output_name = st.selectbox('---请选择出射介质', outputMenu, key='出射介质')
+    if output_name == outputMenu[0]:
+        output_para = 0
+    else:
+        output_para = 1
+        
 # # # 步骤2
 st.write("<h6>步骤2：请设置膜层结构</h6>", unsafe_allow_html=True)
 
@@ -393,7 +410,9 @@ bz3_1, bz3_2, bz3_3 = st.columns([1, 8, 20])
 bz3_11, bz3_12, bz3_13 = st.columns([1, 20, 1])
 with bz3_2:
     cal_button_clicked_ref = st.button('***点击计算反射***', key='cal_button_ref')
-
+with bz3_2:
+    cal_button_clicked_trans = st.button('***点击计算透射率***', key='cal_button_trans')
+    
 # ******************** # 计算反射部分 @Wavelength Scan
 if cal_button_clicked_ref:
     # 将登陆者信息传递过来
@@ -426,7 +445,7 @@ if cal_button_clicked_ref:
     local_time = datetime.now(timezone)
     # 格式化时间
     date = local_time.strftime('%Y-%m-%d %H:%M:%S')
-    new_content = user_name + '于' + date + '使用了《08-TFMaster薄膜光学仿真工具 (V1.3) - 反射部分》;  ' + '\n'
+    new_content = user_name + '于' + date + '使用了《08-TFMaster薄膜光学仿真工具 (V99.2) - 反射部分》;  ' + '\n'
 
     # GitHub API URL
     api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
@@ -492,16 +511,26 @@ if cal_button_clicked_ref:
 
         # #确认上传的txt文件中，一共多少组膜堆
         stack_num = int(stack_data.shape[1] / 2)
- 
+        # 初始化一个空的 DataFrame，用于存储所有 f_Ref_Meta 的结果
+        results_ref = []
+        
         for k in range(stack_num):
             nk_name_list0 = []
-            nk_name_list0.append('Air')
-            insert_nk_name = stack_data[k * 2].dropna().tolist()
-
-            nk_name_list0.append(insert_nk_name)
-            nk_name_list0.append('Air')
-            nk_name_list = flatten_list(nk_name_list0)
+            if input_para == 0:
+                nk_name_list0.append('Air')
+            else:
+                nk_name_list0.append('B20_Glass_Wizus')
             
+            insert_nk_name = stack_data[k * 2].dropna().tolist()
+            nk_name_list0.append(insert_nk_name)
+
+            if output_para == 0:
+                nk_name_list0.append('Air')
+            else:
+                nk_name_list0.append('B20_Glass_Wizus')
+            
+            nk_name_list = flatten_list(nk_name_list0)
+        
             d_list_min0 = []
             d_list_min0.append('inf')
             insert_d_list_min = stack_data[k * 2 + 1].dropna().tolist()
@@ -609,6 +638,8 @@ if cal_button_clicked_ref:
                 # 计算400~700nm反射率平均值
                 Ref_Meta = np.mean(R[int((400 - wl_min) / wl_pitch):int((700 - wl_min) / wl_pitch + 1)])
                 f_Ref_Meta = "{:.6f}".format(Ref_Meta)
+                # 将 f_Ref_Meta 添加到结果列表中
+                results_ref.append({'Index': '膜堆' + str(k + 1), 'f_Ref_Meta': f_Ref_Meta})
 
                 # 设置final数据
                 final[ind + 1, 0] = ind + 1
@@ -627,11 +658,274 @@ if cal_button_clicked_ref:
             with bz3_12:
                 st.write(' **反射数据 - 膜堆** ' + str(k + 1))
                 st.write(final)
+            # 将结果列表转换为 DataFrame
+            f_Ref_Meta_df = pd.DataFrame(results_ref)
+        with bz3_12:
+            st.write(f_Ref_Meta_df)
 
     except ValueError:
         bz5_3, bz5_4, bz5_5 = st.columns([1, 3, 5])
         with bz5_4:
             st.write(':red[请加载BLU光谱txt文件!]')
+            
+# ******************** # 计算透射部分 @Wavelength Scan
+if cal_button_clicked_trans:
+    start_time = time.time()
+    # 将登陆者信息传递过来
+    if 'user_name' in st.session_state:
+        user_name = st.session_state['user_name']
+        # st.write(user_name)
+
+    # 将登录者以及使用的信息保存到《网站使用者.txt》文件中
+    import requests
+    import json
+    import base64
+    from hashlib import sha1
+    from datetime import datetime
+    import pytz
+
+    # 从 Streamlit Secret 获取 GitHub PAT
+    github_pat = st.secrets['github_token']
+
+    # GitHub 仓库信息
+    owner = 'Mestas'  # 仓库所有者
+    repo = 'PDT'  # 仓库名称
+    branch = 'main'  # 分支名称
+    filepath = 'users/网站使用者.txt'  # 文件路径
+
+    # 文件内容
+    # 获取特定时区
+    timezone = pytz.timezone('Asia/Shanghai')  # 例如，获取东八区的时间
+
+    # 获取当前时间，并将其本地化到特定时区
+    local_time = datetime.now(timezone)
+    # 格式化时间
+    date = local_time.strftime('%Y-%m-%d %H:%M:%S')
+    new_content = user_name + '于' + date + '使用了《08-TFMaster薄膜光学仿真工具 (V99.2) - 透射部分》;  ' + '\n'
+
+    # GitHub API URL
+    api_url = f'https://api.github.com/repos/{owner}/{repo}/contents/{filepath}'
+
+    # 设置请求头，包括你的 PAT
+    headers = {
+        'Authorization': f'token {github_pat}',
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+    }
+
+    # 发送请求以获取当前文件内容
+    response = requests.get(api_url, headers=headers)
+    if response.status_code == 200:
+        file_data = response.json()
+        # 读取现有文件内容
+        existing_content = base64.b64decode(file_data['content']).decode('utf-8')
+        # 将新内容追加到现有内容
+        updated_content = existing_content + new_content
+        # 计算更新后内容的 SHA1 哈希值
+        content_sha1 = sha1(updated_content.encode('utf-8')).hexdigest()
+    else:
+        # 如果文件不存在，就创建新文件
+        updated_content = new_content
+        content_sha1 = sha1(new_content.encode('utf-8')).hexdigest()
+
+    # 将更新后的内容转换为 Base64 编码
+    encoded_content = base64.b64encode(updated_content.encode('utf-8')).decode('utf-8')
+
+    # 构建请求体
+    data = {
+        "message": "Append to file via Streamlit",
+        "content": encoded_content,
+        "branch": branch,
+        "sha": file_data['sha'] if response.status_code == 200 else None  # 如果文件不存在，这将被忽略
+    }
+
+    # 发送请求以更新文件内容
+    response = requests.put(api_url, headers=headers, data=json.dumps(data))
+
+    # # # # # # # # # # # # 分隔符，以上为保存使用者信息 # # # # # # # # # # # #
+    # # # # # # # # # # # # 分隔符，以下为正式代码 # # # # # # # # # # # #
+    
+    try:
+        # 根据用户输入生成波长数组
+        wl_ar = np.arange(wl_min, wl_max + wl_pitch, wl_pitch, dtype=float)
+
+        # 使用pandas的read_csv函数读取BLU数据，并将BLU数据按照wl_ar进行波长step选择
+        illuminant_data = pd.read_csv(blu_path, header=None, sep="\t", skip_blank_lines=True)
+        illuminant_data = np.float64(illuminant_data)
+        wavelengths = pd.Series(illuminant_data[:, 0])
+        intensities = pd.Series(illuminant_data[:, 1])
+
+        # 创建一个 DataFrame，使用波长列作为索引
+        selected_blu = pd.DataFrame({'Wavelength': wavelengths, 'Column1': intensities})
+        # 选择需要的行，假设您希望筛选波长在某个范围内的数据
+        selected_blu = selected_blu[selected_blu['Wavelength'].isin(wl_ar)]
+        sblu = selected_blu.values
+
+        # 将 DataFrame 转换为 MultiSpectralDistributions 类型
+        illuminant_array_ref = colour.SpectralDistribution(sblu[:, 1], name='BLU Spectrum')
+        illuminant_array_ref.wavelengths = wl_ar
+
+        # #确认上传的txt文件中，一共多少组膜堆
+        stack_num = int(stack_data.shape[1] / 2)
+        
+        # 初始化一个空的 DataFrame，用于存储所有 f_Trans_Meta 的结果
+        results_trans = []
+
+        for k in range(stack_num):
+            nk_name_list0 = []
+            if input_para == 0:
+                nk_name_list0.append('Air')
+            else:
+                nk_name_list0.append('B20_Glass_Wizus')
+            
+            insert_nk_name = stack_data[k * 2].dropna().tolist()
+            nk_name_list0.append(insert_nk_name)
+
+            if output_para == 0:
+                nk_name_list0.append('Air')
+            else:
+                nk_name_list0.append('B20_Glass_Wizus')
+            
+            nk_name_list = flatten_list(nk_name_list0)
+        
+            d_list_min0 = []
+            d_list_min0.append('inf')
+            insert_d_list_min = stack_data[k * 2 + 1].dropna().tolist()
+            d_list_min0.append(insert_d_list_min)
+            d_list_min0.append('inf')
+            d_list_min = flatten_list(d_list_min0)
+
+            d_list_max0 = []
+            d_list_max0.append('inf')
+            insert_d_list_max = stack_data[k * 2 + 1].dropna().tolist()
+            d_list_max0.append(insert_d_list_max)
+            d_list_max0.append('inf')
+            d_list_max = flatten_list(d_list_max0)
+
+            num_step_list = len(stack_data[k * 2].dropna())
+            step_list = [0.0] * num_step_list
+
+            c_list = [''] * (num_step_list + 2)
+            for i in range(num_step_list + 2):
+                if d_list_min[i] == 'inf' or d_list_min[i] > 100000:
+                    c_list[i] = 'i'
+                else:
+                    c_list[i] = 'c'
+
+            # # # # # # # 计算折射率函数列表nk_fn_list
+            nk_fn_list = make_nk_fn(nk_name_list)
+                
+            # # # # # # # 计算厚度列表d_lists
+            step_layers = []
+            for i in range(0, len(step_list)):
+                step_layers.append({'start': d_list_min[i + 1], 'end': d_list_max[i + 1], 'step': step_list[i]})
+            # print(step_layers)
+
+            combinations = generate_layer_combinations(step_layers)
+
+            d_lists = []
+            for i in range(len(combinations)):
+                d = [np.inf]
+                for j in range(1, len(nk_name_list) - 1):
+                    if step_list[j - 1] != 0:
+                        d.append(combinations[i][j - 1])
+                    else:
+                        d.append(d_list_min[j])
+                d.append(np.inf)
+                d_lists.append(d)
+
+            # 计算所有split的反射率Wx, Wy数据
+            #设置输出文件
+            nlayers = len(step_list)
+            m = len(d_lists) + 1
+            n = int(8 + nlayers + (wl_max - wl_min) / wl_pitch) # NO. / 入射介质 / 薄膜膜层 / 出射介质 / Wx / Wy / WY / 380~780光谱(81 or 401组)
+            final = np.empty((m, n), dtype=object)
+
+            final[0, 0]="No."
+            final[0, 1]="入射介质" + nk_name_list[0]
+            for i in range(nlayers):
+                final[0, i + 2] = nk_name_list[i + 1]
+            final[0, nlayers + 2] = "出射介质" + nk_name_list[len(nk_name_list) - 1]
+            final[0, nlayers + 3] = "Wx"
+            final[0, nlayers + 4] = "Wy"
+            final[0, nlayers + 5] = "WY"
+            final[0, nlayers + 6] = "400~700nm平均值"
+            for i in range(int((wl_max - wl_min) / wl_pitch + 1)):
+                final[0, i + nlayers + 7] = 380 + i * wl_pitch
+
+            for ind, d_list in enumerate(d_lists):
+                # 使用提供的函数计算透射系数
+                Tp, Ts = calc_transmittance(wl_ar, nk_fn_list, d_list, inc_angle)
+                T = (Tp + Ts) / 2
+
+                spectrum_T = colour.SpectralDistribution(T, name='Sample T')
+                spectrum_T.wavelengths = wl_ar
+
+                # 加载CMF，并进行波长step筛选
+                fp_CMF = 'D:/python_work/project/1_PDT_Local/source/CMF.txt'
+                CMF0 = pd.read_csv(fp_CMF, header=None, sep="\t", skip_blank_lines=True)
+                CMF1 = np.float64(CMF0)
+                wavelengths_cmfs = np.arange(380, 780 + 1, 1)
+                values_cmfs = CMF1[:, 0:3]
+                # 创建一个 DataFrame，使用波长step列作为索引
+                selected_rows = pd.DataFrame(
+                    {'Wavelength': wavelengths_cmfs, 'Column1': values_cmfs[:, 0], 'Column2': values_cmfs[:, 1],
+                    'Column3': values_cmfs[:, 2]})
+                # 选择需要的行，假设您希望筛选波长在某个范围内的数据
+                selected_rows = selected_rows[selected_rows['Wavelength'].isin(wl_ar)]
+                # 将 DataFrame 转换为 MultiSpectralDistributions 类型
+                CMF = colour.MultiSpectralDistributions(
+                    {wavelength: [row['Column1'], row['Column2'], row['Column3']] for wavelength, row in
+                    selected_rows.set_index('Wavelength').iterrows()}
+                )
+
+                # 计算Wx，Wy和Y值
+                XYZ_T = colour.sd_to_XYZ(spectrum_T, CMF, illuminant_array_ref)
+                WX = XYZ_T[0]
+                WY = XYZ_T[1]
+                WZ = XYZ_T[2]
+
+                # 计算白点色坐标Wx，Wy
+                Wx = WX / (WX + WY + WZ)
+                Wy = WY / (WX + WY + WZ)
+                f_Wx = "{:.4f}".format(Wx)
+                f_Wy = "{:.4f}".format(Wy)
+                f_WY = "{:.4f}".format(WY)
+
+                # 计算400~700nm透过率平均值
+                Trans_Meta = np.mean(T[int((400 - wl_min) / wl_pitch):int((700 - wl_min) / wl_pitch + 1)])
+                f_Trans_Meta = "{:.6f}".format(Trans_Meta)
+                # 将 f_Ref_Meta 添加到结果列表中
+                results_trans.append({'Index': '膜堆' + str(k + 1), 'f_Trans_Meta': f_Trans_Meta})
+
+                # 设置final数据
+                final[ind + 1, 0] = ind + 1
+                for i in range(len(nk_name_list)):
+                    final[ind + 1, i + 1] = d_list[i]
+
+                g = len(nk_name_list)
+                final[ind + 1, g + 1] = f_Wx
+                final[ind + 1, g + 2] = f_Wy
+                final[ind + 1, g + 3] = f_WY
+                final[ind + 1, g + 4] = f_Trans_Meta
+
+                for i in range(int((wl_max - wl_min) / wl_pitch + 1)):
+                    final[ind + 1, g + 5 + i] = T[i]
+
+            with bz3_12:
+                st.write(' **透射数据 - 膜堆** ' + str(k + 1))
+                st.write(final)
+            # 将结果列表转换为 DataFrame
+            f_Trans_Meta_df = pd.DataFrame(results_trans)
+            # print(f_Ref_Meta_df)
+        with bz3_12:
+            st.write(f_Trans_Meta_df)
+            
+    except ValueError:
+        bz5_3, bz5_4, bz5_5 = st.columns([1, 3, 5])
+        with bz5_4:
+            st.write(':red[请加载BLU光谱txt文件!]')
+
 
 # 编辑button - Final计算状态
 st.markdown(
